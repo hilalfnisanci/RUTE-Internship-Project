@@ -1,0 +1,24 @@
+{
+    "data": [
+      {
+        "barName": "kV",
+        "value": "26"
+      },
+      {
+        "barName": "A",
+        "value": "0"
+      },
+      {
+        "barName": "kN",
+        "value": "75"
+      },
+      {
+        "barName": "kN/FM",
+        "value": "0"
+      },
+      {
+        "barName": "BatV",
+        "value": "114"
+      }
+    ]
+  }
