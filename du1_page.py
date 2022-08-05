@@ -1,14 +1,21 @@
 from threading import Thread
-from venv import create
 from PyQt5.QtWidgets import *
 from PyQt5.QtCore import *
 from PyQt5.QtGui import *
 from PyQt5.QtChart import *
 import createBar
 from mqttEvents import Mqtt
+import random
+from paho.mqtt import client as mqtt_client
 
 class CreateDu1(QWidget):
-    
+
+    broker = 'localhost'
+    topic = 'mqtt'
+    client_id = f'python-mqtt-{random.randint(0, 100)}'
+
+    client = mqtt_client.Client(client_id=client_id)
+
     def __init__(self, parent=None):
         super(CreateDu1, self).__init__(parent)
         self.du1Grid = QGridLayout()
@@ -17,8 +24,7 @@ class CreateDu1(QWidget):
         self.createUpButtons()
         self.createRightButtons()
         self.createInsideButtons()
-        self.createBarsfromImages()
-    
+
     def createDownButtons(self):
         
         # alt butonlar
@@ -208,14 +214,11 @@ class CreateDu1(QWidget):
         self.pushButtonkV.setIconSize(QSize(69, 48))
         self.du1Grid.addWidget(self.pushButtonkV)
 
-
         self.pushButtonStspan = QPushButton("",self)
         self.pushButtonStspan.setGeometry(169, 420, 69, 50)
         self.pushButtonStspan.setStyleSheet("QPushButton{color : white; background-color : transparent;}QPushButton::pressed{background-color : gray;}")
-        self.pushButtonStspan.setIcon(QIcon("images\STSPAN.png"))
-        self.pushButtonStspan.setIconSize(QSize(69, 48))
+        
         self.du1Grid.addWidget(self.pushButtonStspan)
-
 
         # create system button
         self.pushButtonSystem = QPushButton("Sistem", self)
@@ -236,8 +239,7 @@ class CreateDu1(QWidget):
         self.pushButtonCare.setGeometry(238, 470, 69, 50)
         self.pushButtonCare.setStyleSheet("QPushButton{color : white; background-color : transparent;}QPushButton::pressed{background-color : gray;}")
         self.du1Grid.addWidget(self.pushButtonCare)
-
-
+ 
         # create backup button
         self.pushButtonBackup = QPushButton("Yedek", self)
         self.pushButtonBackup.setGeometry(307, 470, 69, 50)
@@ -261,8 +263,7 @@ class CreateDu1(QWidget):
         self.btnDIR = QPushButton(self)
         self.btnDIR.setGeometry(514, 420, 69, 50)
         self.btnDIR.setStyleSheet("QPushButton{color : white; background-color : transparent;}QPushButton::pressed{background-color : gray;}")
-        self.btnDIR.setIcon(QIcon("images\DBRAPL.png"))
-        self.btnDIR.setIconSize(QSize(69, 48))
+
         self.du1Grid.addWidget(self.btnDIR)
 
 
@@ -287,10 +288,7 @@ class CreateDu1(QWidget):
         self.btnDırfwd = QPushButton(self)
         self.btnDırfwd.setGeometry(731, 208, 58, 52)
         self.btnDırfwd.setStyleSheet("QPushButton{color : white; background-color : transparent;}QPushButton::pressed{background-color : gray;}")
-        self.btnDırfwd.setIcon(QIcon("images\DIRFWD.png"))
-        self.btnDırfwd.setIconSize(QSize(58, 52))
         self.du1Grid.addWidget(self.btnDırfwd)
-
 
         # create key-brake button
         self.pushButtonKey = QPushButton("Anahtar/Fren", self)
@@ -309,6 +307,11 @@ class CreateDu1(QWidget):
         self.pushButtonPull.setGeometry(721, 470, 69, 50)
         self.pushButtonPull.setStyleSheet("QPushButton{color : white; background-color : transparent;}QPushButton::pressed{background-color : gray;}")
         self.du1Grid.addWidget(self.pushButtonPull)
+
+        
+        self.MCBLabel = QLabel(self)
+        self.du1Grid.addWidget(self.MCBLabel)
+
 
     def UiComponents(self):
         self.bar1 = QProgressBar(self)
@@ -365,23 +368,22 @@ class CreateDu1(QWidget):
         painter.drawLine(583, 420, 583, 520)
         painter.drawLine(652, 420, 652, 520)
         painter.drawLine(721, 420, 721, 520)
-
-        # 28, 250, 50
-        """dataValue = mqtt.sendData(barName="kV")
-        print("kontrol: ", mqtt.sendData(barName="kV"))"""
         
         
         # print(pv, "  -  ", type(pv))   Mqtt.takeData(barName='kV')    Mqtt.takeData(barName='A')
         createBar.CreateBar().paintEvent(painter=painter, barName="kV", page="du1", progressValue = Mqtt.takeData(barName='kV'))
-
         createBar.CreateBar().paintEvent(painter=painter, barName="A", page="du1", progressValue= Mqtt.takeData(barName='A'))
-
         createBar.CreateBar().paintEvent(painter=painter, barName="kN", page="du1", progressValue=Mqtt.takeData(barName='kN'))
-
         createBar.CreateBar().paintEvent(painter=painter, barName='brakeBar1', page='du1', progressValue=Mqtt.takeData(barName='brakeBar1'))
-    
+        createBar.CreateBar().paintEvent(painter=painter, barName='brakeBar2', page='du1', progressValue=Mqtt.takeData(barName='brakeBar2'))
+
+
         t1 = Thread(target=self.update())
         t1.start()
+
+        
+        self.createBtnImg()
+        self.createScrollImg()
 
         self.dateTime = QDateTime.currentDateTime()
         painter.drawText(550, 400, self.dateTime.toString())
@@ -390,29 +392,17 @@ class CreateDu1(QWidget):
 
     def createBarsfromImages(self):
 
-        """# kN bar  left - 300 , Right - 100
-        self.label1 = QLabel(self)
-        self.pixmap1 = QPixmap('images\TrDynBrakeBarV1.png')
-        self.label1.setPixmap(self.pixmap1)
-        self.label1.setGeometry(280, 120, self.pixmap1.width(), self.pixmap1.height())"""
-
         #YelArrow.png
         self.arrowLabel = QLabel(self)
         self.icon = QPixmap('images\YelArrow.png')
         self.arrowLabel.setPixmap(self.icon)
         self.arrowLabel.setGeometry(375, 334, self.icon.width(), self.icon.height())
         self.arrowLabel.resize(20, 10)
-
-        # FS  2 bar left 6,0  Right 6
-        """self.label2 = QLabel(self)
-        self.pixmap2 = QPixmap('images\BrakePipePressV1.png')
-        self.label2.setPixmap(self.pixmap2)
-        self.label2.setGeometry(450, 102, self.pixmap2.width(), self.pixmap2.height())"""
         
         #YelArrow.png
         self.arrowLabel2 = QLabel(self)
         self.arrowLabel2.setPixmap(self.icon)
-        self.arrowLabel2.setGeometry(545, 125, self.icon.width(), self.icon.height())
+        self.arrowLabel2.setGeometry(548, 125, self.icon.width(), self.icon.height())
         self.arrowLabel2.resize(20, 10)
 
         self.label3 = QLabel(self)
@@ -425,4 +415,49 @@ class CreateDu1(QWidget):
         self.pixmap4 = QPixmap("images\BCPT.png")
         self.label4.setPixmap(self.pixmap4)
         self.label4.setGeometry(620, 335, self.pixmap4.width(), self.pixmap4.height())
+
+    def createBtnImg(self):
+        if 1 in Mqtt.btnValue:
+            self.btnDırfwd.setIcon(QIcon("images\DIRFWD.png"))
+            self.btnDırfwd.setIconSize(QSize(58, 52))
+            
+        elif 0 in Mqtt.btnValue:
+            self.btnDırfwd.setIcon(QIcon("images\DIRNTR.png"))
+            self.btnDırfwd.setIconSize(QSize(58, 52))
+            
+
+        elif -1 in Mqtt.btnValue:
+            self.btnDırfwd.setIcon(QIcon("images\DIRRWD.png"))
+            self.btnDırfwd.setIconSize(QSize(58, 52))
+
+    def createScrollImg(self):
         
+        if "pantoScroll" in Mqtt.scrollDict.keys():
+            if 99 == Mqtt.scrollDict["pantoScroll"]:
+                self.pushButtonStspan.setIcon(QIcon("images\PANTODR.png"))
+                self.pushButtonStspan.setIconSize(QSize(69, 48))
+            elif 0 == Mqtt.scrollDict["pantoScroll"]:
+                self.pushButtonStspan.setIcon(QIcon("images\PANTOUP.png"))
+                self.pushButtonStspan.setIconSize(QSize(69, 48))
+
+        if "frenScroll" in Mqtt.scrollDict.keys():
+            if 99 == Mqtt.scrollDict["frenScroll"]:
+                self.btnDIR.setIcon(QIcon("images\BRACT2.png"))
+                self.btnDIR.setIconSize(QSize(69, 48))
+            if 0 == Mqtt.scrollDict["frenScroll"]:
+                self.btnDIR.setIcon(QIcon("images\BRR2.png"))
+                self.btnDIR.setIconSize(QSize(69, 48))
+        
+        # MCBStateOpen.png   MCBStateClose.png
+        if "mcbScroll" in Mqtt.scrollDict.keys():
+            self.iconMCBOpen = QPixmap('images\MCBStateOpen.png')
+            self.iconMCBClose = QPixmap('images\MCBStateClose.png')
+            
+            if 99 == Mqtt.scrollDict["mcbScroll"]:
+                self.MCBLabel.setPixmap(self.iconMCBOpen)
+                self.MCBLabel.setGeometry(148, 325, self.iconMCBOpen.width(), self.iconMCBOpen.height())
+
+            if 0 == Mqtt.scrollDict["mcbScroll"]:
+                self.MCBLabel.setPixmap(self.iconMCBClose)
+                self.MCBLabel.setGeometry(148, 325, self.iconMCBClose.width(), self.iconMCBClose.height())
+            

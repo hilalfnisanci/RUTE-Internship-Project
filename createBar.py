@@ -1,5 +1,3 @@
-from cgitb import text
-from math import erfc
 from PyQt5.QtGui import *
 from PyQt5.QtCore import *
 
@@ -52,7 +50,7 @@ class CreateBar():
                     painter.drawText(text_x, start_y + 10, str(30 - i * increment))
 
             # geometrik çizimler için kalem ayarlanır
-            painter.setPen(QPen(Qt.white, 2, Qt.SolidLine))
+            painter.setPen(QPen(Qt.white, 1, Qt.SolidLine))
                 
             # bar çizimi yapılır
             painter.drawRect(rect_x, rect_y, rect_w, rect_h)
@@ -75,13 +73,13 @@ class CreateBar():
                 painter.drawLine(rect_x-6, scale_y, rect_x, scale_y)
 
             # progress kısmı çizilir
-            if progressValue >=0 and progressValue<=30:
+            if progressValue >=0 and progressValue <=30:
                 if progressValue <= 20:
                     progressValue = progressValue * 2 + 9
                 else:
                     progressValue = (progressValue - 20) * 16 + 50
                 
-                rect = QRectF(rect_x + 1, rect_y+rect_h - progressValue, rect_w-2, progressValue - 1)
+                rect = QRectF(rect_x + 1, rect_y+rect_h - progressValue, rect_w-2, progressValue)
                 painter.fillRect(rect, QBrush(Qt.blue))
         # paintevent end for kW bar
 
@@ -128,7 +126,7 @@ class CreateBar():
                     painter.drawText(text_x, start_y + 10, str(800 - i * increment))
             
             # geometrik çizimler için kalem ayarlanır
-            painter.setPen(QPen(Qt.white, 2, Qt.SolidLine))
+            painter.setPen(QPen(Qt.white, 1, Qt.SolidLine))
                 
             # bar çizimi yapılır
             painter.drawRect(rect_x, rect_y, rect_w, rect_h)
@@ -154,7 +152,7 @@ class CreateBar():
             
             if progressValue >=0 and progressValue <= 800:
                 progressValue = (float)(progressValue / increment) * spaceVal
-                rect = QRectF(rect_x + 1, rect_y+rect_h - progressValue, rect_w - 2, progressValue - 1)
+                rect = QRectF(rect_x + 1, rect_y+rect_h - progressValue, rect_w - 1, progressValue - 1)
                 painter.fillRect(rect, QBrush(Qt.red))
         # paintEvent end for A bar
 
@@ -193,7 +191,7 @@ class CreateBar():
                 painter.drawText(text_x + 105, rect_y + i*spaceValRight , str(100 - i*incrementRight))
 
             # geometrik çizimler için kalem ayarlanır
-            painter.setPen(QPen(Qt.white, 2, Qt.SolidLine))
+            painter.setPen(QPen(Qt.white, 1, Qt.SolidLine))
                 
             # bar çizimi yapılır
             painter.drawRect(rect_x, rect_y, rect_w, rect_h)
@@ -220,7 +218,7 @@ class CreateBar():
             
             if progressValue >= 0 and progressValue <= 300:
                 progressValue = (float)(progressValue / incrementLeft) * spaceValLeft
-                rect = QRectF(rect_x + 1, rect_y + rect_h - progressValue, rect_w - 2, progressValue - 1)
+                rect = QRectF(rect_x + 1, rect_y + rect_h - progressValue, rect_w - 1, progressValue )
                 painter.fillRect(rect, QBrush(Qt.green))
         # paintEvent end for kN bar
 
@@ -254,7 +252,7 @@ class CreateBar():
                     painter.drawText(text_x, start_y + 10, str(400 - i * increment))
             
             # geometrik çizimler için kalem ayarlanır
-            painter.setPen(QPen(Qt.white, 2, Qt.SolidLine))
+            painter.setPen(QPen(Qt.white, 1, Qt.SolidLine))
 
             # bar çizimi yapılır
             painter.drawRect(rect_x, rect_y, rect_w, rect_h)
@@ -271,7 +269,7 @@ class CreateBar():
 
             if progressValue >= 0 and progressValue <= 400:
                 progressValue = (float) (progressValue / increment) * spaceVal
-                rect = QRectF(rect_x + 1, rect_y + rect_h - progressValue, rect_w - 2, progressValue - 1)
+                rect = QRectF(rect_x + 1, rect_y + rect_h - progressValue, rect_w - 1, progressValue)
                 painter.fillRect(rect, QBrush(Qt.blue))
         # paintEvent end for kN/FM bar        
 
@@ -298,7 +296,7 @@ class CreateBar():
             # değerin gösterildiği kutuya değer yazılır
             pen.setColor(QColor("blue"))
             painter.setPen(pen)
-            painter.drawText(rect_x + 5, rect_y + rect_h + 18, str(progressValue))
+            painter.drawText(rect_x + 5, rect_y + rect_h + 18, str(int(progressValue)))
 
 
             # değiştirilen kalem rengi düzeltilir
@@ -315,7 +313,7 @@ class CreateBar():
                     painter.drawText(text_x, start_y + 10, str(120 - i * increment))
             
             # geometrik çizimler için kalem ayarlanır
-            painter.setPen(QPen(Qt.white, 2, Qt.SolidLine))
+            painter.setPen(QPen(Qt.white, 1, Qt.SolidLine))
                 
             # bar çizimi yapılır
             painter.drawRect(rect_x, rect_y, rect_w, rect_h)
@@ -345,7 +343,7 @@ class CreateBar():
             # progress kısmı
             if progressValue >= 0 and progressValue <= 120:
                 progressValue = (float)(progressValue / increment) * spaceVal
-                rect = QRectF(rect_x + 1, rect_y + rect_h - progressValue, rect_w - 2, progressValue - 1)
+                rect = QRectF(rect_x + 1, rect_y + rect_h - progressValue, rect_w - 1, progressValue)
                 painter.fillRect(rect, QBrush(Qt.blue))
 
         if barName == "brakeBar1":
@@ -353,22 +351,49 @@ class CreateBar():
             rect_y = 110
             rect_h = 210
             rect_w = 60
+            text_x = 460
+            text_y = 105
+            incrementLeft = 0.5
+            incrementRight = 1
 
             scaleCountLeft = 8
             scaleCountRight = 12
             spaceValRight = (int) (rect_h / (scaleCountRight - 1))
             spaceValLeft = (int) (rect_h / (scaleCountLeft - 1))
+            spaceVal = (int) (rect_h / (scaleCountLeft - 1))
 
             pen.setWidth(60)
             pen.setColor(QColor("white"))
             painter.setPen(pen)
 
-            # barın adı yazılır
-            painter.drawText(rect_x - 20, rect_y - 5, "")
+            # ölçekteki sayısal değerler yazılır
+            for i in range(scaleCountLeft):
+                if i == scaleCountLeft - 1:
+                    start_y = rect_h + rect_y
+                    painter.drawText(text_x, start_y, str(0))
+                else:
+                    start_y = i * spaceVal + text_y
+                    painter.drawText(text_x, start_y + 10, str(6.0 - i * incrementLeft))
 
+            # barın sağ tarafı için
+            for i in range(scaleCountRight):
+                if i == 0:
+                    painter.drawText(text_x + 125, rect_y + i*spaceValRight + 3, "FS")
+                if i == 1:
+                    painter.drawText(text_x + 125, rect_y + i*spaceValRight + 3, "RP")
+                if i == 2:
+                    painter.drawText(text_x + 125, rect_y + i*spaceValRight + 3, "1A")
+                if i == 3:
+                    painter.drawText(text_x + 125, rect_y + i*spaceValRight + 3, "1B")
+                if i >= 4 and i <scaleCountRight - 2:
+                    painter.drawText(text_x + 125, rect_y + i*spaceValRight + 3, str(-2 + i*incrementRight))
+                if i == scaleCountRight - 2:
+                    painter.drawText(text_x + 125, rect_y + i*spaceValRight + 3, "MB")
+                if i == scaleCountRight - 1:
+                    painter.drawText(text_x + 125, rect_y + i*spaceValRight + 3, "EB")
 
-             # geometrik çizimler için kalem ayarlanır
-            painter.setPen(QPen(Qt.white, 2, Qt.SolidLine))
+            # geometrik çizimler için kalem ayarlanır
+            painter.setPen(QPen(Qt.white, 1, Qt.SolidLine))
                 
             # bar çizimi yapılır
             painter.drawRect(rect_x, rect_y, rect_w, rect_h)
@@ -384,11 +409,61 @@ class CreateBar():
                 else:
                     painter.drawLine(rect_x-15, rect_y + i*spaceValLeft, rect_x, rect_y + i*spaceValLeft)
 
-            # barın sol tarafındaki küçük ölçek çizgileri çizilir
-            # bardaki küçük ölçek çizgileri çizilir
-            for i in range((scaleCountLeft - 1) * 5):
-                scale_y = i * 16 + (rect_y + 10)
-                if scale_y >= 310:
-                    break
-                painter.drawLine(rect_x-6, scale_y, rect_x, scale_y)
+            # progress kısmı
+            if progressValue >=0 and progressValue <= 3.0:
+                progressValue = progressValue * 10.0
+                
+            elif progressValue > 3.0 and progressValue <= 6.0:
+                progressValue = 30.0 + (progressValue - 3)*60.0
+            rect = QRectF(rect_x + 1, rect_y + rect_h - progressValue, rect_w - 1, progressValue)
+            painter.fillRect(rect, QBrush(Qt.yellow))
+                
+        if barName == "brakeBar2":
+            rect_x = 630
+            rect_y = 140
+            rect_h = 180
+            rect_w = 60 
+            text_x = 610
+            text_y = 135
+            scaleCount = 7
+            spaceVal = (int) (rect_h / (scaleCount - 1))
 
+            pen.setWidth(60)
+            pen.setColor(QColor("white"))
+            painter.setPen(pen)
+
+            for i in range(scaleCount):
+                if i == scaleCount - 1:
+                    start_y = rect_h + rect_y
+                    painter.drawText(text_x, start_y, str(0))
+                else:
+                    start_y = i * spaceVal + text_y
+                    painter.drawText(text_x, start_y + 10, str(6 - i))
+            # geometrik çizimler için kalem ayarlanır
+            painter.setPen(QPen(Qt.white, 1, Qt.SolidLine))
+                
+            # bar çizimi yapılır
+            painter.drawRect(rect_x, rect_y, rect_w, rect_h)
+            painter.drawLine(rect_x + int(rect_w / 2) - 4, rect_y, rect_x + int(rect_w / 2) - 4, rect_y + rect_h)
+            painter.drawLine(rect_x + int(rect_w / 2) + 4, rect_y, rect_x + int(rect_w / 2) + 4, rect_y + rect_h)
+
+            # aradaki küçük çizgiler çizilir
+            for i in range(1,12):
+                painter.drawLine(rect_x + int(rect_w / 2) - 4, rect_y + i* int(rect_h / 12), rect_x + int(rect_w / 2) + 4, rect_y + i* int(rect_h / 12))
+
+            # ölçek çizgileri çizilir
+            for i in range(scaleCount):
+                # büyük ölçek çizgilerini çizmek için
+                painter.drawLine(rect_x - 9, rect_y + i * int(rect_h / (scaleCount-1)), rect_x, rect_y + i * int(rect_h / (scaleCount-1)))
+                # küçük ölçek çizgilerini çizmek için
+                painter.drawLine(rect_x - 5, rect_y + int(rect_h / 12) + i*int(rect_h / (scaleCount-1)), rect_x, rect_y + int(rect_h / 12) + i*int(rect_h / (scaleCount-1)))
+            
+
+            if 0 <= progressValue <=6:
+                progressValue = progressValue*30
+            
+            rect = QRectF(rect_x + 1, rect_y + rect_h - progressValue, int(rect_w / 2) - 5, progressValue)
+            painter.fillRect(rect, QBrush(Qt.yellow))
+
+            rect2 = QRectF(rect_x + int(rect_w / 2) + 5, rect_y + rect_h - progressValue, int(rect_w / 2) - 4, progressValue)
+            painter.fillRect(rect2, QBrush(Qt.yellow))

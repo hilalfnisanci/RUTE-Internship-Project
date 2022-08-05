@@ -232,16 +232,16 @@ class CreateDu2(QWidget):
         self.pushButtonStspan = QPushButton("",self)
         self.pushButtonStspan.setGeometry(169, 420, 69, 50)
         self.pushButtonStspan.setStyleSheet("QPushButton{color : white; background-color : transparent;}QPushButton::pressed{background-color : gray;}")
-        self.pushButtonStspan.setIcon(QIcon("images\STSPAN.png"))
-        self.pushButtonStspan.setIconSize(QSize(69, 48))
+        """self.pushButtonStspan.setIcon(QIcon("images\STSPAN.png"))
+        self.pushButtonStspan.setIconSize(QSize(69, 48))"""
         self.du2Grid.addWidget(self.pushButtonStspan)
 
 
         self.btnDIR = QPushButton(self)
         self.btnDIR.setGeometry(514, 420, 69, 50)
         self.btnDIR.setStyleSheet("QPushButton{color : white; background-color : transparent;}QPushButton::pressed{background-color : gray;}")
-        self.btnDIR.setIcon(QIcon("images\DBRAPL.png"))
-        self.btnDIR.setIconSize(QSize(69, 48))
+        """self.btnDIR.setIcon(QIcon("images\DBRAPL.png"))
+        self.btnDIR.setIconSize(QSize(69, 48))"""
         self.du2Grid.addWidget(self.btnDIR)
 
 
@@ -307,6 +307,8 @@ class CreateDu2(QWidget):
         t1 = Thread(target=self.update())
         t1.start()
 
+        self.createScrollImg()
+
         self.dateTime = QDateTime.currentDateTime()
         painter.drawText(550, 400, self.dateTime.toString())
 
@@ -322,5 +324,20 @@ class CreateDu2(QWidget):
         self.arrowLabel.setGeometry(675, 345, self.icon.width(), self.icon.height())
         self.arrowLabel.resize(20, 10)
 
-    def takeData(barName, ):
-        pass
+    def createScrollImg(self):
+
+        if "pantoScroll" in Mqtt.scrollDict.keys():
+            if 99 == Mqtt.scrollDict["pantoScroll"]:
+                self.pushButtonStspan.setIcon(QIcon("images\PANTODR.png"))
+                self.pushButtonStspan.setIconSize(QSize(69, 48))
+            elif 0 == Mqtt.scrollDict["pantoScroll"]:
+                self.pushButtonStspan.setIcon(QIcon("images\PANTOUP.png"))
+                self.pushButtonStspan.setIconSize(QSize(69, 48))
+
+        if "frenScroll" in Mqtt.scrollDict.keys():
+            if 99 == Mqtt.scrollDict["frenScroll"]:
+                self.btnDIR.setIcon(QIcon("images\BRACT2.png"))
+                self.btnDIR.setIconSize(QSize(69, 48))
+            if 0 == Mqtt.scrollDict["frenScroll"]:
+                self.btnDIR.setIcon(QIcon("images\BRR2.png"))
+                self.btnDIR.setIconSize(QSize(69, 48))

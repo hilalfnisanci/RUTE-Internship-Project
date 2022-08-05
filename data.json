@@ -2,7 +2,7 @@
     "data": [
       {
         "barName": "kV",
-        "value": "26"
+        "value": "26.5"
       },
       {
         "barName": "A",
@@ -10,7 +10,7 @@
       },
       {
         "barName": "kN",
-        "value": "75"
+        "value": "0"
       },
       {
         "barName": "kN/FM",
@@ -19,6 +19,14 @@
       {
         "barName": "BatV",
         "value": "114"
+      },
+      {
+        "barName": "brakeBar1",
+        "value": "5.0"
+      },
+      {
+        "barName": "brakeBar2",
+        "value":"3.75"
       }
     ]
   }

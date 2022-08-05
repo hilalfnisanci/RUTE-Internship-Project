@@ -1,14 +1,9 @@
 import os
-import sys
 import math
 
 from PyQt5.QtWidgets import *
-
 from PyQt5.QtGui import *
-
 from PyQt5.QtCore import *
-
-from threading import Thread
 
 class AnalogGaugeWidget(QWidget):
     """Fetches rows from a Bigtable.
@@ -20,7 +15,7 @@ class AnalogGaugeWidget(QWidget):
 
     def __init__(self, parent=None):
         super(AnalogGaugeWidget, self).__init__(parent)
-
+        
         ################################################################################################
         # DEFAULT TIMER VALUE
         ################################################################################################
@@ -201,7 +196,7 @@ class AnalogGaugeWidget(QWidget):
         ################################################################################################
         # SET DEFAULT THEME
         ################################################################################################
-        self.setGaugeTheme(5)
+        self.setGaugeTheme(1)
 
         ################################################################################################
         # RESIZE GAUGE
@@ -1422,10 +1417,8 @@ class AnalogGaugeWidget(QWidget):
         self.NeedleColor = self.NeedleColorReleased
 
         if not self.use_timer_event:
-
             self.update()
         pass
-
 
     ########################################################################
     ## MOUSE LEAVE EVENT
@@ -1434,13 +1427,11 @@ class AnalogGaugeWidget(QWidget):
         self.NeedleColor = self.NeedleColorReleased
         self.update() 
 
-
     def mousePressEvent(self, event):
 
         if event.buttons () == Qt.LeftButton: # left button pressed
-            
+
             self.angle += 4
-            print("pressed left button")
 
             value = (float(math.fmod(self.angle - self.scale_angle_start_value + 720, 360)) / \
                     (float(self.scale_angle_size) / float(self.maxValue - self.minValue))) + self.minValue
@@ -1465,44 +1456,6 @@ class AnalogGaugeWidget(QWidget):
                 
                 self.updateValue(value)
 
-
-    """def mouseMoveEvent(self, event):
-        
-        # x, y = event.x() - (self.width() / 2), event.y() - (self.height() / 2)
-        x=1
-        # print("event.x : ", event.x(), "event.y : ", event.y(), "width : ", self.width(), "height : ", self.height())
-        if not x == 0: 
-            #angle = math.atan2(y, x) / math.pi * 180
-            print("angle : ",self.angle)
-            # winkellaenge der anzeige immer positiv 0 - 360deg
-            # min wert + umskalierter wert
-            value = (float(math.fmod(self.angle - self.scale_angle_start_value + 720, 360)) / \
-                     (float(self.scale_angle_size) / float(self.maxValue - self.minValue))) + self.minValue
-
-            temp = value
-            fmod = float(math.fmod(angle - self.scale_angle_start_value + 720, 360))
-            if (self.value - (self.maxValue - self.minValue) * self.valueNeedleSnapzone) <= \
-                    value <= \
-                    (self.value + (self.maxValue - self.minValue) * self.valueNeedleSnapzone):
-                self.NeedleColor = self.NeedleColorDrag
-                # todo: evtl ueberpruefen
-                #
-                # if value >= self.maxValue and self.last_value < (self.maxValue - self.minValue) / 2:
-                if value >= self.maxValue and self.last_value < (self.maxValue - self.minValue) / 2:
-                    value = self.maxValue
-                    self.last_value = self.minValue
-                    self.valueChanged.emit(int(value))
-
-                elif value >= self.maxValue >= self.last_value:
-                    value = self.maxValue
-                    self.last_value = self.maxValue
-                    self.valueChanged.emit(int(value))
-
-                else:
-                    self.last_value = value
-                    self.valueChanged.emit(int(value))
-
-                self.updateValue(value)"""
 ################################################################################################
 # END ==>
 ################################################################################################
