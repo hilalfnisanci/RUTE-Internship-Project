@@ -1,0 +1,7 @@
+du2\_page module
+================
+
+.. automodule:: du2_page
+   :members:
+   :undoc-members:
+   :show-inheritance:

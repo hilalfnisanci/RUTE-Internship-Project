@@ -1,0 +1,7 @@
+createBar module
+================
+
+.. automodule:: createBar
+   :members:
+   :undoc-members:
+   :show-inheritance:

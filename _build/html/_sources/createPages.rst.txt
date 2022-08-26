@@ -1,0 +1,7 @@
+createPages module
+==================
+
+.. automodule:: createPages
+   :members:
+   :undoc-members:
+   :show-inheritance:

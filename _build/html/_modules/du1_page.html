@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>du1_page &mdash; Sphinx Project 0.0.1 documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../_static/doctools.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../index.html" class="icon icon-home"> Sphinx Project
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../modules.html">project_files</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Sphinx Project</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="index.html">Module code</a> &raquo;</li>
+      <li>du1_page</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for du1_page</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">du1_page.py</span>
+<span class="sd">====================================</span>
+<span class="sd">This module to create du1 components</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">from</span> <span class="nn">PyQt5.QtWidgets</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">PyQt5.QtCore</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">PyQt5.QtGui</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">PyQt5.QtChart</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">import</span> <span class="nn">createBar</span>
+<span class="kn">from</span> <span class="nn">mqttEvents</span> <span class="kn">import</span> <span class="n">Mqtt</span>
+<span class="kn">import</span> <span class="nn">random</span>
+<span class="kn">from</span> <span class="nn">paho.mqtt</span> <span class="kn">import</span> <span class="n">client</span> <span class="k">as</span> <span class="n">mqtt_client</span>
+
+<div class="viewcode-block" id="CreateDu1"><a class="viewcode-back" href="../du1_page.html#du1_page.CreateDu1">[docs]</a><span class="k">class</span> <span class="nc">CreateDu1</span><span class="p">(</span><span class="n">QWidget</span><span class="p">):</span>
+
+    <span class="n">broker</span> <span class="o">=</span> <span class="s1">&#39;localhost&#39;</span>
+    <span class="n">topic</span> <span class="o">=</span> <span class="s1">&#39;mqtt&#39;</span>
+    <span class="n">client_id</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;python-mqtt-</span><span class="si">{</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span><span class="si">}</span><span class="s1">&#39;</span>
+
+    <span class="n">client</span> <span class="o">=</span> <span class="n">mqtt_client</span><span class="o">.</span><span class="n">Client</span><span class="p">(</span><span class="n">client_id</span><span class="o">=</span><span class="n">client_id</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">CreateDu1</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">parent</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">du1Grid</span> <span class="o">=</span> <span class="n">QGridLayout</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">createDownButtons</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">createLeftButtons</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">createUpButtons</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">createRightButtons</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">createInsideButtons</span><span class="p">()</span>
+
+<div class="viewcode-block" id="CreateDu1.createDownButtons"><a class="viewcode-back" href="../du1_page.html#du1_page.CreateDu1.createDownButtons">[docs]</a>    <span class="k">def</span> <span class="nf">createDownButtons</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This method will create the buttom buttons of the screen</span>
+
+<span class="sd">        :param</span>
+
+<span class="sd">        :returns: The buttom buttons</span>
+
+<span class="sd">        :rtype: void</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># alt butonlar</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pushButton1</span> <span class="o">=</span> <span class="n">QPushButton</span><span class="p">(</span><span class="s2">&quot;1&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pushButton1</span><span class="o">.</span><span class="n">setGeometry</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">540</span><span class="p">,</span> <span class="mi">60</span><span class="p">,</span> <span class="mi">60</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pushButton1</span><span class="o">.</span><span class="n">setStyleSheet</span><span class="p">(</span><span class="s2">&quot;QPushButton{border-radius : 15; border : 1px solid white;background-color : #3A3535;color : white}QPushButton::pressed{background-color : gray;}&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">du1Grid</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pushButton1</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">pushButton2</span> <span class="o">=</span> <span class="n">QPushButton</span><span class="p">(</span><span class="s2">&quot;2&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pushButton2</span><span class="o">.</span><span class="n">setGeometry</span><span class="p">(</span><span class="mi">170</span><span class="p">,</span> <span class="mi">540</span><span class="p">,</span> <span class="mi">60</span><span class="p">,</span> <span class="mi">60</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pushButton2</span><span class="o">.</span><span class="n">setStyleSheet</span><span class="p">(</span><span class="s2">&quot;QPushButton{border-radius : 15; border : 1px solid white;background-color : #3A3535;color : white}QPushButton::pressed{background-color : gray;}&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">du1Grid</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pushButton2</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">pushButton3</span> <span class="o">=</span> <span class="n">QPushButton</span><span class="p">(</span><span class="s2">&quot;3&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pushButton3</span><span class="o">.</span><span class="n">setGeometry</span><span class="p">(</span><span class="mi">240</span><span class="p">,</span> <span class="mi">540</span><span class="p">,</span> <span class="mi">60</span><span class="p">,</span> <span class="mi">60</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pushButton3</span><span class="o">.</span><span class="n">setStyleSheet</span><span class="p">(</span><span class="s2">&quot;QPushButton{border-radius : 15; border : 1px solid white;background-color : #3A3535;color : white}QPushButton::pressed{background-color : gray;}&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">du1Grid</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pushButton3</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">pushButton4</span> <span class="o">=</span> <span class="n">QPushButton</span><span class="p">(</span><span class="s2">&quot;4&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pushButton4</span><span class="o">.</span><span class="n">setGeometry</span><span class="p">(</span><span class="mi">310</span><span class="p">,</span> <span class="mi">540</span><span class="p">,</span> <span class="mi">60</span><span class="p">,</span> <span class="mi">60</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pushButton4</span><span class="o">.</span><span class="n">setStyleSheet</span><span class="p">(</span><span class="s2">&quot;QPushButton{border-radius : 15; border : 1px solid white;background-color : #3A3535;color : white}QPushButton::pressed{background-color : gray;}&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">du1Grid</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pushButton4</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">pushButton5</span> <span class="o">=</span> <span class="n">QPushButton</span><span class="p">(</span><span class="s2">&quot;5&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pushButton5</span><span class="o">.</span><span class="n">setGeometry</span><span class="p">(</span><span class="mi">380</span><span class="p">,</span> <span class="mi">540</span><span class="p">,</span> <span class="mi">60</span><span class="p">,</span> <span class="mi">60</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pushButton5</span><span class="o">.</span><span class="n">setStyleSheet</span><span class="p">(</span><span class="s2">&quot;QPushButton{border-radius : 15; border : 1px solid white;background-color : #3A3535;color : white}QPushButton::pressed{background-color : gray;}&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">du1Grid</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pushButton5</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">pushButton6</span> <span class="o">=</span> <span class="n">QPushButton</span><span class="p">(</span><span class="s2">&quot;6&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pushButton6</span><span class="o">.</span><span class="n">setGeometry</span><span class="p">(</span><span class="mi">450</span><span class="p">,</span> <span class="mi">540</span><span class="p">,</span> <span class="mi">60</span><span class="p">,</span> <span class="mi">60</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pushButton6</span><span class="o">.</span><span class="n">setStyleSheet</span><span class="p">(</span><span class="s2">&quot;QPushButton{border-radius : 15; border : 1px solid white;background-color : #3A3535;color : white}QPushButton::pressed{background-color : gray;}&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">du1Grid</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pushButton6</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">pushButton7</span> <span class="o">=</span> <span class="n">QPushButton</span><span class="p">(</span><span class="s2">&quot;7&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pushButton7</span><span class="o">.</span><span class="n">setGeometry</span><span class="p">(</span><span class="mi">520</span><span class="p">,</span> <span class="mi">540</span><span class="p">,</span> <span class="mi">60</span><span class="p">,</span> <span class="mi">60</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pushButton7</span><span class="o">.</span><span class="n">setStyleSheet</span><span class="p">(</span><span class="s2">&quot;QPushButton{border-radius : 15; border : 1px solid white;background-color : #3A3535;color : white}QPushButton::pressed{background-color : gray;}&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">du1Grid</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pushButton7</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">pushButton8</span> <span class="o">=</span> <span class="n">QPushButton</span><span class="p">(</span><span class="s2">&quot;8&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pushButton8</span><span class="o">.</span><span class="n">setGeometry</span><span class="p">(</span><span class="mi">590</span><span class="p">,</span> <span class="mi">540</span><span class="p">,</span> <span class="mi">60</span><span class="p">,</span> <span class="mi">60</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pushButton8</span><span class="o">.</span><span class="n">setStyleSheet</span><span class="p">(</span><span class="s2">&quot;QPushButton{border-radius : 15; border : 1px solid white;background-color : #3A3535;color : white}QPushButton::pressed{background-color : gray;}&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">du1Grid</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pushButton8</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">pushButton9</span> <span class="o">=</span> <span class="n">QPushButton</span><span class="p">(</span><span class="s2">&quot;9&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pushButton9</span><span class="o">.</span><span class="n">setGeometry</span><span class="p">(</span><span class="mi">660</span><span class="p">,</span> <span class="mi">540</span><span class="p">,</span> <span class="mi">60</span><span class="p">,</span> <span class="mi">60</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pushButton9</span><span class="o">.</span><span class="n">setStyleSheet</span><span class="p">(</span><span class="s2">&quot;QPushButton{border-radius : 15; border : 1px solid white;background-color : #3A3535;color : white}QPushButton::pressed{background-color : gray;}&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">du1Grid</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pushButton9</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">pushButton10</span> <span class="o">=</span> <span class="n">QPushButton</span><span class="p">(</span><span class="s2">&quot;10&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pushButton10</span><span class="o">.</span><span class="n">setGeometry</span><span class="p">(</span><span class="mi">730</span><span class="p">,</span> <span class="mi">540</span><span class="p">,</span> <span class="mi">60</span><span class="p">,</span> <span class="mi">60</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pushButton10</span><span class="o">.</span><span class="n">setStyleSheet</span><span class="p">(</span><span class="s2">&quot;QPushButton{border-radius : 15; border : 1px solid white;background-color : #3A3535;color : white}QPushButton::pressed{background-color : gray;}&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">du1Grid</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pushButton10</span><span class="p">)</span></div>
+    
+<div class="viewcode-block" id="CreateDu1.createUpButtons"><a class="viewcode-back" href="../du1_page.html#du1_page.CreateDu1.createUpButtons">[docs]</a>    <span class="k">def</span> <span class="nf">createUpButtons</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+        <span class="c1"># üst butonlar</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pushButtonOpen</span> <span class="o">=</span> <span class="n">QPushButton</span><span class="p">(</span><span class="s2">&quot;Open&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pushButtonOpen</span><span class="o">.</span><span class="n">setGeometry</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">60</span><span class="p">,</span> <span class="mi">60</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pushButtonOpen</span><span class="o">.</span><span class="n">setStyleSheet</span><span class="p">(</span><span class="s2">&quot;QPushButton{border-radius : 15; border : 1px solid white;background-color : #3A3535;color : white}QPushButton::pressed{background-color : gray;}&quot;</span><span class="p">)</span>
+        <span class="c1"># self.pushButtonOpen.clicked.connect(self.pub)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">du1Grid</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pushButtonOpen</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">pushButtonFlag</span> <span class="o">=</span> <span class="n">QPushButton</span><span class="p">(</span><span class="s2">&quot;Flag&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pushButtonFlag</span><span class="o">.</span><span class="n">setGeometry</span><span class="p">(</span><span class="mi">170</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">60</span><span class="p">,</span> <span class="mi">60</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pushButtonFlag</span><span class="o">.</span><span class="n">setStyleSheet</span><span class="p">(</span><span class="s2">&quot;QPushButton{border-radius : 15; border : 1px solid white;background-color : #3A3535;color : white}QPushButton::pressed{background-color : gray;}&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">du1Grid</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pushButtonFlag</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">pushButtoni</span> <span class="o">=</span> <span class="n">QPushButton</span><span class="p">(</span><span class="s2">&quot;i&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pushButtoni</span><span class="o">.</span><span class="n">setGeometry</span><span class="p">(</span><span class="mi">240</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">60</span><span class="p">,</span> <span class="mi">60</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pushButtoni</span><span class="o">.</span><span class="n">setStyleSheet</span><span class="p">(</span><span class="s2">&quot;QPushButton{border-radius : 15; border : 1px solid white;background-color : #3A3535;color : white}QPushButton::pressed{background-color : gray;}&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">du1Grid</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pushButtoni</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">pushButtonInfo</span> <span class="o">=</span> <span class="n">QPushButton</span><span class="p">(</span><span class="s2">&quot;Info&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pushButtonInfo</span><span class="o">.</span><span class="n">setGeometry</span><span class="p">(</span><span class="mi">310</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">60</span><span class="p">,</span> <span class="mi">60</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pushButtonInfo</span><span class="o">.</span><span class="n">setStyleSheet</span><span class="p">(</span><span class="s2">&quot;QPushButton{border-radius : 15; border : 1px solid white;background-color : #3A3535;color : white}QPushButton::pressed{background-color : gray;}&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">du1Grid</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pushButtonInfo</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">pushButtonFault</span> <span class="o">=</span> <span class="n">QPushButton</span><span class="p">(</span><span class="s2">&quot;Fault&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pushButtonFault</span><span class="o">.</span><span class="n">setGeometry</span><span class="p">(</span><span class="mi">380</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">60</span><span class="p">,</span> <span class="mi">60</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pushButtonFault</span><span class="o">.</span><span class="n">setStyleSheet</span><span class="p">(</span><span class="s2">&quot;QPushButton{border-radius : 15; border : 1px solid white;background-color : #3A3535;color : white}QPushButton::pressed{background-color : gray;}&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">du1Grid</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pushButtonFault</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">pushButtonV0</span> <span class="o">=</span> <span class="n">QPushButton</span><span class="p">(</span><span class="s2">&quot;V=0&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pushButtonV0</span><span class="o">.</span><span class="n">setGeometry</span><span class="p">(</span><span class="mi">450</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">60</span><span class="p">,</span> <span class="mi">60</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pushButtonV0</span><span class="o">.</span><span class="n">setStyleSheet</span><span class="p">(</span><span class="s2">&quot;QPushButton{border-radius : 15; border : 1px solid white;background-color : #3A3535;color : white}QPushButton::pressed{background-color : gray;}&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">du1Grid</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pushButtonV0</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">pushButtonV1</span> <span class="o">=</span> <span class="n">QPushButton</span><span class="p">(</span><span class="s2">&quot;V&gt;0&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pushButtonV1</span><span class="o">.</span><span class="n">setGeometry</span><span class="p">(</span><span class="mi">520</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">60</span><span class="p">,</span> <span class="mi">60</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pushButtonV1</span><span class="o">.</span><span class="n">setStyleSheet</span><span class="p">(</span><span class="s2">&quot;QPushButton{border-radius : 15; border : 1px solid white;background-color : #3A3535;color : white}QPushButton::pressed{background-color : gray;}&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">du1Grid</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pushButtonV1</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">pushButtonBrightness</span> <span class="o">=</span> <span class="n">QPushButton</span><span class="p">(</span><span class="s2">&quot;*&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pushButtonBrightness</span><span class="o">.</span><span class="n">setGeometry</span><span class="p">(</span><span class="mi">590</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">60</span><span class="p">,</span> <span class="mi">60</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pushButtonBrightness</span><span class="o">.</span><span class="n">setStyleSheet</span><span class="p">(</span><span class="s2">&quot;QPushButton{border-radius : 15; border : 1px solid white;background-color : #3A3535;color : white}QPushButton::pressed{background-color : gray;}&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">du1Grid</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pushButtonBrightness</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">pushButtonDayNight</span> <span class="o">=</span> <span class="n">QPushButton</span><span class="p">(</span><span class="s2">&quot;Day/Night&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pushButtonDayNight</span><span class="o">.</span><span class="n">setGeometry</span><span class="p">(</span><span class="mi">660</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">60</span><span class="p">,</span> <span class="mi">60</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pushButtonDayNight</span><span class="o">.</span><span class="n">setStyleSheet</span><span class="p">(</span><span class="s2">&quot;QPushButton{border-radius : 15; border : 1px solid white;background-color : #3A3535;color : white}QPushButton::pressed{background-color : gray;}&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">du1Grid</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pushButtonDayNight</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">pushButtonChange</span> <span class="o">=</span> <span class="n">QPushButton</span><span class="p">(</span><span class="s2">&quot;&lt;-&gt;&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pushButtonChange</span><span class="o">.</span><span class="n">setGeometry</span><span class="p">(</span><span class="mi">730</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">60</span><span class="p">,</span> <span class="mi">60</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pushButtonChange</span><span class="o">.</span><span class="n">setStyleSheet</span><span class="p">(</span><span class="s2">&quot;QPushButton{border-radius : 15; border : 1px solid white;background-color : #3A3535;color : white}QPushButton::pressed{background-color : gray;}&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">du1Grid</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pushButtonChange</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="CreateDu1.createLeftButtons"><a class="viewcode-back" href="../du1_page.html#du1_page.CreateDu1.createLeftButtons">[docs]</a>    <span class="k">def</span> <span class="nf">createLeftButtons</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+        <span class="c1"># sol butonlar oluşturulur</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pushButtonF1</span> <span class="o">=</span> <span class="n">QPushButton</span><span class="p">(</span><span class="s2">&quot;F1&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pushButtonF1</span><span class="o">.</span><span class="n">setGeometry</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="mi">110</span><span class="p">,</span> <span class="mi">60</span><span class="p">,</span> <span class="mi">60</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pushButtonF1</span><span class="o">.</span><span class="n">setStyleSheet</span><span class="p">(</span><span class="s2">&quot;QPushButton{border-radius : 15; border : 1px solid white;background-color : #3A3535;color : white}QPushButton::pressed{background-color : gray;}&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">du1Grid</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pushButtonF1</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">pushButtonF2</span> <span class="o">=</span> <span class="n">QPushButton</span><span class="p">(</span><span class="s2">&quot;F2&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pushButtonF2</span><span class="o">.</span><span class="n">setGeometry</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="mi">180</span><span class="p">,</span> <span class="mi">60</span><span class="p">,</span> <span class="mi">60</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pushButtonF2</span><span class="o">.</span><span class="n">setStyleSheet</span><span class="p">(</span><span class="s2">&quot;QPushButton{border-radius : 15; border : 1px solid white;background-color : #3A3535;color : white}QPushButton::pressed{background-color : gray;}&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">du1Grid</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pushButtonF2</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">pushButtonF3</span> <span class="o">=</span> <span class="n">QPushButton</span><span class="p">(</span><span class="s2">&quot;F3&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pushButtonF3</span><span class="o">.</span><span class="n">setGeometry</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="mi">250</span><span class="p">,</span> <span class="mi">60</span><span class="p">,</span> <span class="mi">60</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pushButtonF3</span><span class="o">.</span><span class="n">setStyleSheet</span><span class="p">(</span><span class="s2">&quot;QPushButton{border-radius : 15; border : 1px solid white;background-color : #3A3535;color : white}QPushButton::pressed{background-color : gray;}&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">du1Grid</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pushButtonF3</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">pushButtonF4</span> <span class="o">=</span> <span class="n">QPushButton</span><span class="p">(</span><span class="s2">&quot;F4&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pushButtonF4</span><span class="o">.</span><span class="n">setGeometry</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="mi">320</span><span class="p">,</span> <span class="mi">60</span><span class="p">,</span> <span class="mi">60</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pushButtonF4</span><span class="o">.</span><span class="n">setStyleSheet</span><span class="p">(</span><span class="s2">&quot;QPushButton{border-radius : 15; border : 1px solid white;background-color : #3A3535;color : white}QPushButton::pressed{background-color : gray;}&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">du1Grid</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pushButtonF4</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">pushButtonF5</span> <span class="o">=</span> <span class="n">QPushButton</span><span class="p">(</span><span class="s2">&quot;F5&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pushButtonF5</span><span class="o">.</span><span class="n">setGeometry</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="mi">390</span><span class="p">,</span> <span class="mi">60</span><span class="p">,</span> <span class="mi">60</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pushButtonF5</span><span class="o">.</span><span class="n">setStyleSheet</span><span class="p">(</span><span class="s2">&quot;QPushButton{border-radius : 15; border : 1px solid white;background-color : #3A3535;color : white}QPushButton::pressed{background-color : gray;}&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">du1Grid</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pushButtonF5</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">pushButtonF6</span> <span class="o">=</span> <span class="n">QPushButton</span><span class="p">(</span><span class="s2">&quot;F6&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pushButtonF6</span><span class="o">.</span><span class="n">setGeometry</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="mi">460</span><span class="p">,</span> <span class="mi">60</span><span class="p">,</span> <span class="mi">60</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pushButtonF6</span><span class="o">.</span><span class="n">setStyleSheet</span><span class="p">(</span><span class="s2">&quot;QPushButton{border-radius : 15; border : 1px solid white;background-color : #3A3535;color : white}QPushButton::pressed{background-color : gray;}&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">du1Grid</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pushButtonF6</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="CreateDu1.createRightButtons"><a class="viewcode-back" href="../du1_page.html#du1_page.CreateDu1.createRightButtons">[docs]</a>    <span class="k">def</span> <span class="nf">createRightButtons</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+        <span class="c1"># sağ butonlar</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pushButtonC</span> <span class="o">=</span> <span class="n">QPushButton</span><span class="p">(</span><span class="s2">&quot;C&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pushButtonC</span><span class="o">.</span><span class="n">setGeometry</span><span class="p">(</span><span class="mi">810</span><span class="p">,</span> <span class="mi">110</span><span class="p">,</span> <span class="mi">60</span><span class="p">,</span> <span class="mi">60</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pushButtonC</span><span class="o">.</span><span class="n">setStyleSheet</span><span class="p">(</span><span class="s2">&quot;QPushButton{border-radius : 15; border : 1px solid white;background-color : #3A3535;color : white}QPushButton::pressed{background-color : gray;}&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">du1Grid</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pushButtonC</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">pushButtonLeft</span> <span class="o">=</span> <span class="n">QPushButton</span><span class="p">(</span><span class="s2">&quot;&lt;-&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pushButtonLeft</span><span class="o">.</span><span class="n">setGeometry</span><span class="p">(</span><span class="mi">810</span><span class="p">,</span> <span class="mi">180</span><span class="p">,</span> <span class="mi">60</span><span class="p">,</span> <span class="mi">60</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pushButtonLeft</span><span class="o">.</span><span class="n">setStyleSheet</span><span class="p">(</span><span class="s2">&quot;QPushButton{border-radius : 15; border : 1px solid white;background-color : #3A3535;color : white}QPushButton::pressed{background-color : gray;}&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">du1Grid</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pushButtonLeft</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">pushButtonRight</span> <span class="o">=</span> <span class="n">QPushButton</span><span class="p">(</span><span class="s2">&quot;⯈&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pushButtonRight</span><span class="o">.</span><span class="n">setGeometry</span><span class="p">(</span><span class="mi">810</span><span class="p">,</span> <span class="mi">250</span><span class="p">,</span> <span class="mi">60</span><span class="p">,</span> <span class="mi">60</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pushButtonRight</span><span class="o">.</span><span class="n">setStyleSheet</span><span class="p">(</span><span class="s2">&quot;QPushButton{border-radius : 15; border : 1px solid white;background-color : #3A3535;color : white}QPushButton::pressed{background-color : gray;}&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">du1Grid</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pushButtonRight</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">pushButtonUp</span> <span class="o">=</span> <span class="n">QPushButton</span><span class="p">(</span><span class="s2">&quot;up&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pushButtonUp</span><span class="o">.</span><span class="n">setGeometry</span><span class="p">(</span><span class="mi">810</span><span class="p">,</span> <span class="mi">320</span><span class="p">,</span> <span class="mi">60</span><span class="p">,</span> <span class="mi">60</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pushButtonUp</span><span class="o">.</span><span class="n">setStyleSheet</span><span class="p">(</span><span class="s2">&quot;QPushButton{border-radius : 15; border : 1px solid white;background-color : #3A3535;color : white}QPushButton::pressed{background-color : gray;}&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">du1Grid</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pushButtonUp</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">pushButtonDown</span> <span class="o">=</span> <span class="n">QPushButton</span><span class="p">(</span><span class="s2">&quot;down&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pushButtonDown</span><span class="o">.</span><span class="n">setGeometry</span><span class="p">(</span><span class="mi">810</span><span class="p">,</span> <span class="mi">390</span><span class="p">,</span> <span class="mi">60</span><span class="p">,</span> <span class="mi">60</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pushButtonDown</span><span class="o">.</span><span class="n">setStyleSheet</span><span class="p">(</span><span class="s2">&quot;QPushButton{border-radius : 15; border : 1px solid white;background-color : #3A3535;color : white}QPushButton::pressed{background-color : gray;}&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">du1Grid</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pushButtonDown</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">pushButtonE</span> <span class="o">=</span> <span class="n">QPushButton</span><span class="p">(</span><span class="s2">&quot;E&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pushButtonE</span><span class="o">.</span><span class="n">setGeometry</span><span class="p">(</span><span class="mi">810</span><span class="p">,</span> <span class="mi">460</span><span class="p">,</span> <span class="mi">60</span><span class="p">,</span> <span class="mi">60</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pushButtonE</span><span class="o">.</span><span class="n">setStyleSheet</span><span class="p">(</span><span class="s2">&quot;QPushButton{border-radius : 15; border : 1px solid white;background-color : #3A3535;color : white}QPushButton::pressed{background-color : gray;}&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">du1Grid</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pushButtonE</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="CreateDu1.createInsideButtons"><a class="viewcode-back" href="../du1_page.html#du1_page.CreateDu1.createInsideButtons">[docs]</a>    <span class="k">def</span> <span class="nf">createInsideButtons</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c1"># create G button</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pushButtonG</span> <span class="o">=</span> <span class="n">QPushButton</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pushButtonG</span><span class="o">.</span><span class="n">setGeometry</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">370</span><span class="p">,</span> <span class="mi">69</span><span class="p">,</span> <span class="mi">50</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pushButtonG</span><span class="o">.</span><span class="n">setStyleSheet</span><span class="p">(</span><span class="s2">&quot;QPushButton{color : white; background-color : transparent;}QPushButton::pressed{background-color : gray;}&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pushButtonG</span><span class="o">.</span><span class="n">setIcon</span><span class="p">(</span><span class="n">QIcon</span><span class="p">(</span><span class="s2">&quot;images\BRKMDG.png&quot;</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pushButtonG</span><span class="o">.</span><span class="n">setIconSize</span><span class="p">(</span><span class="n">QSize</span><span class="p">(</span><span class="mi">69</span><span class="p">,</span> <span class="mi">48</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">du1Grid</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pushButtonG</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">pushButtonkV</span> <span class="o">=</span> <span class="n">QPushButton</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pushButtonkV</span><span class="o">.</span><span class="n">setGeometry</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">420</span><span class="p">,</span> <span class="mi">69</span><span class="p">,</span> <span class="mi">50</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pushButtonkV</span><span class="o">.</span><span class="n">setStyleSheet</span><span class="p">(</span><span class="s2">&quot;QPushButton{color : white; background-color : transparent;}QPushButton::pressed{background-color : gray;}&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pushButtonkV</span><span class="o">.</span><span class="n">setIcon</span><span class="p">(</span><span class="n">QIcon</span><span class="p">(</span><span class="s2">&quot;images\SYSTR.png&quot;</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pushButtonkV</span><span class="o">.</span><span class="n">setIconSize</span><span class="p">(</span><span class="n">QSize</span><span class="p">(</span><span class="mi">69</span><span class="p">,</span> <span class="mi">48</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">du1Grid</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pushButtonkV</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">pushButtonStspan</span> <span class="o">=</span> <span class="n">QPushButton</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">,</span><span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pushButtonStspan</span><span class="o">.</span><span class="n">setGeometry</span><span class="p">(</span><span class="mi">169</span><span class="p">,</span> <span class="mi">420</span><span class="p">,</span> <span class="mi">69</span><span class="p">,</span> <span class="mi">50</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pushButtonStspan</span><span class="o">.</span><span class="n">setStyleSheet</span><span class="p">(</span><span class="s2">&quot;QPushButton{color : white; background-color : transparent;}QPushButton::pressed{background-color : gray;}&quot;</span><span class="p">)</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">du1Grid</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pushButtonStspan</span><span class="p">)</span>
+
+        <span class="c1"># create system button</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pushButtonSystem</span> <span class="o">=</span> <span class="n">QPushButton</span><span class="p">(</span><span class="s2">&quot;Sistem&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pushButtonSystem</span><span class="o">.</span><span class="n">setGeometry</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">470</span><span class="p">,</span> <span class="mi">69</span><span class="p">,</span> <span class="mi">50</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pushButtonSystem</span><span class="o">.</span><span class="n">setStyleSheet</span><span class="p">(</span><span class="s2">&quot;QPushButton{color : white; background-color : transparent;}QPushButton::pressed{background-color : gray;}&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">du1Grid</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pushButtonSystem</span><span class="p">)</span>
+
+
+        <span class="c1"># create case (durum) button</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pushButtonCase</span> <span class="o">=</span> <span class="n">QPushButton</span><span class="p">(</span><span class="s2">&quot;Durum&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pushButtonCase</span><span class="o">.</span><span class="n">setGeometry</span><span class="p">(</span><span class="mi">169</span><span class="p">,</span> <span class="mi">470</span><span class="p">,</span> <span class="mi">69</span><span class="p">,</span> <span class="mi">50</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pushButtonCase</span><span class="o">.</span><span class="n">setStyleSheet</span><span class="p">(</span><span class="s2">&quot;QPushButton{color : white; background-color : transparent;}QPushButton::pressed{background-color : gray;}&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">du1Grid</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pushButtonCase</span><span class="p">)</span>
+
+
+        <span class="c1"># create care button</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pushButtonCare</span> <span class="o">=</span> <span class="n">QPushButton</span><span class="p">(</span><span class="s2">&quot;Bakım&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pushButtonCare</span><span class="o">.</span><span class="n">setGeometry</span><span class="p">(</span><span class="mi">238</span><span class="p">,</span> <span class="mi">470</span><span class="p">,</span> <span class="mi">69</span><span class="p">,</span> <span class="mi">50</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pushButtonCare</span><span class="o">.</span><span class="n">setStyleSheet</span><span class="p">(</span><span class="s2">&quot;QPushButton{color : white; background-color : transparent;}QPushButton::pressed{background-color : gray;}&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">du1Grid</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pushButtonCare</span><span class="p">)</span>
+ 
+        <span class="c1"># create backup button</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pushButtonBackup</span> <span class="o">=</span> <span class="n">QPushButton</span><span class="p">(</span><span class="s2">&quot;Yedek&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pushButtonBackup</span><span class="o">.</span><span class="n">setGeometry</span><span class="p">(</span><span class="mi">307</span><span class="p">,</span> <span class="mi">470</span><span class="p">,</span> <span class="mi">69</span><span class="p">,</span> <span class="mi">50</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pushButtonBackup</span><span class="o">.</span><span class="n">setStyleSheet</span><span class="p">(</span><span class="s2">&quot;QPushButton{color : white; background-color : transparent;}QPushButton::pressed{background-color : gray;}&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">du1Grid</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pushButtonBackup</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">btntraction</span> <span class="o">=</span> <span class="n">QPushButton</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">btntraction</span><span class="o">.</span><span class="n">setGeometry</span><span class="p">(</span><span class="mi">376</span><span class="p">,</span> <span class="mi">470</span><span class="p">,</span> <span class="mi">69</span><span class="p">,</span> <span class="mi">50</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">btntraction</span><span class="o">.</span><span class="n">setStyleSheet</span><span class="p">(</span><span class="s2">&quot;QPushButton{color : white; background-color : transparent;}QPushButton::pressed{background-color : gray;}&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">btntraction</span><span class="o">.</span><span class="n">setIcon</span><span class="p">(</span><span class="n">QIcon</span><span class="p">(</span><span class="s2">&quot;images\TractionInterlockOK.png&quot;</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">btntraction</span><span class="o">.</span><span class="n">setIconSize</span><span class="p">(</span><span class="n">QSize</span><span class="p">(</span><span class="mi">69</span><span class="p">,</span> <span class="mi">48</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">du1Grid</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">btntraction</span><span class="p">)</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">btnMenuBrk</span> <span class="o">=</span> <span class="n">QPushButton</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">btnMenuBrk</span><span class="o">.</span><span class="n">setGeometry</span><span class="p">(</span><span class="mi">445</span><span class="p">,</span> <span class="mi">470</span><span class="p">,</span> <span class="mi">69</span><span class="p">,</span> <span class="mi">50</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">btnMenuBrk</span><span class="o">.</span><span class="n">setStyleSheet</span><span class="p">(</span><span class="s2">&quot;QPushButton{color : white; background-color : transparent;}QPushButton::pressed{background-color : gray;}&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">btnMenuBrk</span><span class="o">.</span><span class="n">setIcon</span><span class="p">(</span><span class="n">QIcon</span><span class="p">(</span><span class="s2">&quot;images\MENUBRK.png&quot;</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">btnMenuBrk</span><span class="o">.</span><span class="n">setIconSize</span><span class="p">(</span><span class="n">QSize</span><span class="p">(</span><span class="mi">69</span><span class="p">,</span> <span class="mi">48</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">du1Grid</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">btnMenuBrk</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">btnDIR</span> <span class="o">=</span> <span class="n">QPushButton</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">btnDIR</span><span class="o">.</span><span class="n">setGeometry</span><span class="p">(</span><span class="mi">514</span><span class="p">,</span> <span class="mi">420</span><span class="p">,</span> <span class="mi">69</span><span class="p">,</span> <span class="mi">50</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">btnDIR</span><span class="o">.</span><span class="n">setStyleSheet</span><span class="p">(</span><span class="s2">&quot;QPushButton{color : white; background-color : transparent;}QPushButton::pressed{background-color : gray;}&quot;</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">du1Grid</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">btnDIR</span><span class="p">)</span>
+
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">btnCabdeac</span> <span class="o">=</span> <span class="n">QPushButton</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">btnCabdeac</span><span class="o">.</span><span class="n">setGeometry</span><span class="p">(</span><span class="mi">731</span><span class="p">,</span> <span class="mi">101</span><span class="p">,</span> <span class="mi">58</span><span class="p">,</span> <span class="mi">52</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">btnCabdeac</span><span class="o">.</span><span class="n">setStyleSheet</span><span class="p">(</span><span class="s2">&quot;QPushButton{color : white; background-color : transparent;}QPushButton::pressed{background-color : gray;}&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">btnCabdeac</span><span class="o">.</span><span class="n">setIcon</span><span class="p">(</span><span class="n">QIcon</span><span class="p">(</span><span class="s2">&quot;images\CABDEAC.png&quot;</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">btnCabdeac</span><span class="o">.</span><span class="n">setIconSize</span><span class="p">(</span><span class="n">QSize</span><span class="p">(</span><span class="mi">58</span><span class="p">,</span> <span class="mi">52</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">du1Grid</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">btnCabdeac</span><span class="p">)</span>
+
+
+        <span class="c1"># TRLNOFF.png</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">btnTrlnoff</span> <span class="o">=</span> <span class="n">QPushButton</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">btnTrlnoff</span><span class="o">.</span><span class="n">setGeometry</span><span class="p">(</span><span class="mi">731</span><span class="p">,</span> <span class="mi">154</span><span class="p">,</span> <span class="mi">58</span><span class="p">,</span> <span class="mi">52</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">btnTrlnoff</span><span class="o">.</span><span class="n">setStyleSheet</span><span class="p">(</span><span class="s2">&quot;QPushButton{color : white; background-color : transparent;}QPushButton::pressed{background-color : gray;}&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">btnTrlnoff</span><span class="o">.</span><span class="n">setIcon</span><span class="p">(</span><span class="n">QIcon</span><span class="p">(</span><span class="s2">&quot;images\TRLNOFF.png&quot;</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">btnTrlnoff</span><span class="o">.</span><span class="n">setIconSize</span><span class="p">(</span><span class="n">QSize</span><span class="p">(</span><span class="mi">58</span><span class="p">,</span><span class="mi">52</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">du1Grid</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">btnTrlnoff</span><span class="p">)</span>
+
+
+        <span class="c1"># DIRFWD.png</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">btnDırfwd</span> <span class="o">=</span> <span class="n">QPushButton</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">btnDırfwd</span><span class="o">.</span><span class="n">setGeometry</span><span class="p">(</span><span class="mi">731</span><span class="p">,</span> <span class="mi">208</span><span class="p">,</span> <span class="mi">58</span><span class="p">,</span> <span class="mi">52</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">btnDırfwd</span><span class="o">.</span><span class="n">setStyleSheet</span><span class="p">(</span><span class="s2">&quot;QPushButton{color : white; background-color : transparent;}QPushButton::pressed{background-color : gray;}&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">du1Grid</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">btnDırfwd</span><span class="p">)</span>
+
+        <span class="c1"># create key-brake button</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pushButtonKey</span> <span class="o">=</span> <span class="n">QPushButton</span><span class="p">(</span><span class="s2">&quot;Anahtar/Fren&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pushButtonKey</span><span class="o">.</span><span class="n">setGeometry</span><span class="p">(</span><span class="mi">583</span><span class="p">,</span> <span class="mi">470</span><span class="p">,</span> <span class="mi">69</span><span class="p">,</span> <span class="mi">50</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pushButtonKey</span><span class="o">.</span><span class="n">setStyleSheet</span><span class="p">(</span><span class="s2">&quot;QPushButton{color : white; background-color : transparent;}QPushButton::pressed{background-color : gray;}&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">du1Grid</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pushButtonKey</span><span class="p">)</span>
+
+        <span class="c1"># create office button</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pushButtonOffice</span> <span class="o">=</span> <span class="n">QPushButton</span><span class="p">(</span><span class="s2">&quot;Atölye&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pushButtonOffice</span><span class="o">.</span><span class="n">setGeometry</span><span class="p">(</span><span class="mi">652</span><span class="p">,</span> <span class="mi">470</span><span class="p">,</span> <span class="mi">69</span><span class="p">,</span> <span class="mi">50</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pushButtonOffice</span><span class="o">.</span><span class="n">setStyleSheet</span><span class="p">(</span><span class="s2">&quot;QPushButton{color : white; background-color : transparent;}QPushButton::pressed{background-color : gray;}&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">du1Grid</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pushButtonOffice</span><span class="p">)</span>
+
+        <span class="c1"># create mode pull button</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pushButtonPull</span> <span class="o">=</span> <span class="n">QPushButton</span><span class="p">(</span><span class="s2">&quot;Çekme Modu&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pushButtonPull</span><span class="o">.</span><span class="n">setGeometry</span><span class="p">(</span><span class="mi">721</span><span class="p">,</span> <span class="mi">470</span><span class="p">,</span> <span class="mi">69</span><span class="p">,</span> <span class="mi">50</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pushButtonPull</span><span class="o">.</span><span class="n">setStyleSheet</span><span class="p">(</span><span class="s2">&quot;QPushButton{color : white; background-color : transparent;}QPushButton::pressed{background-color : gray;}&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">du1Grid</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pushButtonPull</span><span class="p">)</span>
+
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">MCBLabel</span> <span class="o">=</span> <span class="n">QLabel</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">du1Grid</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">MCBLabel</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="CreateDu1.UiComponents"><a class="viewcode-back" href="../du1_page.html#du1_page.CreateDu1.UiComponents">[docs]</a>    <span class="k">def</span> <span class="nf">UiComponents</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">bar1</span> <span class="o">=</span> <span class="n">QProgressBar</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">bar1</span><span class="o">.</span><span class="n">setGeometry</span><span class="p">(</span><span class="mi">140</span><span class="p">,</span> <span class="mi">120</span><span class="p">,</span> <span class="mi">35</span><span class="p">,</span> <span class="mi">200</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">bar1</span><span class="o">.</span><span class="n">setValue</span><span class="p">(</span><span class="mi">70</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">bar1</span><span class="o">.</span><span class="n">setAlignment</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">AlignCenter</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">bar1</span><span class="o">.</span><span class="n">setOrientation</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">Vertical</span><span class="p">)</span> <span class="c1"># default olarak yatay ama orientation ile dikey yapılır</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">bar1</span><span class="o">.</span><span class="n">setStyleSheet</span><span class="p">(</span><span class="s2">&quot;QProgressBar&quot;</span>
+                          <span class="s2">&quot;{&quot;</span>
+                          <span class="s2">&quot;border: solid white;&quot;</span>
+                          <span class="s2">&quot;border-radius: 5px;&quot;</span>
+                          <span class="s2">&quot;color: white; &quot;</span>
+                          <span class="s2">&quot;}&quot;</span>
+                          <span class="s2">&quot;QProgressBar::chunk &quot;</span>
+                          <span class="s2">&quot;{background-color: blue;&quot;</span>
+                          <span class="s2">&quot;border-radius :5px;&quot;</span>
+                          <span class="s2">&quot;}&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">bar1</span><span class="o">.</span><span class="n">setTextVisible</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">du1Grid</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">bar1</span><span class="p">)</span></div>
+
+    <span class="c1"># çizim işlemleri gerçekleştirilir</span>
+<div class="viewcode-block" id="CreateDu1.paintEvent"><a class="viewcode-back" href="../du1_page.html#du1_page.CreateDu1.paintEvent">[docs]</a>    <span class="k">def</span> <span class="nf">paintEvent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">e</span><span class="p">):</span>
+        <span class="n">painter</span> <span class="o">=</span> <span class="n">QPainter</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="n">painter</span><span class="o">.</span><span class="n">begin</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="n">painter</span><span class="o">.</span><span class="n">setPen</span><span class="p">(</span><span class="n">QPen</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">white</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">Qt</span><span class="o">.</span><span class="n">SolidLine</span><span class="p">))</span>
+
+        <span class="c1"># merkezdeki ana dörtgen, her şeyi içine alan kısım</span>
+        <span class="n">painter</span><span class="o">.</span><span class="n">drawRect</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">690</span><span class="p">,</span> <span class="mi">420</span><span class="p">)</span>
+        
+        <span class="c1"># ana dörtgeni ortadan ikiye bölen kısım</span>
+        <span class="n">painter</span><span class="o">.</span><span class="n">drawLine</span><span class="p">(</span><span class="mi">445</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">445</span><span class="p">,</span> <span class="mi">520</span><span class="p">)</span>
+        
+        <span class="c1"># ana dörtgeni alt-üst olarak iki parçaya bölen kısım</span>
+        <span class="n">painter</span><span class="o">.</span><span class="n">drawLine</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">370</span><span class="p">,</span> <span class="mi">790</span><span class="p">,</span> <span class="mi">370</span><span class="p">)</span>
+        
+        <span class="c1"># sol üst parçayı iki parçaya bölen kısım</span>
+        <span class="n">painter</span><span class="o">.</span><span class="n">drawLine</span><span class="p">(</span><span class="mi">275</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">275</span><span class="p">,</span> <span class="mi">370</span><span class="p">)</span>
+        
+        <span class="c1"># sağ taraftaki küçük 5 tane kutu çizilir</span>
+        <span class="n">painter</span><span class="o">.</span><span class="n">drawLine</span><span class="p">(</span><span class="mi">730</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">730</span><span class="p">,</span> <span class="mi">370</span><span class="p">)</span>
+        <span class="n">painter</span><span class="o">.</span><span class="n">drawLine</span><span class="p">(</span><span class="mi">730</span><span class="p">,</span> <span class="mi">154</span><span class="p">,</span> <span class="mi">790</span><span class="p">,</span> <span class="mi">154</span><span class="p">)</span>
+        <span class="n">painter</span><span class="o">.</span><span class="n">drawLine</span><span class="p">(</span><span class="mi">730</span><span class="p">,</span> <span class="mi">208</span><span class="p">,</span> <span class="mi">790</span><span class="p">,</span> <span class="mi">208</span><span class="p">)</span>
+        <span class="n">painter</span><span class="o">.</span><span class="n">drawLine</span><span class="p">(</span><span class="mi">730</span><span class="p">,</span> <span class="mi">262</span><span class="p">,</span> <span class="mi">790</span><span class="p">,</span> <span class="mi">262</span><span class="p">)</span>
+        <span class="n">painter</span><span class="o">.</span><span class="n">drawLine</span><span class="p">(</span><span class="mi">730</span><span class="p">,</span> <span class="mi">316</span><span class="p">,</span> <span class="mi">790</span><span class="p">,</span> <span class="mi">316</span><span class="p">)</span>
+        
+        <span class="c1"># alt parça yapılır</span>
+        <span class="n">painter</span><span class="o">.</span><span class="n">drawLine</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">470</span><span class="p">,</span> <span class="mi">790</span><span class="p">,</span> <span class="mi">470</span><span class="p">)</span>
+        <span class="n">painter</span><span class="o">.</span><span class="n">drawLine</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">420</span><span class="p">,</span> <span class="mi">790</span><span class="p">,</span> <span class="mi">420</span><span class="p">)</span>
+        <span class="n">painter</span><span class="o">.</span><span class="n">drawLine</span><span class="p">(</span><span class="mi">169</span><span class="p">,</span> <span class="mi">370</span><span class="p">,</span> <span class="mi">169</span><span class="p">,</span> <span class="mi">520</span><span class="p">)</span>
+        <span class="n">painter</span><span class="o">.</span><span class="n">drawLine</span><span class="p">(</span><span class="mi">238</span><span class="p">,</span> <span class="mi">370</span><span class="p">,</span> <span class="mi">238</span><span class="p">,</span> <span class="mi">520</span><span class="p">)</span>
+        <span class="n">painter</span><span class="o">.</span><span class="n">drawLine</span><span class="p">(</span><span class="mi">307</span><span class="p">,</span> <span class="mi">370</span><span class="p">,</span> <span class="mi">307</span><span class="p">,</span> <span class="mi">520</span><span class="p">)</span>
+        <span class="n">painter</span><span class="o">.</span><span class="n">drawLine</span><span class="p">(</span><span class="mi">376</span><span class="p">,</span> <span class="mi">370</span><span class="p">,</span> <span class="mi">376</span><span class="p">,</span> <span class="mi">520</span><span class="p">)</span>
+        <span class="n">painter</span><span class="o">.</span><span class="n">drawLine</span><span class="p">(</span><span class="mi">514</span><span class="p">,</span> <span class="mi">420</span><span class="p">,</span> <span class="mi">514</span><span class="p">,</span> <span class="mi">520</span><span class="p">)</span>
+        <span class="n">painter</span><span class="o">.</span><span class="n">drawLine</span><span class="p">(</span><span class="mi">583</span><span class="p">,</span> <span class="mi">420</span><span class="p">,</span> <span class="mi">583</span><span class="p">,</span> <span class="mi">520</span><span class="p">)</span>
+        <span class="n">painter</span><span class="o">.</span><span class="n">drawLine</span><span class="p">(</span><span class="mi">652</span><span class="p">,</span> <span class="mi">420</span><span class="p">,</span> <span class="mi">652</span><span class="p">,</span> <span class="mi">520</span><span class="p">)</span>
+        <span class="n">painter</span><span class="o">.</span><span class="n">drawLine</span><span class="p">(</span><span class="mi">721</span><span class="p">,</span> <span class="mi">420</span><span class="p">,</span> <span class="mi">721</span><span class="p">,</span> <span class="mi">520</span><span class="p">)</span>
+        
+        <span class="c1"># print(pv, &quot;  -  &quot;, type(pv))   Mqtt.takeData(barName=&#39;kV&#39;)    Mqtt.takeData(barName=&#39;A&#39;)</span>
+        <span class="n">createBar</span><span class="o">.</span><span class="n">CreateBar</span><span class="p">()</span><span class="o">.</span><span class="n">paintEvent</span><span class="p">(</span><span class="n">painter</span><span class="o">=</span><span class="n">painter</span><span class="p">,</span> <span class="n">barName</span><span class="o">=</span><span class="s2">&quot;kV&quot;</span><span class="p">,</span> <span class="n">page</span><span class="o">=</span><span class="s2">&quot;du1&quot;</span><span class="p">,</span> <span class="n">progressValue</span> <span class="o">=</span> <span class="n">Mqtt</span><span class="o">.</span><span class="n">takeData</span><span class="p">(</span><span class="n">barName</span><span class="o">=</span><span class="s1">&#39;kV&#39;</span><span class="p">))</span>
+        <span class="n">createBar</span><span class="o">.</span><span class="n">CreateBar</span><span class="p">()</span><span class="o">.</span><span class="n">paintEvent</span><span class="p">(</span><span class="n">painter</span><span class="o">=</span><span class="n">painter</span><span class="p">,</span> <span class="n">barName</span><span class="o">=</span><span class="s2">&quot;A&quot;</span><span class="p">,</span> <span class="n">page</span><span class="o">=</span><span class="s2">&quot;du1&quot;</span><span class="p">,</span> <span class="n">progressValue</span><span class="o">=</span> <span class="n">Mqtt</span><span class="o">.</span><span class="n">takeData</span><span class="p">(</span><span class="n">barName</span><span class="o">=</span><span class="s1">&#39;A&#39;</span><span class="p">))</span>
+        <span class="n">createBar</span><span class="o">.</span><span class="n">CreateBar</span><span class="p">()</span><span class="o">.</span><span class="n">paintEvent</span><span class="p">(</span><span class="n">painter</span><span class="o">=</span><span class="n">painter</span><span class="p">,</span> <span class="n">barName</span><span class="o">=</span><span class="s2">&quot;kN&quot;</span><span class="p">,</span> <span class="n">page</span><span class="o">=</span><span class="s2">&quot;du1&quot;</span><span class="p">,</span> <span class="n">progressValue</span><span class="o">=</span><span class="n">Mqtt</span><span class="o">.</span><span class="n">takeData</span><span class="p">(</span><span class="n">barName</span><span class="o">=</span><span class="s1">&#39;kN&#39;</span><span class="p">))</span>
+        <span class="n">createBar</span><span class="o">.</span><span class="n">CreateBar</span><span class="p">()</span><span class="o">.</span><span class="n">paintEvent</span><span class="p">(</span><span class="n">painter</span><span class="o">=</span><span class="n">painter</span><span class="p">,</span> <span class="n">barName</span><span class="o">=</span><span class="s1">&#39;brakeBar1&#39;</span><span class="p">,</span> <span class="n">page</span><span class="o">=</span><span class="s1">&#39;du1&#39;</span><span class="p">,</span> <span class="n">progressValue</span><span class="o">=</span><span class="n">Mqtt</span><span class="o">.</span><span class="n">takeData</span><span class="p">(</span><span class="n">barName</span><span class="o">=</span><span class="s1">&#39;brakeBar1&#39;</span><span class="p">))</span>
+        <span class="n">createBar</span><span class="o">.</span><span class="n">CreateBar</span><span class="p">()</span><span class="o">.</span><span class="n">paintEvent</span><span class="p">(</span><span class="n">painter</span><span class="o">=</span><span class="n">painter</span><span class="p">,</span> <span class="n">barName</span><span class="o">=</span><span class="s1">&#39;brakeBar2&#39;</span><span class="p">,</span> <span class="n">page</span><span class="o">=</span><span class="s1">&#39;du1&#39;</span><span class="p">,</span> <span class="n">progressValue</span><span class="o">=</span><span class="n">Mqtt</span><span class="o">.</span><span class="n">takeData</span><span class="p">(</span><span class="n">barName</span><span class="o">=</span><span class="s1">&#39;brakeBar2&#39;</span><span class="p">))</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">createBtnImg</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">createScrollImg</span><span class="p">()</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">dateTime</span> <span class="o">=</span> <span class="n">QDateTime</span><span class="o">.</span><span class="n">currentDateTime</span><span class="p">()</span>
+        <span class="n">painter</span><span class="o">.</span><span class="n">drawText</span><span class="p">(</span><span class="mi">550</span><span class="p">,</span> <span class="mi">400</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">dateTime</span><span class="o">.</span><span class="n">toString</span><span class="p">())</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">update</span><span class="p">()</span>
+
+        <span class="n">painter</span><span class="o">.</span><span class="n">end</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="CreateDu1.createBarsfromImages"><a class="viewcode-back" href="../du1_page.html#du1_page.CreateDu1.createBarsfromImages">[docs]</a>    <span class="k">def</span> <span class="nf">createBarsfromImages</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+        <span class="c1">#YelArrow.png</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">arrowLabel</span> <span class="o">=</span> <span class="n">QLabel</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">icon</span> <span class="o">=</span> <span class="n">QPixmap</span><span class="p">(</span><span class="s1">&#39;images\YelArrow.png&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">arrowLabel</span><span class="o">.</span><span class="n">setPixmap</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">icon</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">arrowLabel</span><span class="o">.</span><span class="n">setGeometry</span><span class="p">(</span><span class="mi">375</span><span class="p">,</span> <span class="mi">334</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">icon</span><span class="o">.</span><span class="n">width</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">icon</span><span class="o">.</span><span class="n">height</span><span class="p">())</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">arrowLabel</span><span class="o">.</span><span class="n">resize</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+        
+        <span class="c1">#YelArrow.png</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">arrowLabel2</span> <span class="o">=</span> <span class="n">QLabel</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">arrowLabel2</span><span class="o">.</span><span class="n">setPixmap</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">icon</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">arrowLabel2</span><span class="o">.</span><span class="n">setGeometry</span><span class="p">(</span><span class="mi">548</span><span class="p">,</span> <span class="mi">125</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">icon</span><span class="o">.</span><span class="n">width</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">icon</span><span class="o">.</span><span class="n">height</span><span class="p">())</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">arrowLabel2</span><span class="o">.</span><span class="n">resize</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">label3</span> <span class="o">=</span> <span class="n">QLabel</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pixmap3</span> <span class="o">=</span> <span class="n">QPixmap</span><span class="p">(</span><span class="s1">&#39;images\BPPT.png&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">label3</span><span class="o">.</span><span class="n">setPixmap</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pixmap3</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">label3</span><span class="o">.</span><span class="n">setGeometry</span><span class="p">(</span><span class="mi">508</span><span class="p">,</span> <span class="mi">330</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">pixmap3</span><span class="o">.</span><span class="n">width</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">pixmap3</span><span class="o">.</span><span class="n">height</span><span class="p">())</span>
+
+        <span class="c1">#BCPT.png</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">label4</span> <span class="o">=</span> <span class="n">QLabel</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pixmap4</span> <span class="o">=</span> <span class="n">QPixmap</span><span class="p">(</span><span class="s2">&quot;images\BCPT.png&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">label4</span><span class="o">.</span><span class="n">setPixmap</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pixmap4</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">label4</span><span class="o">.</span><span class="n">setGeometry</span><span class="p">(</span><span class="mi">620</span><span class="p">,</span> <span class="mi">335</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">pixmap4</span><span class="o">.</span><span class="n">width</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">pixmap4</span><span class="o">.</span><span class="n">height</span><span class="p">())</span></div>
+
+<div class="viewcode-block" id="CreateDu1.createBtnImg"><a class="viewcode-back" href="../du1_page.html#du1_page.CreateDu1.createBtnImg">[docs]</a>    <span class="k">def</span> <span class="nf">createBtnImg</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="mi">1</span> <span class="ow">in</span> <span class="n">Mqtt</span><span class="o">.</span><span class="n">btnValue</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">btnDırfwd</span><span class="o">.</span><span class="n">setIcon</span><span class="p">(</span><span class="n">QIcon</span><span class="p">(</span><span class="s2">&quot;images\DIRFWD.png&quot;</span><span class="p">))</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">btnDırfwd</span><span class="o">.</span><span class="n">setIconSize</span><span class="p">(</span><span class="n">QSize</span><span class="p">(</span><span class="mi">58</span><span class="p">,</span> <span class="mi">52</span><span class="p">))</span>
+            
+        <span class="k">elif</span> <span class="mi">0</span> <span class="ow">in</span> <span class="n">Mqtt</span><span class="o">.</span><span class="n">btnValue</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">btnDırfwd</span><span class="o">.</span><span class="n">setIcon</span><span class="p">(</span><span class="n">QIcon</span><span class="p">(</span><span class="s2">&quot;images\DIRNTR.png&quot;</span><span class="p">))</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">btnDırfwd</span><span class="o">.</span><span class="n">setIconSize</span><span class="p">(</span><span class="n">QSize</span><span class="p">(</span><span class="mi">58</span><span class="p">,</span> <span class="mi">52</span><span class="p">))</span>
+            
+
+        <span class="k">elif</span> <span class="o">-</span><span class="mi">1</span> <span class="ow">in</span> <span class="n">Mqtt</span><span class="o">.</span><span class="n">btnValue</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">btnDırfwd</span><span class="o">.</span><span class="n">setIcon</span><span class="p">(</span><span class="n">QIcon</span><span class="p">(</span><span class="s2">&quot;images\DIRRWD.png&quot;</span><span class="p">))</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">btnDırfwd</span><span class="o">.</span><span class="n">setIconSize</span><span class="p">(</span><span class="n">QSize</span><span class="p">(</span><span class="mi">58</span><span class="p">,</span> <span class="mi">52</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="CreateDu1.createScrollImg"><a class="viewcode-back" href="../du1_page.html#du1_page.CreateDu1.createScrollImg">[docs]</a>    <span class="k">def</span> <span class="nf">createScrollImg</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        
+        <span class="k">if</span> <span class="s2">&quot;pantoScroll&quot;</span> <span class="ow">in</span> <span class="n">Mqtt</span><span class="o">.</span><span class="n">scrollDict</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+            <span class="k">if</span> <span class="mi">99</span> <span class="o">==</span> <span class="n">Mqtt</span><span class="o">.</span><span class="n">scrollDict</span><span class="p">[</span><span class="s2">&quot;pantoScroll&quot;</span><span class="p">]:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">pushButtonStspan</span><span class="o">.</span><span class="n">setIcon</span><span class="p">(</span><span class="n">QIcon</span><span class="p">(</span><span class="s2">&quot;images\PANTODR.png&quot;</span><span class="p">))</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">pushButtonStspan</span><span class="o">.</span><span class="n">setIconSize</span><span class="p">(</span><span class="n">QSize</span><span class="p">(</span><span class="mi">69</span><span class="p">,</span> <span class="mi">48</span><span class="p">))</span>
+            <span class="k">elif</span> <span class="mi">0</span> <span class="o">==</span> <span class="n">Mqtt</span><span class="o">.</span><span class="n">scrollDict</span><span class="p">[</span><span class="s2">&quot;pantoScroll&quot;</span><span class="p">]:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">pushButtonStspan</span><span class="o">.</span><span class="n">setIcon</span><span class="p">(</span><span class="n">QIcon</span><span class="p">(</span><span class="s2">&quot;images\PANTOUP.png&quot;</span><span class="p">))</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">pushButtonStspan</span><span class="o">.</span><span class="n">setIconSize</span><span class="p">(</span><span class="n">QSize</span><span class="p">(</span><span class="mi">69</span><span class="p">,</span> <span class="mi">48</span><span class="p">))</span>
+
+        <span class="k">if</span> <span class="s2">&quot;frenScroll&quot;</span> <span class="ow">in</span> <span class="n">Mqtt</span><span class="o">.</span><span class="n">scrollDict</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+            <span class="k">if</span> <span class="mi">99</span> <span class="o">==</span> <span class="n">Mqtt</span><span class="o">.</span><span class="n">scrollDict</span><span class="p">[</span><span class="s2">&quot;frenScroll&quot;</span><span class="p">]:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">btnDIR</span><span class="o">.</span><span class="n">setIcon</span><span class="p">(</span><span class="n">QIcon</span><span class="p">(</span><span class="s2">&quot;images\BRACT2.png&quot;</span><span class="p">))</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">btnDIR</span><span class="o">.</span><span class="n">setIconSize</span><span class="p">(</span><span class="n">QSize</span><span class="p">(</span><span class="mi">69</span><span class="p">,</span> <span class="mi">48</span><span class="p">))</span>
+            <span class="k">if</span> <span class="mi">0</span> <span class="o">==</span> <span class="n">Mqtt</span><span class="o">.</span><span class="n">scrollDict</span><span class="p">[</span><span class="s2">&quot;frenScroll&quot;</span><span class="p">]:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">btnDIR</span><span class="o">.</span><span class="n">setIcon</span><span class="p">(</span><span class="n">QIcon</span><span class="p">(</span><span class="s2">&quot;images\BRR2.png&quot;</span><span class="p">))</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">btnDIR</span><span class="o">.</span><span class="n">setIconSize</span><span class="p">(</span><span class="n">QSize</span><span class="p">(</span><span class="mi">69</span><span class="p">,</span> <span class="mi">48</span><span class="p">))</span>
+        
+        <span class="c1"># MCBStateOpen.png   MCBStateClose.png</span>
+        <span class="k">if</span> <span class="s2">&quot;mcbScroll&quot;</span> <span class="ow">in</span> <span class="n">Mqtt</span><span class="o">.</span><span class="n">scrollDict</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">iconMCBOpen</span> <span class="o">=</span> <span class="n">QPixmap</span><span class="p">(</span><span class="s1">&#39;images\MCBStateOpen.png&#39;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">iconMCBClose</span> <span class="o">=</span> <span class="n">QPixmap</span><span class="p">(</span><span class="s1">&#39;images\MCBStateClose.png&#39;</span><span class="p">)</span>
+            
+            <span class="k">if</span> <span class="mi">99</span> <span class="o">==</span> <span class="n">Mqtt</span><span class="o">.</span><span class="n">scrollDict</span><span class="p">[</span><span class="s2">&quot;mcbScroll&quot;</span><span class="p">]:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">MCBLabel</span><span class="o">.</span><span class="n">setPixmap</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">iconMCBOpen</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">MCBLabel</span><span class="o">.</span><span class="n">setGeometry</span><span class="p">(</span><span class="mi">148</span><span class="p">,</span> <span class="mi">325</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">iconMCBOpen</span><span class="o">.</span><span class="n">width</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">iconMCBOpen</span><span class="o">.</span><span class="n">height</span><span class="p">())</span>
+
+            <span class="k">if</span> <span class="mi">0</span> <span class="o">==</span> <span class="n">Mqtt</span><span class="o">.</span><span class="n">scrollDict</span><span class="p">[</span><span class="s2">&quot;mcbScroll&quot;</span><span class="p">]:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">MCBLabel</span><span class="o">.</span><span class="n">setPixmap</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">iconMCBClose</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">MCBLabel</span><span class="o">.</span><span class="n">setGeometry</span><span class="p">(</span><span class="mi">148</span><span class="p">,</span> <span class="mi">325</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">iconMCBClose</span><span class="o">.</span><span class="n">width</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">iconMCBClose</span><span class="o">.</span><span class="n">height</span><span class="p">())</span></div></div>
+            
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Hilal Nisanci.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

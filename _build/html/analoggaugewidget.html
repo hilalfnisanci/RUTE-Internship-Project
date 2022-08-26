@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>analoggaugewidget module &mdash; Sphinx Project 0.0.1 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="_static/doctools.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="createBar module" href="createBar.html" />
+    <link rel="prev" title="project_files" href="modules.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="index.html" class="icon icon-home"> Sphinx Project
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">project_files</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">analoggaugewidget module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#analoggaugewidget-py">analoggaugewidget.py</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="createBar.html">createBar module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="createPages.html">createPages module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="du1_page.html">du1_page module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="du2_page.html">du2_page module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="main.html">main module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mqttEvents.html">mqttEvents module</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Sphinx Project</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="modules.html">project_files</a> &raquo;</li>
+      <li>analoggaugewidget module</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/analoggaugewidget.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-analoggaugewidget">
+<span id="analoggaugewidget-module"></span><h1>analoggaugewidget module<a class="headerlink" href="#module-analoggaugewidget" title="Permalink to this heading"></a></h1>
+<section id="analoggaugewidget-py">
+<h2>analoggaugewidget.py<a class="headerlink" href="#analoggaugewidget-py" title="Permalink to this heading"></a></h2>
+<p>This module to create gauge meter widget</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="analoggaugewidget.AnalogGaugeWidget">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">analoggaugewidget.</span></span><span class="sig-name descname"><span class="pre">AnalogGaugeWidget</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parent</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/analoggaugewidget.html#AnalogGaugeWidget"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#analoggaugewidget.AnalogGaugeWidget" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">QWidget</span></code></p>
+<p>Fetches rows from a Bigtable.
+:param none:</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="analoggaugewidget.AnalogGaugeWidget.center_horizontal">
+<span class="sig-name descname"><span class="pre">center_horizontal</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/analoggaugewidget.html#AnalogGaugeWidget.center_horizontal"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#analoggaugewidget.AnalogGaugeWidget.center_horizontal" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="analoggaugewidget.AnalogGaugeWidget.center_vertical">
+<span class="sig-name descname"><span class="pre">center_vertical</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/analoggaugewidget.html#AnalogGaugeWidget.center_vertical"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#analoggaugewidget.AnalogGaugeWidget.center_vertical" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="analoggaugewidget.AnalogGaugeWidget.change_value_needle_style">
+<span class="sig-name descname"><span class="pre">change_value_needle_style</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">design</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/analoggaugewidget.html#AnalogGaugeWidget.change_value_needle_style"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#analoggaugewidget.AnalogGaugeWidget.change_value_needle_style" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="analoggaugewidget.AnalogGaugeWidget.create_fine_scaled_marker">
+<span class="sig-name descname"><span class="pre">create_fine_scaled_marker</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/analoggaugewidget.html#AnalogGaugeWidget.create_fine_scaled_marker"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#analoggaugewidget.AnalogGaugeWidget.create_fine_scaled_marker" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="analoggaugewidget.AnalogGaugeWidget.create_polygon_pie">
+<span class="sig-name descname"><span class="pre">create_polygon_pie</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">outer_radius</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">inner_raduis</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">start</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lenght</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bar_graph</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/analoggaugewidget.html#AnalogGaugeWidget.create_polygon_pie"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#analoggaugewidget.AnalogGaugeWidget.create_polygon_pie" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="analoggaugewidget.AnalogGaugeWidget.create_scale_marker_values_text">
+<span class="sig-name descname"><span class="pre">create_scale_marker_values_text</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/analoggaugewidget.html#AnalogGaugeWidget.create_scale_marker_values_text"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#analoggaugewidget.AnalogGaugeWidget.create_scale_marker_values_text" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="analoggaugewidget.AnalogGaugeWidget.create_units_text">
+<span class="sig-name descname"><span class="pre">create_units_text</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/analoggaugewidget.html#AnalogGaugeWidget.create_units_text"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#analoggaugewidget.AnalogGaugeWidget.create_units_text" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="analoggaugewidget.AnalogGaugeWidget.create_values_text">
+<span class="sig-name descname"><span class="pre">create_values_text</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/analoggaugewidget.html#AnalogGaugeWidget.create_values_text"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#analoggaugewidget.AnalogGaugeWidget.create_values_text" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="analoggaugewidget.AnalogGaugeWidget.draw_big_needle_center_point">
+<span class="sig-name descname"><span class="pre">draw_big_needle_center_point</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">diameter</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">30</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/analoggaugewidget.html#AnalogGaugeWidget.draw_big_needle_center_point"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#analoggaugewidget.AnalogGaugeWidget.draw_big_needle_center_point" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="analoggaugewidget.AnalogGaugeWidget.draw_big_scaled_marker">
+<span class="sig-name descname"><span class="pre">draw_big_scaled_marker</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/analoggaugewidget.html#AnalogGaugeWidget.draw_big_scaled_marker"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#analoggaugewidget.AnalogGaugeWidget.draw_big_scaled_marker" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="analoggaugewidget.AnalogGaugeWidget.draw_filled_polygon">
+<span class="sig-name descname"><span class="pre">draw_filled_polygon</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">outline_pen_with</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/analoggaugewidget.html#AnalogGaugeWidget.draw_filled_polygon"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#analoggaugewidget.AnalogGaugeWidget.draw_filled_polygon" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="analoggaugewidget.AnalogGaugeWidget.draw_icon_image">
+<span class="sig-name descname"><span class="pre">draw_icon_image</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/analoggaugewidget.html#AnalogGaugeWidget.draw_icon_image"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#analoggaugewidget.AnalogGaugeWidget.draw_icon_image" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="analoggaugewidget.AnalogGaugeWidget.draw_needle">
+<span class="sig-name descname"><span class="pre">draw_needle</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/analoggaugewidget.html#AnalogGaugeWidget.draw_needle"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#analoggaugewidget.AnalogGaugeWidget.draw_needle" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="analoggaugewidget.AnalogGaugeWidget.draw_outer_circle">
+<span class="sig-name descname"><span class="pre">draw_outer_circle</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">diameter</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">30</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/analoggaugewidget.html#AnalogGaugeWidget.draw_outer_circle"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#analoggaugewidget.AnalogGaugeWidget.draw_outer_circle" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="analoggaugewidget.AnalogGaugeWidget.get_value_max">
+<span class="sig-name descname"><span class="pre">get_value_max</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/analoggaugewidget.html#AnalogGaugeWidget.get_value_max"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#analoggaugewidget.AnalogGaugeWidget.get_value_max" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="analoggaugewidget.AnalogGaugeWidget.leaveEvent">
+<span class="sig-name descname"><span class="pre">leaveEvent</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">QEvent</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/analoggaugewidget.html#AnalogGaugeWidget.leaveEvent"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#analoggaugewidget.AnalogGaugeWidget.leaveEvent" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="analoggaugewidget.AnalogGaugeWidget.mouseReleaseEvent">
+<span class="sig-name descname"><span class="pre">mouseReleaseEvent</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">QMouseEvent</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/analoggaugewidget.html#AnalogGaugeWidget.mouseReleaseEvent"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#analoggaugewidget.AnalogGaugeWidget.mouseReleaseEvent" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="analoggaugewidget.AnalogGaugeWidget.paintEvent">
+<span class="sig-name descname"><span class="pre">paintEvent</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">QPaintEvent</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/analoggaugewidget.html#AnalogGaugeWidget.paintEvent"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#analoggaugewidget.AnalogGaugeWidget.paintEvent" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="analoggaugewidget.AnalogGaugeWidget.rescale_method">
+<span class="sig-name descname"><span class="pre">rescale_method</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/analoggaugewidget.html#AnalogGaugeWidget.rescale_method"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#analoggaugewidget.AnalogGaugeWidget.rescale_method" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="analoggaugewidget.AnalogGaugeWidget.resizeEvent">
+<span class="sig-name descname"><span class="pre">resizeEvent</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">QResizeEvent</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/analoggaugewidget.html#AnalogGaugeWidget.resizeEvent"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#analoggaugewidget.AnalogGaugeWidget.resizeEvent" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="analoggaugewidget.AnalogGaugeWidget.setBigScaleColor">
+<span class="sig-name descname"><span class="pre">setBigScaleColor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">color</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/analoggaugewidget.html#AnalogGaugeWidget.setBigScaleColor"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#analoggaugewidget.AnalogGaugeWidget.setBigScaleColor" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="analoggaugewidget.AnalogGaugeWidget.setCustomGaugeTheme">
+<span class="sig-name descname"><span class="pre">setCustomGaugeTheme</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">colors</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/analoggaugewidget.html#AnalogGaugeWidget.setCustomGaugeTheme"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#analoggaugewidget.AnalogGaugeWidget.setCustomGaugeTheme" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="analoggaugewidget.AnalogGaugeWidget.setDisplayValueColor">
+<span class="sig-name descname"><span class="pre">setDisplayValueColor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">R</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">50</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">G</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">50</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">B</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">50</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Transparency</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">255</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/analoggaugewidget.html#AnalogGaugeWidget.setDisplayValueColor"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#analoggaugewidget.AnalogGaugeWidget.setDisplayValueColor" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="analoggaugewidget.AnalogGaugeWidget.setEnableBarGraph">
+<span class="sig-name descname"><span class="pre">setEnableBarGraph</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">enable</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/analoggaugewidget.html#AnalogGaugeWidget.setEnableBarGraph"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#analoggaugewidget.AnalogGaugeWidget.setEnableBarGraph" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="analoggaugewidget.AnalogGaugeWidget.setEnableBigScaleGrid">
+<span class="sig-name descname"><span class="pre">setEnableBigScaleGrid</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">enable</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/analoggaugewidget.html#AnalogGaugeWidget.setEnableBigScaleGrid"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#analoggaugewidget.AnalogGaugeWidget.setEnableBigScaleGrid" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="analoggaugewidget.AnalogGaugeWidget.setEnableCenterPoint">
+<span class="sig-name descname"><span class="pre">setEnableCenterPoint</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">enable</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/analoggaugewidget.html#AnalogGaugeWidget.setEnableCenterPoint"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#analoggaugewidget.AnalogGaugeWidget.setEnableCenterPoint" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="analoggaugewidget.AnalogGaugeWidget.setEnableFineScaleGrid">
+<span class="sig-name descname"><span class="pre">setEnableFineScaleGrid</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">enable</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/analoggaugewidget.html#AnalogGaugeWidget.setEnableFineScaleGrid"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#analoggaugewidget.AnalogGaugeWidget.setEnableFineScaleGrid" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="analoggaugewidget.AnalogGaugeWidget.setEnableNeedlePolygon">
+<span class="sig-name descname"><span class="pre">setEnableNeedlePolygon</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">enable</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/analoggaugewidget.html#AnalogGaugeWidget.setEnableNeedlePolygon"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#analoggaugewidget.AnalogGaugeWidget.setEnableNeedlePolygon" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="analoggaugewidget.AnalogGaugeWidget.setEnableScalePolygon">
+<span class="sig-name descname"><span class="pre">setEnableScalePolygon</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">enable</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/analoggaugewidget.html#AnalogGaugeWidget.setEnableScalePolygon"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#analoggaugewidget.AnalogGaugeWidget.setEnableScalePolygon" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="analoggaugewidget.AnalogGaugeWidget.setEnableScaleText">
+<span class="sig-name descname"><span class="pre">setEnableScaleText</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">enable</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/analoggaugewidget.html#AnalogGaugeWidget.setEnableScaleText"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#analoggaugewidget.AnalogGaugeWidget.setEnableScaleText" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="analoggaugewidget.AnalogGaugeWidget.setEnableValueText">
+<span class="sig-name descname"><span class="pre">setEnableValueText</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">enable</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/analoggaugewidget.html#AnalogGaugeWidget.setEnableValueText"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#analoggaugewidget.AnalogGaugeWidget.setEnableValueText" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="analoggaugewidget.AnalogGaugeWidget.setFineScaleColor">
+<span class="sig-name descname"><span class="pre">setFineScaleColor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">color</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/analoggaugewidget.html#AnalogGaugeWidget.setFineScaleColor"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#analoggaugewidget.AnalogGaugeWidget.setFineScaleColor" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="analoggaugewidget.AnalogGaugeWidget.setGaugeColorInnerRadiusFactor">
+<span class="sig-name descname"><span class="pre">setGaugeColorInnerRadiusFactor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/analoggaugewidget.html#AnalogGaugeWidget.setGaugeColorInnerRadiusFactor"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#analoggaugewidget.AnalogGaugeWidget.setGaugeColorInnerRadiusFactor" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="analoggaugewidget.AnalogGaugeWidget.setGaugeColorOuterRadiusFactor">
+<span class="sig-name descname"><span class="pre">setGaugeColorOuterRadiusFactor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/analoggaugewidget.html#AnalogGaugeWidget.setGaugeColorOuterRadiusFactor"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#analoggaugewidget.AnalogGaugeWidget.setGaugeColorOuterRadiusFactor" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="analoggaugewidget.AnalogGaugeWidget.setGaugeTheme">
+<span class="sig-name descname"><span class="pre">setGaugeTheme</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">Theme</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/analoggaugewidget.html#AnalogGaugeWidget.setGaugeTheme"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#analoggaugewidget.AnalogGaugeWidget.setGaugeTheme" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="analoggaugewidget.AnalogGaugeWidget.setMaxValue">
+<span class="sig-name descname"><span class="pre">setMaxValue</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">max</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/analoggaugewidget.html#AnalogGaugeWidget.setMaxValue"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#analoggaugewidget.AnalogGaugeWidget.setMaxValue" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="analoggaugewidget.AnalogGaugeWidget.setMinValue">
+<span class="sig-name descname"><span class="pre">setMinValue</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">min</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/analoggaugewidget.html#AnalogGaugeWidget.setMinValue"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#analoggaugewidget.AnalogGaugeWidget.setMinValue" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="analoggaugewidget.AnalogGaugeWidget.setMouseTracking">
+<span class="sig-name descname"><span class="pre">setMouseTracking</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bool</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/analoggaugewidget.html#AnalogGaugeWidget.setMouseTracking"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#analoggaugewidget.AnalogGaugeWidget.setMouseTracking" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="analoggaugewidget.AnalogGaugeWidget.setNeedleCenterColor">
+<span class="sig-name descname"><span class="pre">setNeedleCenterColor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">colors</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/analoggaugewidget.html#AnalogGaugeWidget.setNeedleCenterColor"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#analoggaugewidget.AnalogGaugeWidget.setNeedleCenterColor" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="analoggaugewidget.AnalogGaugeWidget.setNeedleColor">
+<span class="sig-name descname"><span class="pre">setNeedleColor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">R</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">50</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">G</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">50</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">B</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">50</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Transparency</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">255</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/analoggaugewidget.html#AnalogGaugeWidget.setNeedleColor"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#analoggaugewidget.AnalogGaugeWidget.setNeedleColor" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="analoggaugewidget.AnalogGaugeWidget.setNeedleColorOnDrag">
+<span class="sig-name descname"><span class="pre">setNeedleColorOnDrag</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">R</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">50</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">G</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">50</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">B</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">50</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Transparency</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">255</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/analoggaugewidget.html#AnalogGaugeWidget.setNeedleColorOnDrag"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#analoggaugewidget.AnalogGaugeWidget.setNeedleColorOnDrag" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="analoggaugewidget.AnalogGaugeWidget.setOuterCircleColor">
+<span class="sig-name descname"><span class="pre">setOuterCircleColor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">colors</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/analoggaugewidget.html#AnalogGaugeWidget.setOuterCircleColor"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#analoggaugewidget.AnalogGaugeWidget.setOuterCircleColor" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="analoggaugewidget.AnalogGaugeWidget.setScalaCount">
+<span class="sig-name descname"><span class="pre">setScalaCount</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">count</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/analoggaugewidget.html#AnalogGaugeWidget.setScalaCount"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#analoggaugewidget.AnalogGaugeWidget.setScalaCount" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="analoggaugewidget.AnalogGaugeWidget.setScaleFontFamily">
+<span class="sig-name descname"><span class="pre">setScaleFontFamily</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">font</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/analoggaugewidget.html#AnalogGaugeWidget.setScaleFontFamily"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#analoggaugewidget.AnalogGaugeWidget.setScaleFontFamily" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="analoggaugewidget.AnalogGaugeWidget.setScalePolygonColor">
+<span class="sig-name descname"><span class="pre">setScalePolygonColor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">colors</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/analoggaugewidget.html#AnalogGaugeWidget.setScalePolygonColor"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#analoggaugewidget.AnalogGaugeWidget.setScalePolygonColor" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="analoggaugewidget.AnalogGaugeWidget.setScaleStartAngle">
+<span class="sig-name descname"><span class="pre">setScaleStartAngle</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/analoggaugewidget.html#AnalogGaugeWidget.setScaleStartAngle"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#analoggaugewidget.AnalogGaugeWidget.setScaleStartAngle" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="analoggaugewidget.AnalogGaugeWidget.setScaleValueColor">
+<span class="sig-name descname"><span class="pre">setScaleValueColor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">R</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">50</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">G</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">50</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">B</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">50</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Transparency</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">255</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/analoggaugewidget.html#AnalogGaugeWidget.setScaleValueColor"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#analoggaugewidget.AnalogGaugeWidget.setScaleValueColor" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="analoggaugewidget.AnalogGaugeWidget.setTotalScaleAngleSize">
+<span class="sig-name descname"><span class="pre">setTotalScaleAngleSize</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/analoggaugewidget.html#AnalogGaugeWidget.setTotalScaleAngleSize"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#analoggaugewidget.AnalogGaugeWidget.setTotalScaleAngleSize" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="analoggaugewidget.AnalogGaugeWidget.setValueFontFamily">
+<span class="sig-name descname"><span class="pre">setValueFontFamily</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">font</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/analoggaugewidget.html#AnalogGaugeWidget.setValueFontFamily"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#analoggaugewidget.AnalogGaugeWidget.setValueFontFamily" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="analoggaugewidget.AnalogGaugeWidget.set_CenterPointColor">
+<span class="sig-name descname"><span class="pre">set_CenterPointColor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">R</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">50</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">G</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">50</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">B</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">50</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Transparency</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">255</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/analoggaugewidget.html#AnalogGaugeWidget.set_CenterPointColor"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#analoggaugewidget.AnalogGaugeWidget.set_CenterPointColor" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="analoggaugewidget.AnalogGaugeWidget.set_scale_polygon_colors">
+<span class="sig-name descname"><span class="pre">set_scale_polygon_colors</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">color_array</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/analoggaugewidget.html#AnalogGaugeWidget.set_scale_polygon_colors"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#analoggaugewidget.AnalogGaugeWidget.set_scale_polygon_colors" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="analoggaugewidget.AnalogGaugeWidget.updateAngleOffset">
+<span class="sig-name descname"><span class="pre">updateAngleOffset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">offset</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/analoggaugewidget.html#AnalogGaugeWidget.updateAngleOffset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#analoggaugewidget.AnalogGaugeWidget.updateAngleOffset" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="analoggaugewidget.AnalogGaugeWidget.updateAngleValue">
+<span class="sig-name descname"><span class="pre">updateAngleValue</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/analoggaugewidget.html#AnalogGaugeWidget.updateAngleValue"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#analoggaugewidget.AnalogGaugeWidget.updateAngleValue" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="analoggaugewidget.AnalogGaugeWidget.updateValue">
+<span class="sig-name descname"><span class="pre">updateValue</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mouse_controlled</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/analoggaugewidget.html#AnalogGaugeWidget.updateValue"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#analoggaugewidget.AnalogGaugeWidget.updateValue" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="analoggaugewidget.AnalogGaugeWidget.valueChanged">
+<span class="sig-name descname"><span class="pre">valueChanged</span></span><a class="headerlink" href="#analoggaugewidget.AnalogGaugeWidget.valueChanged" title="Permalink to this definition"></a></dt>
+<dd><p>int = …, arguments: Sequence = …) -&gt; PYQT_SIGNAL</p>
+<p>types is normally a sequence of individual types.  Each type is either a
+type object or a string that is the name of a C++ type.  Alternatively
+each type could itself be a sequence of types each describing a different
+overloaded signal.
+name is the optional C++ name of the signal.  If it is not specified then
+the name of the class attribute that is bound to the signal is used.
+revision is the optional revision of the signal that is exported to QML.
+If it is not specified then 0 is used.
+arguments is the optional sequence of the names of the signal’s arguments.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>pyqtSignal(<a href="#id1"><span class="problematic" id="id2">*</span></a>types, name</p>
+</dd>
+<dt class="field-even">Type</dt>
+<dd class="field-even"><p>str = …, revision</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="modules.html" class="btn btn-neutral float-left" title="project_files" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="createBar.html" class="btn btn-neutral float-right" title="createBar module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Hilal Nisanci.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

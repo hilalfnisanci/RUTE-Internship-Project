@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>main &mdash; Sphinx Project 0.0.1 documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../_static/doctools.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../index.html" class="icon icon-home"> Sphinx Project
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../modules.html">project_files</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Sphinx Project</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="index.html">Module code</a> &raquo;</li>
+      <li>main</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for main</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">main.py</span>
+<span class="sd">====================================</span>
+<span class="sd">This module to run the program and create control panel components</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">from</span> <span class="nn">time</span> <span class="kn">import</span> <span class="n">sleep</span>
+<span class="kn">from</span> <span class="nn">PyQt5.QtCore</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">PyQt5.QtWidgets</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">PyQt5.QtGui</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">createPages</span>
+<span class="kn">from</span> <span class="nn">mqttEvents</span> <span class="kn">import</span> <span class="n">Mqtt</span> <span class="k">as</span> <span class="n">mqtt</span>
+<span class="kn">import</span> <span class="nn">random</span>
+<span class="kn">from</span> <span class="nn">paho.mqtt</span> <span class="kn">import</span> <span class="n">client</span> <span class="k">as</span> <span class="n">mqtt_client</span>
+
+<div class="viewcode-block" id="App"><a class="viewcode-back" href="../main.html#main.App">[docs]</a><span class="k">class</span> <span class="nc">App</span><span class="p">(</span><span class="n">QWidget</span><span class="p">):</span>
+
+    <span class="n">count</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">broker</span> <span class="o">=</span> <span class="s1">&#39;localhost&#39;</span>
+    <span class="n">topic</span> <span class="o">=</span> <span class="s1">&#39;mqtt&#39;</span>
+    <span class="n">client_id</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;python-mqtt-</span><span class="si">{</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span><span class="si">}</span><span class="s1">&#39;</span>
+
+    <span class="n">client</span> <span class="o">=</span> <span class="n">mqtt_client</span><span class="o">.</span><span class="n">Client</span><span class="p">(</span><span class="n">client_id</span><span class="o">=</span><span class="n">client_id</span><span class="p">)</span>
+    
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">App</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">parent</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">setStyleSheet</span><span class="p">(</span><span class="s2">&quot;background-color: #031122;&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setGeometry</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">980</span><span class="p">,</span> <span class="mi">600</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setWindowTitle</span><span class="p">(</span><span class="s2">&quot;Control Unit&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">middlePanel</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">rightPanel</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">createButtons</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">leftPanel</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">createImages</span><span class="p">()</span>
+
+
+<div class="viewcode-block" id="App.middlePanel"><a class="viewcode-back" href="../main.html#main.App.middlePanel">[docs]</a>    <span class="k">def</span> <span class="nf">middlePanel</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">label</span> <span class="o">=</span> <span class="n">QLabel</span><span class="p">(</span><span class="s2">&quot;Kumlama</span><span class="se">\n</span><span class="s2">Anahtarı&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">label</span><span class="o">.</span><span class="n">setGeometry</span><span class="p">(</span><span class="mi">328</span><span class="p">,</span> <span class="mi">55</span><span class="p">,</span> <span class="mi">60</span><span class="p">,</span> <span class="mi">30</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">label</span><span class="o">.</span><span class="n">setStyleSheet</span><span class="p">(</span><span class="s2">&quot;QLabel{color : white;}&quot;</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">scroll1</span> <span class="o">=</span> <span class="n">QScrollBar</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">scroll1</span><span class="o">.</span><span class="n">setGeometry</span><span class="p">(</span><span class="mi">324</span><span class="p">,</span> <span class="mi">90</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="mi">90</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">scroll1</span><span class="o">.</span><span class="n">setStyleSheet</span><span class="p">(</span> <span class="s2">&quot;QScrollBar{background : #a89383; border : 2px solid gray}&quot;</span>
+                                    <span class="s2">&quot;QScrollBar::handle{background : #483c32; border-radius : 20; min-width: 50px; min-height: 45px;}&quot;</span>
+                                    <span class="s2">&quot;QScrollBar::handle::pressed{background : #332d28;}&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">scroll1</span><span class="o">.</span><span class="n">setCursor</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">PointingHandCursor</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">scroll1</span><span class="o">.</span><span class="n">setValue</span><span class="p">(</span><span class="mi">45</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">label</span> <span class="o">=</span> <span class="n">QLabel</span><span class="p">(</span><span class="s2">&quot;  Pürjör</span><span class="se">\n</span><span class="s2">Anahtarı&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">label</span><span class="o">.</span><span class="n">setGeometry</span><span class="p">(</span><span class="mi">422</span><span class="p">,</span> <span class="mi">55</span><span class="p">,</span> <span class="mi">60</span><span class="p">,</span> <span class="mi">30</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">label</span><span class="o">.</span><span class="n">setStyleSheet</span><span class="p">(</span><span class="s2">&quot;QLabel{color : white;}&quot;</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">scroll2</span><span class="o">=</span> <span class="n">QScrollBar</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">scroll2</span><span class="o">.</span><span class="n">setGeometry</span><span class="p">(</span><span class="mi">418</span><span class="p">,</span> <span class="mi">90</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="mi">90</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">scroll2</span><span class="o">.</span><span class="n">setStyleSheet</span><span class="p">(</span> <span class="s2">&quot;QScrollBar{background : #a89383; border : 2px solid gray}&quot;</span>
+                                    <span class="s2">&quot;QScrollBar::handle{background : #483c32; border-radius : 20; min-width: 50px; min-height: 45px;}&quot;</span>
+                                    <span class="s2">&quot;QScrollBar::handle::pressed{background : #332d28;}&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">scroll2</span><span class="o">.</span><span class="n">setCursor</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">PointingHandCursor</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">scroll2</span><span class="o">.</span><span class="n">setValue</span><span class="p">(</span><span class="mi">45</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">label</span> <span class="o">=</span> <span class="n">QLabel</span><span class="p">(</span><span class="s2">&quot;Projektör</span><span class="se">\n</span><span class="s2">Anahtarı&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">label</span><span class="o">.</span><span class="n">setGeometry</span><span class="p">(</span><span class="mi">516</span><span class="p">,</span> <span class="mi">55</span><span class="p">,</span> <span class="mi">60</span><span class="p">,</span> <span class="mi">30</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">label</span><span class="o">.</span><span class="n">setStyleSheet</span><span class="p">(</span><span class="s2">&quot;QLabel{color : white;}&quot;</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">scroll3</span> <span class="o">=</span> <span class="n">QScrollBar</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">scroll3</span><span class="o">.</span><span class="n">setGeometry</span><span class="p">(</span><span class="mi">512</span><span class="p">,</span> <span class="mi">90</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="mi">90</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">scroll3</span><span class="o">.</span><span class="n">setStyleSheet</span><span class="p">(</span> <span class="s2">&quot;QScrollBar{background : #a89383; border : 2px solid gray}&quot;</span>
+                                    <span class="s2">&quot;QScrollBar::handle{background : #483c32; border-radius : 15; min-width: 50px; min-height: 30px;}&quot;</span>
+                                    <span class="s2">&quot;QScrollBar::handle::pressed{background : #332d28;}&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">scroll3</span><span class="o">.</span><span class="n">setCursor</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">PointingHandCursor</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">scroll3</span><span class="o">.</span><span class="n">setValue</span><span class="p">(</span><span class="mi">45</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">label</span> <span class="o">=</span> <span class="n">QLabel</span><span class="p">(</span><span class="s2">&quot;Kabin Aydınlatma-</span><span class="se">\n</span><span class="s2">  Okuma Lambası</span><span class="se">\n</span><span class="s2">      Anahtarı&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">label</span><span class="o">.</span><span class="n">setGeometry</span><span class="p">(</span><span class="mi">595</span><span class="p">,</span> <span class="mi">45</span><span class="p">,</span> <span class="mi">90</span><span class="p">,</span> <span class="mi">40</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">label</span><span class="o">.</span><span class="n">setStyleSheet</span><span class="p">(</span><span class="s2">&quot;QLabel{color : white;}&quot;</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">scroll4</span> <span class="o">=</span> <span class="n">QScrollBar</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">scroll4</span><span class="o">.</span><span class="n">setGeometry</span><span class="p">(</span><span class="mi">608</span><span class="p">,</span> <span class="mi">90</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="mi">90</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">scroll4</span><span class="o">.</span><span class="n">setStyleSheet</span><span class="p">(</span> <span class="s2">&quot;QScrollBar{background : #a89383; border : 2px solid gray}&quot;</span>
+                                    <span class="s2">&quot;QScrollBar::handle{background : #483c32; border-radius : 20; min-width: 50px; min-height: 45px;}&quot;</span>
+                                    <span class="s2">&quot;QScrollBar::handle::pressed{background : #332d28;}&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">scroll4</span><span class="o">.</span><span class="n">setCursor</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">PointingHandCursor</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">scroll4</span><span class="o">.</span><span class="n">setValue</span><span class="p">(</span><span class="mi">45</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="App.rightPanel"><a class="viewcode-back" href="../main.html#main.App.rightPanel">[docs]</a>    <span class="k">def</span> <span class="nf">rightPanel</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">upButton</span> <span class="o">=</span> <span class="n">QPushButton</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">upButton</span><span class="o">.</span><span class="n">setGeometry</span><span class="p">(</span><span class="mi">750</span><span class="p">,</span> <span class="mi">140</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="mi">50</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">upButton</span><span class="o">.</span><span class="n">setStyleSheet</span><span class="p">(</span><span class="s2">&quot;QPushButton{border-radius : 25; border : 3px solid white; background-color : gray;color : black}&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">upButton</span><span class="o">.</span><span class="n">setIcon</span><span class="p">(</span><span class="n">QIcon</span><span class="p">(</span><span class="s1">&#39;images\DIRFWD.png&#39;</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">upButton</span><span class="o">.</span><span class="n">setCursor</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">PointingHandCursor</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">upButton</span><span class="o">.</span><span class="n">clicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pressUpButton</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">notrButton</span> <span class="o">=</span> <span class="n">QPushButton</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">notrButton</span><span class="o">.</span><span class="n">setGeometry</span><span class="p">(</span><span class="mi">815</span><span class="p">,</span> <span class="mi">140</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="mi">50</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">notrButton</span><span class="o">.</span><span class="n">setStyleSheet</span><span class="p">(</span><span class="s2">&quot;QPushButton{border-radius : 25; border : 3px solid white; background-color : gray; color : black}&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">notrButton</span><span class="o">.</span><span class="n">setIcon</span><span class="p">(</span><span class="n">QIcon</span><span class="p">(</span><span class="s1">&#39;images\DIRNTR.png&#39;</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">notrButton</span><span class="o">.</span><span class="n">setCursor</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">PointingHandCursor</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">notrButton</span><span class="o">.</span><span class="n">clicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pressNotrButton</span><span class="p">)</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">downButton</span> <span class="o">=</span> <span class="n">QPushButton</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">downButton</span><span class="o">.</span><span class="n">setGeometry</span><span class="p">(</span><span class="mi">880</span><span class="p">,</span> <span class="mi">140</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="mi">50</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">downButton</span><span class="o">.</span><span class="n">setStyleSheet</span><span class="p">(</span><span class="s2">&quot;QPushButton{border-radius : 25; border : 3px solid white; background-color : gray; color : black}&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">downButton</span><span class="o">.</span><span class="n">setIcon</span><span class="p">(</span><span class="n">QIcon</span><span class="p">(</span><span class="s1">&#39;images\DIRRWD.png&#39;</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">downButton</span><span class="o">.</span><span class="n">setCursor</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">PointingHandCursor</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">downButton</span><span class="o">.</span><span class="n">clicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pressDownButton</span><span class="p">)</span>
+
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">frenLabel</span> <span class="o">=</span> <span class="n">QLabel</span><span class="p">(</span><span class="s2">&quot;   Direkt</span><span class="se">\n</span><span class="s2">Fren Valfi&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">frenLabel</span><span class="o">.</span><span class="n">setGeometry</span><span class="p">(</span><span class="mi">784</span><span class="p">,</span> <span class="mi">220</span><span class="p">,</span> <span class="mi">60</span><span class="p">,</span> <span class="mi">30</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">frenLabel</span><span class="o">.</span><span class="n">setStyleSheet</span><span class="p">(</span><span class="s2">&quot;QLabel{color : white;}&quot;</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">scrollFren</span> <span class="o">=</span> <span class="n">QScrollBar</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">scrollFren</span><span class="o">.</span><span class="n">setGeometry</span><span class="p">(</span><span class="mi">780</span><span class="p">,</span> <span class="mi">260</span><span class="p">,</span> <span class="mi">55</span><span class="p">,</span> <span class="mi">120</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">scrollFren</span><span class="o">.</span><span class="n">setStyleSheet</span><span class="p">(</span>  <span class="s2">&quot;QScrollBar{background : #a89383; border : 2px solid gray}&quot;</span>
+                                        <span class="s2">&quot;QScrollBar::handle{background : #483c32; border-radius : 25; min-width: 50px; min-height: 60px;}&quot;</span>
+                                        <span class="s2">&quot;QScrollBar::handle::pressed{background : #332d28;}&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">scrollFren</span><span class="o">.</span><span class="n">setCursor</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">PointingHandCursor</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">scrollFren</span><span class="o">.</span><span class="n">setValue</span><span class="p">(</span><span class="mi">60</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">scrollFren</span><span class="o">.</span><span class="n">valueChanged</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="k">lambda</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">frenScrollAction</span><span class="p">())</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">kornaLabel</span> <span class="o">=</span> <span class="n">QLabel</span><span class="p">(</span><span class="s2">&quot;Havalı Korna</span><span class="se">\n</span><span class="s2">  Anahtarı&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">kornaLabel</span><span class="o">.</span><span class="n">setGeometry</span><span class="p">(</span><span class="mi">780</span><span class="p">,</span> <span class="mi">400</span><span class="p">,</span> <span class="mi">80</span><span class="p">,</span> <span class="mi">30</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">kornaLabel</span><span class="o">.</span><span class="n">setStyleSheet</span><span class="p">(</span><span class="s2">&quot;QLabel{color : white;}&quot;</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">scrollKorna</span> <span class="o">=</span> <span class="n">QScrollBar</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">scrollKorna</span><span class="o">.</span><span class="n">setGeometry</span><span class="p">(</span><span class="mi">786</span><span class="p">,</span> <span class="mi">440</span><span class="p">,</span> <span class="mi">40</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">scrollKorna</span><span class="o">.</span><span class="n">setStyleSheet</span><span class="p">(</span> <span class="s2">&quot;QScrollBar{background : #a89383; border : 2px solid gray}&quot;</span>
+                                        <span class="s2">&quot;QScrollBar::handle{background : #483c32; border-radius : 15; min-width: 50px; min-height: 45px;}&quot;</span>
+                                        <span class="s2">&quot;QScrollBar::handle::pressed{background : #332d28;}&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">scrollKorna</span><span class="o">.</span><span class="n">setCursor</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">PointingHandCursor</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">scrollKorna</span><span class="o">.</span><span class="n">setValue</span><span class="p">(</span><span class="mi">50</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">label</span> <span class="o">=</span> <span class="n">QLabel</span><span class="p">(</span><span class="s2">&quot;Elektrik</span><span class="se">\n</span><span class="s2">Kornası&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">label</span><span class="o">.</span><span class="n">setGeometry</span><span class="p">(</span><span class="mi">877</span><span class="p">,</span> <span class="mi">450</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="mi">30</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">label</span><span class="o">.</span><span class="n">setStyleSheet</span><span class="p">(</span><span class="s2">&quot;QLabel{color : white;}&quot;</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">kornaButton</span> <span class="o">=</span> <span class="n">QPushButton</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">,</span><span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">kornaButton</span><span class="o">.</span><span class="n">setGeometry</span><span class="p">(</span><span class="mi">870</span><span class="p">,</span> <span class="mi">480</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="mi">50</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">kornaButton</span><span class="o">.</span><span class="n">setStyleSheet</span><span class="p">(</span><span class="s2">&quot;QPushButton{border-radius : 25; border : 3px solid gray; background-color : #fcca12; color : black}&quot;</span>
+                                    <span class="s2">&quot;QPushButton::pressed{background-color : #d9aa02;}&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">kornaButton</span><span class="o">.</span><span class="n">setCursor</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">PointingHandCursor</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="App.leftPanel"><a class="viewcode-back" href="../main.html#main.App.leftPanel">[docs]</a>    <span class="k">def</span> <span class="nf">leftPanel</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">btnLabel</span> <span class="o">=</span> <span class="n">QLabel</span><span class="p">(</span><span class="s2">&quot;  ERTMS</span><span class="se">\n</span><span class="s2">    Aşırı</span><span class="se">\n</span><span class="s2">Yükseltme&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">btnLabel</span><span class="o">.</span><span class="n">setGeometry</span><span class="p">(</span><span class="mi">60</span><span class="p">,</span> <span class="mi">430</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="mi">50</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">btnLabel</span><span class="o">.</span><span class="n">setStyleSheet</span><span class="p">(</span><span class="s2">&quot;QLabel{color : white;}&quot;</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">buttonErtms</span> <span class="o">=</span> <span class="n">QPushButton</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">buttonErtms</span><span class="o">.</span><span class="n">setGeometry</span><span class="p">(</span><span class="mi">60</span><span class="p">,</span> <span class="mi">480</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="mi">50</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">buttonErtms</span><span class="o">.</span><span class="n">setStyleSheet</span><span class="p">(</span><span class="s2">&quot;QPushButton{border-radius : 25; border : 3px solid gray; background-color : red;}&quot;</span>
+                                    <span class="s2">&quot;QPushButton::pressed{background-color : #990000;}&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">buttonErtms</span><span class="o">.</span><span class="n">setCursor</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">PointingHandCursor</span><span class="p">)</span>
+       
+        <span class="bp">self</span><span class="o">.</span><span class="n">pantoLabel</span> <span class="o">=</span> <span class="n">QLabel</span><span class="p">(</span><span class="s2">&quot;  Panto</span><span class="se">\n</span><span class="s2">Kaldırma</span><span class="se">\n</span><span class="s2">Anahtarı&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pantoLabel</span><span class="o">.</span><span class="n">setGeometry</span><span class="p">(</span><span class="mi">89</span><span class="p">,</span> <span class="mi">85</span><span class="p">,</span> <span class="mi">70</span><span class="p">,</span> <span class="mi">60</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pantoLabel</span><span class="o">.</span><span class="n">setStyleSheet</span><span class="p">(</span><span class="s2">&quot;QLabel{color : white;}&quot;</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">pantoScroll</span> <span class="o">=</span> <span class="n">QScrollBar</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pantoScroll</span><span class="o">.</span><span class="n">setGeometry</span><span class="p">(</span><span class="mi">90</span><span class="p">,</span> <span class="mi">140</span><span class="p">,</span> <span class="mi">40</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pantoScroll</span><span class="o">.</span><span class="n">setStyleSheet</span><span class="p">(</span> <span class="s2">&quot;QScrollBar{background : #a89383; border : 2px solid gray}&quot;</span>
+                                        <span class="s2">&quot;QScrollBar::handle{background : #483c32; border-radius : 15; min-width: 50px; min-height: 45px;}&quot;</span>
+                                        <span class="s2">&quot;QScrollBar::handle::pressed{background : #332d28;}&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pantoScroll</span><span class="o">.</span><span class="n">setCursor</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">PointingHandCursor</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pantoScroll</span><span class="o">.</span><span class="n">setValue</span><span class="p">(</span><span class="mi">50</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pantoScroll</span><span class="o">.</span><span class="n">valueChanged</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="k">lambda</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">pantoScrollAction</span><span class="p">())</span>
+
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">mcbLabel</span> <span class="o">=</span> <span class="n">QLabel</span><span class="p">(</span><span class="s2">&quot;   MCB</span><span class="se">\n</span><span class="s2">Anahtarı&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mcbLabel</span><span class="o">.</span><span class="n">setGeometry</span><span class="p">(</span><span class="mi">149</span><span class="p">,</span> <span class="mi">85</span><span class="p">,</span> <span class="mi">70</span><span class="p">,</span> <span class="mi">60</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mcbLabel</span><span class="o">.</span><span class="n">setStyleSheet</span><span class="p">(</span><span class="s2">&quot;QLabel{color : white;}&quot;</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">mcbScroll</span> <span class="o">=</span> <span class="n">QScrollBar</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mcbScroll</span><span class="o">.</span><span class="n">setGeometry</span><span class="p">(</span><span class="mi">150</span><span class="p">,</span> <span class="mi">140</span><span class="p">,</span> <span class="mi">40</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mcbScroll</span><span class="o">.</span><span class="n">setStyleSheet</span><span class="p">(</span><span class="s2">&quot;QScrollBar{background : #a89383; border : 2px solid gray}&quot;</span>
+                                     <span class="s2">&quot;QScrollBar::handle{background : #483c32; border-radius : 15; min-width: 50px; min-height: 45px;}&quot;</span>
+                                     <span class="s2">&quot;QScrollBar::handle::pressed{background : #332d28;}&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mcbScroll</span><span class="o">.</span><span class="n">setCursor</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">PointingHandCursor</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mcbScroll</span><span class="o">.</span><span class="n">setValue</span><span class="p">(</span><span class="mi">50</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mcbScroll</span><span class="o">.</span><span class="n">valueChanged</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="k">lambda</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">mcbScrollAction</span><span class="p">())</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">freeErtmsLabel</span> <span class="o">=</span> <span class="n">QLabel</span><span class="p">(</span><span class="s2">&quot; ERTMS</span><span class="se">\n</span><span class="s2">Serbest</span><span class="se">\n</span><span class="s2">Bırakma&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">freeErtmsLabel</span><span class="o">.</span><span class="n">setGeometry</span><span class="p">(</span><span class="mi">91</span><span class="p">,</span> <span class="mi">250</span><span class="p">,</span> <span class="mi">70</span><span class="p">,</span> <span class="mi">60</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">freeErtmsLabel</span><span class="o">.</span><span class="n">setStyleSheet</span><span class="p">(</span><span class="s2">&quot;QLabel{color : white;}&quot;</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">freeErtmsScroll</span> <span class="o">=</span> <span class="n">QScrollBar</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">freeErtmsScroll</span><span class="o">.</span><span class="n">setGeometry</span><span class="p">(</span><span class="mi">90</span><span class="p">,</span> <span class="mi">310</span><span class="p">,</span> <span class="mi">40</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">freeErtmsScroll</span><span class="o">.</span><span class="n">setStyleSheet</span><span class="p">(</span><span class="s2">&quot;QScrollBar{background : #a89383; border : 2px solid gray}&quot;</span>
+                                     <span class="s2">&quot;QScrollBar::handle{background : #483c32; border-radius : 15; min-width: 50px; min-height: 45px;}&quot;</span>
+                                     <span class="s2">&quot;QScrollBar::handle::pressed{background : #332d28;}&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">freeErtmsScroll</span><span class="o">.</span><span class="n">setCursor</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">PointingHandCursor</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">freeErtmsScroll</span><span class="o">.</span><span class="n">setValue</span><span class="p">(</span><span class="mi">50</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">takenErtmsLabel</span> <span class="o">=</span> <span class="n">QLabel</span><span class="p">(</span><span class="s2">&quot;ERTMS</span><span class="se">\n</span><span class="s2"> Alındı</span><span class="se">\n</span><span class="s2">Bildirimi&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">takenErtmsLabel</span><span class="o">.</span><span class="n">setGeometry</span><span class="p">(</span><span class="mi">152</span><span class="p">,</span> <span class="mi">250</span><span class="p">,</span> <span class="mi">70</span><span class="p">,</span> <span class="mi">60</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">takenErtmsLabel</span><span class="o">.</span><span class="n">setStyleSheet</span><span class="p">(</span><span class="s2">&quot;QLabel{color : white;}&quot;</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">takenErtmsScroll</span> <span class="o">=</span> <span class="n">QScrollBar</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">takenErtmsScroll</span><span class="o">.</span><span class="n">setGeometry</span><span class="p">(</span><span class="mi">150</span><span class="p">,</span> <span class="mi">310</span><span class="p">,</span> <span class="mi">40</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">takenErtmsScroll</span><span class="o">.</span><span class="n">setStyleSheet</span><span class="p">(</span><span class="s2">&quot;QScrollBar{background : #a89383; border : 2px solid gray}&quot;</span>
+                                     <span class="s2">&quot;QScrollBar::handle{background : #fcca12; border-radius : 15; min-width: 50px; min-height: 45px;}&quot;</span>
+                                     <span class="s2">&quot;QScrollBar::handle::pressed{background : #332d28;}&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">takenErtmsScroll</span><span class="o">.</span><span class="n">setCursor</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">PointingHandCursor</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">takenErtmsScroll</span><span class="o">.</span><span class="n">setValue</span><span class="p">(</span><span class="mi">50</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="App.createButtons"><a class="viewcode-back" href="../main.html#main.App.createButtons">[docs]</a>    <span class="k">def</span> <span class="nf">createButtons</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">connectButton</span> <span class="o">=</span> <span class="n">QPushButton</span><span class="p">(</span><span class="s2">&quot;OFF&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">connectButton</span><span class="o">.</span><span class="n">setGeometry</span><span class="p">(</span><span class="mi">450</span><span class="p">,</span> <span class="mi">260</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="mi">50</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">connectButton</span><span class="o">.</span><span class="n">setStyleSheet</span><span class="p">(</span><span class="s2">&quot;QPushButton{border-radius : 15; border : 1px solid white;background-color : red;color : white}&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">connectButton</span><span class="o">.</span><span class="n">clicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pressButton</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">connectButton</span><span class="o">.</span><span class="n">setCursor</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">PointingHandCursor</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="App.pressButton"><a class="viewcode-back" href="../main.html#main.App.pressButton">[docs]</a>    <span class="k">def</span> <span class="nf">pressButton</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">count</span><span class="o">%</span><span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">connectButton</span><span class="o">.</span><span class="n">setStyleSheet</span><span class="p">(</span><span class="s2">&quot;QPushButton{border-radius : 15; border : 1px solid white;background-color : green;color : white}&quot;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">connectButton</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="s2">&quot;ON&quot;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">count</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="n">sleep</span><span class="p">(</span><span class="mf">0.3</span><span class="p">)</span>
+            <span class="n">mqtt</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">pages</span> <span class="o">=</span> <span class="n">createPages</span><span class="o">.</span><span class="n">CreatePages</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">pages</span><span class="o">.</span><span class="n">create</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">connectButton</span><span class="o">.</span><span class="n">setStyleSheet</span><span class="p">(</span><span class="s2">&quot;QPushButton{border-radius : 15; border : 1px solid white;background-color : red;color : white}&quot;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">connectButton</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="s2">&quot;OFF&quot;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">count</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="n">sleep</span><span class="p">(</span><span class="mf">0.3</span><span class="p">)</span>
+            <span class="n">mqtt</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">pages</span><span class="o">.</span><span class="n">close</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="App.paintEvent"><a class="viewcode-back" href="../main.html#main.App.paintEvent">[docs]</a>    <span class="k">def</span> <span class="nf">paintEvent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">e</span><span class="p">):</span>
+        <span class="n">painter</span> <span class="o">=</span> <span class="n">QPainter</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="n">painter</span><span class="o">.</span><span class="n">begin</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="n">painter</span><span class="o">.</span><span class="n">setPen</span><span class="p">(</span><span class="n">QPen</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">white</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">Qt</span><span class="o">.</span><span class="n">SolidLine</span><span class="p">))</span>
+
+        <span class="n">painter</span><span class="o">.</span><span class="n">drawRect</span><span class="p">(</span><span class="mi">40</span><span class="p">,</span> <span class="mi">80</span><span class="p">,</span> <span class="mi">200</span><span class="p">,</span> <span class="mi">480</span><span class="p">)</span>     <span class="c1"># left panel</span>
+        <span class="n">painter</span><span class="o">.</span><span class="n">drawRect</span><span class="p">(</span><span class="mi">740</span><span class="p">,</span> <span class="mi">80</span><span class="p">,</span> <span class="mi">200</span><span class="p">,</span> <span class="mi">480</span><span class="p">)</span>    <span class="c1"># Right panel</span>
+        <span class="n">painter</span><span class="o">.</span><span class="n">drawRect</span><span class="p">(</span><span class="mi">280</span><span class="p">,</span> <span class="mi">40</span><span class="p">,</span> <span class="mi">420</span><span class="p">,</span> <span class="mi">150</span><span class="p">)</span>    <span class="c1"># Middle panel</span>
+        <span class="n">painter</span><span class="o">.</span><span class="n">drawRect</span><span class="p">(</span><span class="mi">340</span><span class="p">,</span> <span class="mi">380</span><span class="p">,</span> <span class="mi">300</span><span class="p">,</span> <span class="mi">180</span><span class="p">)</span>   <span class="c1"># Main control panel</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">sendAngleValueData</span><span class="p">()</span>
+
+        <span class="n">painter</span><span class="o">.</span><span class="n">end</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="App.sendAngleValueData"><a class="viewcode-back" href="../main.html#main.App.sendAngleValueData">[docs]</a>    <span class="k">def</span> <span class="nf">sendAngleValueData</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        
+        <span class="n">randAngleValue</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="o">-</span><span class="mi">20</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+        <span class="n">angleValueMsg</span> <span class="o">=</span> <span class="s1">&#39;{&quot;gaugeMeterAngle&quot; : &quot;&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">randAngleValue</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;&quot;}&#39;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">broker</span><span class="p">,</span> <span class="mi">1883</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">publish</span><span class="p">(</span><span class="n">topic</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">topic</span><span class="p">,</span> <span class="n">payload</span><span class="o">=</span><span class="n">angleValueMsg</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="App.createImages"><a class="viewcode-back" href="../main.html#main.App.createImages">[docs]</a>    <span class="k">def</span> <span class="nf">createImages</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+        <span class="c1"># icon-61.png    icon-62.png</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">icon61Label</span> <span class="o">=</span> <span class="n">QLabel</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">icon61</span> <span class="o">=</span> <span class="n">QPixmap</span><span class="p">(</span><span class="s1">&#39;images\icon-61.png&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">icon61Label</span><span class="o">.</span><span class="n">setPixmap</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">icon61</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">icon61Label</span><span class="o">.</span><span class="n">setGeometry</span><span class="p">(</span><span class="mi">55</span><span class="p">,</span> <span class="mi">140</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">icon61</span><span class="o">.</span><span class="n">width</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">icon61</span><span class="o">.</span><span class="n">height</span><span class="p">())</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">icon62Label</span> <span class="o">=</span> <span class="n">QLabel</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">icon62</span> <span class="o">=</span> <span class="n">QPixmap</span><span class="p">(</span><span class="s1">&#39;images\icon-62.png&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">icon62Label</span><span class="o">.</span><span class="n">setPixmap</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">icon62</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">icon62Label</span><span class="o">.</span><span class="n">setGeometry</span><span class="p">(</span><span class="mi">55</span><span class="p">,</span> <span class="mi">215</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">icon62</span><span class="o">.</span><span class="n">width</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">icon62</span><span class="o">.</span><span class="n">height</span><span class="p">())</span>
+
+
+        <span class="c1"># MCBStateClose.png   MCBStateOpen.png</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">MCBOpenLabel</span> <span class="o">=</span> <span class="n">QLabel</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">iconMCBOpen</span> <span class="o">=</span> <span class="n">QPixmap</span><span class="p">(</span><span class="s1">&#39;images\MCBStateClose.png&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">MCBOpenLabel</span><span class="o">.</span><span class="n">setPixmap</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">iconMCBOpen</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">MCBOpenLabel</span><span class="o">.</span><span class="n">setGeometry</span><span class="p">(</span><span class="mi">200</span><span class="p">,</span> <span class="mi">140</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">iconMCBOpen</span><span class="o">.</span><span class="n">width</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">iconMCBOpen</span><span class="o">.</span><span class="n">height</span><span class="p">())</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">MCBCloseLabel</span> <span class="o">=</span> <span class="n">QLabel</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">iconMCBClose</span> <span class="o">=</span> <span class="n">QPixmap</span><span class="p">(</span><span class="s1">&#39;images\MCBStateOpen.png&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">MCBCloseLabel</span><span class="o">.</span><span class="n">setPixmap</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">iconMCBClose</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">MCBCloseLabel</span><span class="o">.</span><span class="n">setGeometry</span><span class="p">(</span><span class="mi">200</span><span class="p">,</span> <span class="mi">210</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">iconMCBClose</span><span class="o">.</span><span class="n">width</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">iconMCBClose</span><span class="o">.</span><span class="n">height</span><span class="p">())</span>
+
+        <span class="c1"># SANDON.png</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sandonLabel</span> <span class="o">=</span> <span class="n">QLabel</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">iconSandon</span> <span class="o">=</span> <span class="n">QPixmap</span><span class="p">(</span><span class="s1">&#39;images\SANDON.png&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sandonLabel</span><span class="o">.</span><span class="n">setPixmap</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">iconSandon</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sandonLabel</span><span class="o">.</span><span class="n">setGeometry</span><span class="p">(</span><span class="mi">380</span><span class="p">,</span> <span class="mi">120</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">iconSandon</span><span class="o">.</span><span class="n">width</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">iconSandon</span><span class="o">.</span><span class="n">height</span><span class="p">())</span>
+
+
+        <span class="c1"># BRR.png</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">BRRLabel</span> <span class="o">=</span> <span class="n">QLabel</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">iconBRR</span> <span class="o">=</span> <span class="n">QPixmap</span><span class="p">(</span><span class="s1">&#39;images\BRR.png&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">BRRLabel</span><span class="o">.</span><span class="n">setPixmap</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">iconBRR</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">BRRLabel</span><span class="o">.</span><span class="n">setGeometry</span><span class="p">(</span><span class="mi">470</span><span class="p">,</span> <span class="mi">120</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">iconBRR</span><span class="o">.</span><span class="n">width</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">iconBRR</span><span class="o">.</span><span class="n">height</span><span class="p">())</span>
+
+
+        <span class="c1"># icon-66.png   icon-67.png   icon-68.png</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">icon66Label</span> <span class="o">=</span> <span class="n">QLabel</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">icon66</span> <span class="o">=</span> <span class="n">QPixmap</span><span class="p">(</span><span class="s1">&#39;images\icon-66.png&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">icon66Label</span><span class="o">.</span><span class="n">setPixmap</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">icon66</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">icon66Label</span><span class="o">.</span><span class="n">setGeometry</span><span class="p">(</span><span class="mi">565</span><span class="p">,</span> <span class="mi">80</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">icon66</span><span class="o">.</span><span class="n">width</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">icon66</span><span class="o">.</span><span class="n">height</span><span class="p">())</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">icon67Label</span> <span class="o">=</span> <span class="n">QLabel</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">icon67</span> <span class="o">=</span> <span class="n">QPixmap</span><span class="p">(</span><span class="s1">&#39;images\icon-67.png&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">icon67Label</span><span class="o">.</span><span class="n">setPixmap</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">icon67</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">icon67Label</span><span class="o">.</span><span class="n">setGeometry</span><span class="p">(</span><span class="mi">565</span><span class="p">,</span> <span class="mi">110</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">icon67</span><span class="o">.</span><span class="n">width</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">icon67</span><span class="o">.</span><span class="n">height</span><span class="p">())</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">icon68Label</span><span class="o">=</span> <span class="n">QLabel</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">icon68</span> <span class="o">=</span> <span class="n">QPixmap</span><span class="p">(</span><span class="s1">&#39;images\icon-68.png&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">icon68Label</span><span class="o">.</span><span class="n">setPixmap</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">icon68</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">icon68Label</span><span class="o">.</span><span class="n">setGeometry</span><span class="p">(</span><span class="mi">565</span><span class="p">,</span> <span class="mi">140</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">icon68</span><span class="o">.</span><span class="n">width</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">icon68</span><span class="o">.</span><span class="n">height</span><span class="p">())</span>
+
+
+        <span class="c1"># BRR.png  BRACT.png</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">BRRLabel2</span> <span class="o">=</span> <span class="n">QLabel</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">BRRLabel2</span><span class="o">.</span><span class="n">setPixmap</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">iconBRR</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">BRRLabel2</span><span class="o">.</span><span class="n">setGeometry</span><span class="p">(</span><span class="mi">745</span><span class="p">,</span> <span class="mi">270</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">iconBRR</span><span class="o">.</span><span class="n">width</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">iconBRR</span><span class="o">.</span><span class="n">height</span><span class="p">())</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">bractLabel</span> <span class="o">=</span> <span class="n">QLabel</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">iconBRACT</span> <span class="o">=</span> <span class="n">QPixmap</span><span class="p">(</span><span class="s1">&#39;images\BRACT.png&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">bractLabel</span><span class="o">.</span><span class="n">setPixmap</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">iconBRACT</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">bractLabel</span><span class="o">.</span><span class="n">setGeometry</span><span class="p">(</span><span class="mi">745</span><span class="p">,</span> <span class="mi">340</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">iconBRACT</span><span class="o">.</span><span class="n">width</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">iconBRACT</span><span class="o">.</span><span class="n">height</span><span class="p">())</span></div>
+
+<div class="viewcode-block" id="App.pressUpButton"><a class="viewcode-back" href="../main.html#main.App.pressUpButton">[docs]</a>    <span class="k">def</span> <span class="nf">pressUpButton</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">upButton</span><span class="o">.</span><span class="n">setStyleSheet</span><span class="p">(</span><span class="s2">&quot;QPushButton{border-radius : 25; border : 3px solid white; background-color : #734a12;color : black}&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">downButton</span><span class="o">.</span><span class="n">setStyleSheet</span><span class="p">(</span><span class="s2">&quot;QPushButton{border-radius : 25; border : 3px solid white; background-color : gray;color : black}&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">notrButton</span><span class="o">.</span><span class="n">setStyleSheet</span><span class="p">(</span><span class="s2">&quot;QPushButton{border-radius : 25; border : 3px solid white; background-color : gray;color : black}&quot;</span><span class="p">)</span>
+        
+        <span class="n">msg</span> <span class="o">=</span> <span class="s1">&#39;{&quot;btnValue&quot; : &quot;1&quot;}&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">broker</span><span class="p">,</span> <span class="mi">1883</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">publish</span><span class="p">(</span><span class="n">topic</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">topic</span><span class="p">,</span> <span class="n">payload</span><span class="o">=</span><span class="n">msg</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;press up button&quot;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="App.pressDownButton"><a class="viewcode-back" href="../main.html#main.App.pressDownButton">[docs]</a>    <span class="k">def</span> <span class="nf">pressDownButton</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">notrButton</span><span class="o">.</span><span class="n">setStyleSheet</span><span class="p">(</span><span class="s2">&quot;QPushButton{border-radius : 25; border : 3px solid white; background-color : gray;color : black}&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">downButton</span><span class="o">.</span><span class="n">setStyleSheet</span><span class="p">(</span><span class="s2">&quot;QPushButton{border-radius : 25; border : 3px solid white; background-color : #734a12;color : black}&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">upButton</span><span class="o">.</span><span class="n">setStyleSheet</span><span class="p">(</span><span class="s2">&quot;QPushButton{border-radius : 25; border : 3px solid white; background-color : gray;color : black}&quot;</span><span class="p">)</span>
+        
+        <span class="n">msg</span> <span class="o">=</span> <span class="s1">&#39;{&quot;btnValue&quot; : &quot;-1&quot;}&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">broker</span><span class="p">,</span> <span class="mi">1883</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">publish</span><span class="p">(</span><span class="n">topic</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">topic</span><span class="p">,</span> <span class="n">payload</span><span class="o">=</span><span class="n">msg</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;press down button&quot;</span><span class="p">)</span></div>
+    
+<div class="viewcode-block" id="App.pressNotrButton"><a class="viewcode-back" href="../main.html#main.App.pressNotrButton">[docs]</a>    <span class="k">def</span> <span class="nf">pressNotrButton</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">notrButton</span><span class="o">.</span><span class="n">setStyleSheet</span><span class="p">(</span><span class="s2">&quot;QPushButton{border-radius : 25; border : 3px solid white; background-color : #734a12;color : black}&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">downButton</span><span class="o">.</span><span class="n">setStyleSheet</span><span class="p">(</span><span class="s2">&quot;QPushButton{border-radius : 25; border : 3px solid white; background-color : gray;color : black}&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">upButton</span><span class="o">.</span><span class="n">setStyleSheet</span><span class="p">(</span><span class="s2">&quot;QPushButton{border-radius : 25; border : 3px solid white; background-color : gray;color : black}&quot;</span><span class="p">)</span>
+        
+        <span class="n">msg</span> <span class="o">=</span> <span class="s1">&#39;{&quot;btnValue&quot; : &quot;0&quot;}&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">broker</span><span class="p">,</span> <span class="mi">1883</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">publish</span><span class="p">(</span><span class="n">topic</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">topic</span><span class="p">,</span> <span class="n">payload</span><span class="o">=</span><span class="n">msg</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;press notr button&quot;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="App.pantoScrollAction"><a class="viewcode-back" href="../main.html#main.App.pantoScrollAction">[docs]</a>    <span class="k">def</span> <span class="nf">pantoScrollAction</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">pantoScroll</span><span class="o">.</span><span class="n">value</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">value</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">or</span> <span class="n">value</span> <span class="o">==</span> <span class="mi">99</span><span class="p">:</span>
+            <span class="n">msg</span> <span class="o">=</span> <span class="s1">&#39;{&quot;pantoScroll&quot; : &quot;&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">value</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;&quot;}&#39;</span>
+            <span class="c1"># print(msg)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">broker</span><span class="p">,</span> <span class="mi">1883</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">publish</span><span class="p">(</span><span class="n">topic</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">topic</span><span class="p">,</span> <span class="n">payload</span><span class="o">=</span><span class="n">msg</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;panto scroll new value : &quot;</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span></div>
+        
+<div class="viewcode-block" id="App.frenScrollAction"><a class="viewcode-back" href="../main.html#main.App.frenScrollAction">[docs]</a>    <span class="k">def</span> <span class="nf">frenScrollAction</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">scrollFren</span><span class="o">.</span><span class="n">value</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">value</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">or</span> <span class="n">value</span> <span class="o">==</span> <span class="mi">99</span><span class="p">:</span>
+            <span class="n">msg</span> <span class="o">=</span> <span class="s1">&#39;{&quot;frenScroll&quot; : &quot;&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">value</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;&quot;}&#39;</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">broker</span><span class="p">,</span> <span class="mi">1883</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">publish</span><span class="p">(</span><span class="n">topic</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">topic</span><span class="p">,</span> <span class="n">payload</span><span class="o">=</span><span class="n">msg</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;fren scroll new value : &quot;</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span></div>
+    
+<div class="viewcode-block" id="App.mcbScrollAction"><a class="viewcode-back" href="../main.html#main.App.mcbScrollAction">[docs]</a>    <span class="k">def</span> <span class="nf">mcbScrollAction</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mcbScroll</span><span class="o">.</span><span class="n">value</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">value</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">or</span> <span class="n">value</span> <span class="o">==</span> <span class="mi">99</span><span class="p">:</span>
+            <span class="n">msg</span> <span class="o">=</span> <span class="s1">&#39;{&quot;mcbScroll&quot; : &quot;&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">value</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;&quot;}&#39;</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">broker</span><span class="p">,</span> <span class="mi">1883</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">publish</span><span class="p">(</span><span class="n">topic</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">topic</span><span class="p">,</span> <span class="n">payload</span><span class="o">=</span><span class="n">msg</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;mcb scroll new value : &quot;</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span></div></div>
+
+<div class="viewcode-block" id="main"><a class="viewcode-back" href="../main.html#main.main">[docs]</a><span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="n">app</span> <span class="o">=</span> <span class="n">QApplication</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">)</span>
+    <span class="n">ex</span> <span class="o">=</span> <span class="n">App</span><span class="p">()</span>
+    <span class="n">ex</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+    <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="n">app</span><span class="o">.</span><span class="n">exec_</span><span class="p">())</span></div>
+
+<span class="k">if</span> <span class="vm">__name__</span><span class="o">==</span><span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">main</span><span class="p">()</span>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Hilal Nisanci.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

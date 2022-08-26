@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>createBar &mdash; Sphinx Project 0.0.1 documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../_static/doctools.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../index.html" class="icon icon-home"> Sphinx Project
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../modules.html">project_files</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Sphinx Project</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="index.html">Module code</a> &raquo;</li>
+      <li>createBar</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for createBar</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">createBar.py</span>
+<span class="sd">====================================</span>
+<span class="sd">This module to create bars</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">from</span> <span class="nn">PyQt5.QtGui</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">PyQt5.QtCore</span> <span class="kn">import</span> <span class="o">*</span>
+
+<div class="viewcode-block" id="CreateBar"><a class="viewcode-back" href="../createBar.html#createBar.CreateBar">[docs]</a><span class="k">class</span> <span class="nc">CreateBar</span><span class="p">():</span>
+
+<div class="viewcode-block" id="CreateBar.paintEvent"><a class="viewcode-back" href="../createBar.html#createBar.CreateBar.paintEvent">[docs]</a>    <span class="k">def</span> <span class="nf">paintEvent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">painter</span><span class="p">,</span> <span class="n">barName</span><span class="p">,</span> <span class="n">page</span><span class="p">,</span> <span class="n">progressValue</span><span class="p">):</span>
+        
+        <span class="n">pen</span> <span class="o">=</span> <span class="n">QPen</span><span class="p">()</span>
+
+        <span class="c1"># paintEvent start for kW bar </span>
+        <span class="k">if</span> <span class="n">barName</span> <span class="o">==</span> <span class="s2">&quot;kV&quot;</span><span class="p">:</span>
+            
+            <span class="k">if</span> <span class="n">page</span> <span class="o">==</span> <span class="s2">&quot;du1&quot;</span><span class="p">:</span>
+                <span class="c1"># kullanılacak sayısal değerler verilir</span>
+                <span class="n">text_x</span> <span class="o">=</span> <span class="mi">105</span>    <span class="c1"># kW barında değerlerin yazılmaya başlanacağı x değeri  </span>
+                <span class="n">text_y</span> <span class="o">=</span> <span class="mi">135</span>    <span class="c1"># kW barında değerlerin yazılmaya başlanacağı y değeri</span>
+                <span class="n">scaleCount</span> <span class="o">=</span> <span class="mi">4</span>  <span class="c1"># kW barında 4 değer bulunuyor</span>
+                <span class="n">increment</span> <span class="o">=</span> <span class="mi">5</span>   <span class="c1"># kW barındaki artış değeri</span>
+                <span class="n">rect_x</span> <span class="o">=</span> <span class="mi">140</span>    <span class="c1"># dörtgenin başlangıç x değeri</span>
+                <span class="n">rect_y</span> <span class="o">=</span> <span class="mi">130</span>    <span class="c1"># dörtgenin başlangıç y değeri</span>
+                <span class="n">rect_w</span> <span class="o">=</span> <span class="mi">40</span>     <span class="c1"># dörtgenin width değeri</span>
+                <span class="n">rect_h</span> <span class="o">=</span> <span class="mi">220</span>    <span class="c1"># dörtgenin height değeri  </span>
+
+            <span class="k">if</span> <span class="n">page</span> <span class="o">==</span> <span class="s2">&quot;du2&quot;</span><span class="p">:</span>
+                <span class="c1"># kullanılacak sayısal değerler verilir</span>
+                <span class="n">text_x</span> <span class="o">=</span> <span class="mi">450</span>    <span class="c1"># kW barında değerlerin yazılmaya başlanacağı x değeri  </span>
+                <span class="n">text_y</span> <span class="o">=</span> <span class="mi">135</span>    <span class="c1"># kW barında değerlerin yazılmaya başlanacağı y değeri  </span>
+                <span class="n">scaleCount</span> <span class="o">=</span> <span class="mi">4</span>  <span class="c1"># kW barında 4 değer bulunuyor</span>
+                <span class="n">increment</span> <span class="o">=</span> <span class="mi">5</span>   <span class="c1"># kW barındaki artış değeri</span>
+                <span class="n">rect_x</span> <span class="o">=</span> <span class="mi">488</span>    <span class="c1"># dörtgenin başlangıç x değeri   </span>
+                <span class="n">rect_y</span> <span class="o">=</span> <span class="mi">130</span>    <span class="c1"># dörtgenin başlangıç y değeri   </span>
+                <span class="n">rect_w</span> <span class="o">=</span> <span class="mi">40</span>     <span class="c1"># dörtgenin width değeri </span>
+                <span class="n">rect_h</span> <span class="o">=</span> <span class="mi">220</span>    <span class="c1"># dörtgenin height değeri       </span>
+
+            <span class="c1"># yazı için kalem özellikleri ayarlanır</span>
+            <span class="n">pen</span><span class="o">.</span><span class="n">setWidth</span><span class="p">(</span><span class="mi">60</span><span class="p">)</span>
+            <span class="n">pen</span><span class="o">.</span><span class="n">setColor</span><span class="p">(</span><span class="n">QColor</span><span class="p">(</span><span class="s2">&quot;white&quot;</span><span class="p">))</span>
+            <span class="n">painter</span><span class="o">.</span><span class="n">setPen</span><span class="p">(</span><span class="n">pen</span><span class="p">)</span>
+
+            <span class="c1"># barın adı yazılır</span>
+            <span class="n">painter</span><span class="o">.</span><span class="n">drawText</span><span class="p">(</span><span class="n">rect_x</span><span class="o">+</span><span class="mi">18</span><span class="p">,</span> <span class="n">rect_y</span><span class="o">-</span><span class="mi">5</span><span class="p">,</span> <span class="n">barName</span><span class="p">)</span>
+                
+            <span class="c1"># bardaki ölçek sayıları yazılır</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">scaleCount</span><span class="p">):</span>
+                <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span>
+                    <span class="n">start_y</span> <span class="o">=</span> <span class="p">(</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="mi">80</span> <span class="o">+</span> <span class="mi">45</span> <span class="o">+</span> <span class="n">text_y</span>
+                    <span class="n">painter</span><span class="o">.</span><span class="n">drawText</span><span class="p">(</span><span class="n">text_x</span><span class="p">,</span> <span class="n">start_y</span> <span class="o">+</span> <span class="mi">10</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="mi">0</span><span class="p">))</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">start_y</span> <span class="o">=</span> <span class="n">i</span> <span class="o">*</span> <span class="mi">80</span> <span class="o">+</span> <span class="n">text_y</span>
+                    <span class="n">painter</span><span class="o">.</span><span class="n">drawText</span><span class="p">(</span><span class="n">text_x</span><span class="p">,</span> <span class="n">start_y</span> <span class="o">+</span> <span class="mi">10</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="mi">30</span> <span class="o">-</span> <span class="n">i</span> <span class="o">*</span> <span class="n">increment</span><span class="p">))</span>
+
+            <span class="c1"># geometrik çizimler için kalem ayarlanır</span>
+            <span class="n">painter</span><span class="o">.</span><span class="n">setPen</span><span class="p">(</span><span class="n">QPen</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">white</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">Qt</span><span class="o">.</span><span class="n">SolidLine</span><span class="p">))</span>
+                
+            <span class="c1"># bar çizimi yapılır</span>
+            <span class="n">painter</span><span class="o">.</span><span class="n">drawRect</span><span class="p">(</span><span class="n">rect_x</span><span class="p">,</span> <span class="n">rect_y</span><span class="p">,</span> <span class="n">rect_w</span><span class="p">,</span> <span class="n">rect_h</span><span class="p">)</span>
+
+            <span class="c1"># bardaki büyük ölçek çizgileri çizilir</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">scaleCount</span><span class="p">):</span>
+                <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                    <span class="n">scale_y</span> <span class="o">=</span> <span class="n">rect_y</span> <span class="o">+</span> <span class="mi">10</span>
+                <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span>
+                    <span class="n">scale_y</span> <span class="o">=</span> <span class="mi">350</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">scale_y</span> <span class="o">=</span> <span class="n">i</span> <span class="o">*</span> <span class="mi">80</span> <span class="o">+</span> <span class="p">(</span><span class="n">rect_y</span> <span class="o">+</span> <span class="mi">10</span><span class="p">)</span>
+                <span class="n">painter</span><span class="o">.</span><span class="n">drawLine</span><span class="p">(</span><span class="n">rect_x</span><span class="o">-</span><span class="mi">18</span><span class="p">,</span> <span class="n">scale_y</span><span class="p">,</span> <span class="n">rect_x</span><span class="p">,</span> <span class="n">scale_y</span><span class="p">)</span>
+                
+            <span class="c1"># bardaki küçük ölçek çizgileri çizilir</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">((</span><span class="n">scaleCount</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="mi">5</span><span class="p">):</span>
+                <span class="n">scale_y</span> <span class="o">=</span> <span class="n">i</span> <span class="o">*</span> <span class="mi">16</span> <span class="o">+</span> <span class="p">(</span><span class="n">rect_y</span> <span class="o">+</span> <span class="mi">10</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">scale_y</span> <span class="o">&gt;=</span> <span class="mi">310</span><span class="p">:</span>
+                    <span class="k">break</span>
+                <span class="n">painter</span><span class="o">.</span><span class="n">drawLine</span><span class="p">(</span><span class="n">rect_x</span><span class="o">-</span><span class="mi">6</span><span class="p">,</span> <span class="n">scale_y</span><span class="p">,</span> <span class="n">rect_x</span><span class="p">,</span> <span class="n">scale_y</span><span class="p">)</span>
+
+            <span class="c1"># progress kısmı çizilir</span>
+            <span class="k">if</span> <span class="n">progressValue</span> <span class="o">&gt;=</span><span class="mi">0</span> <span class="ow">and</span> <span class="n">progressValue</span> <span class="o">&lt;=</span><span class="mi">30</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">progressValue</span> <span class="o">&lt;=</span> <span class="mi">20</span><span class="p">:</span>
+                    <span class="n">progressValue</span> <span class="o">=</span> <span class="n">progressValue</span> <span class="o">*</span> <span class="mi">2</span> <span class="o">+</span> <span class="mi">9</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">progressValue</span> <span class="o">=</span> <span class="p">(</span><span class="n">progressValue</span> <span class="o">-</span> <span class="mi">20</span><span class="p">)</span> <span class="o">*</span> <span class="mi">16</span> <span class="o">+</span> <span class="mi">50</span>
+                
+                <span class="n">rect</span> <span class="o">=</span> <span class="n">QRectF</span><span class="p">(</span><span class="n">rect_x</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">rect_y</span><span class="o">+</span><span class="n">rect_h</span> <span class="o">-</span> <span class="n">progressValue</span><span class="p">,</span> <span class="n">rect_w</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="n">progressValue</span><span class="p">)</span>
+                <span class="n">painter</span><span class="o">.</span><span class="n">fillRect</span><span class="p">(</span><span class="n">rect</span><span class="p">,</span> <span class="n">QBrush</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">blue</span><span class="p">))</span>
+        <span class="c1"># paintevent end for kW bar</span>
+
+        <span class="c1"># paintEvent start for A bar</span>
+        <span class="k">if</span> <span class="n">barName</span> <span class="o">==</span> <span class="s2">&quot;A&quot;</span><span class="p">:</span>
+            
+            <span class="k">if</span> <span class="n">page</span> <span class="o">==</span> <span class="s2">&quot;du1&quot;</span><span class="p">:</span>
+                <span class="n">text_x</span> <span class="o">=</span> <span class="mi">190</span>
+                <span class="n">text_y</span> <span class="o">=</span> <span class="mi">170</span>
+                <span class="n">rect_x</span> <span class="o">=</span> <span class="mi">230</span>
+                <span class="n">rect_y</span> <span class="o">=</span> <span class="mi">130</span>
+                <span class="n">rect_w</span> <span class="o">=</span> <span class="mi">30</span>
+                <span class="n">rect_h</span> <span class="o">=</span> <span class="mi">220</span>
+                <span class="n">scaleCount</span> <span class="o">=</span> <span class="mi">5</span>
+                <span class="n">increment</span> <span class="o">=</span> <span class="mi">200</span>
+                <span class="n">spaceVal</span> <span class="o">=</span> <span class="p">(</span><span class="nb">int</span><span class="p">)</span> <span class="p">(</span><span class="n">rect_h</span> <span class="o">/</span> <span class="n">scaleCount</span><span class="p">)</span>
+                <span class="n">scale_y</span> <span class="o">=</span> <span class="n">rect_y</span> <span class="o">+</span> <span class="n">spaceVal</span>
+            <span class="k">if</span> <span class="n">page</span> <span class="o">==</span> <span class="s2">&quot;du2&quot;</span><span class="p">:</span>
+                <span class="n">text_x</span> <span class="o">=</span> <span class="mi">540</span>
+                <span class="n">text_y</span> <span class="o">=</span> <span class="mi">125</span>
+                <span class="n">rect_x</span> <span class="o">=</span> <span class="mi">580</span>
+                <span class="n">rect_y</span> <span class="o">=</span> <span class="mi">130</span>
+                <span class="n">rect_w</span> <span class="o">=</span> <span class="mi">30</span>
+                <span class="n">rect_h</span> <span class="o">=</span> <span class="mi">208</span>
+                <span class="n">scaleCount</span> <span class="o">=</span> <span class="mi">9</span>
+                <span class="n">increment</span> <span class="o">=</span> <span class="mi">100</span>
+                <span class="n">spaceVal</span> <span class="o">=</span> <span class="p">(</span><span class="nb">int</span><span class="p">)(</span><span class="n">rect_h</span> <span class="o">/</span> <span class="p">(</span><span class="n">scaleCount</span> <span class="o">-</span> <span class="mi">1</span><span class="p">))</span>
+                <span class="n">scale_y</span> <span class="o">=</span> <span class="n">rect_y</span>
+            
+            <span class="n">pen</span><span class="o">.</span><span class="n">setWidth</span><span class="p">(</span><span class="mi">60</span><span class="p">)</span>
+            <span class="n">pen</span><span class="o">.</span><span class="n">setColor</span><span class="p">(</span><span class="n">QColor</span><span class="p">(</span><span class="s2">&quot;white&quot;</span><span class="p">))</span>
+            <span class="n">painter</span><span class="o">.</span><span class="n">setPen</span><span class="p">(</span><span class="n">pen</span><span class="p">)</span>
+
+            <span class="c1"># barın adı yazılır</span>
+            <span class="n">painter</span><span class="o">.</span><span class="n">drawText</span><span class="p">(</span><span class="n">rect_x</span> <span class="o">+</span> <span class="mi">13</span><span class="p">,</span> <span class="n">rect_y</span><span class="o">-</span><span class="mi">5</span><span class="p">,</span> <span class="n">barName</span><span class="p">)</span>
+
+            <span class="c1"># ölçekteki sayısal değerler yazılır</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">scaleCount</span><span class="p">):</span>
+                <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="n">scaleCount</span> <span class="o">-</span> <span class="mi">1</span><span class="p">:</span>
+                    <span class="n">start_y</span> <span class="o">=</span> <span class="n">rect_y</span> <span class="o">+</span> <span class="n">rect_h</span>
+                    <span class="n">painter</span><span class="o">.</span><span class="n">drawText</span><span class="p">(</span><span class="n">text_x</span><span class="p">,</span> <span class="n">start_y</span> <span class="o">+</span> <span class="mi">5</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="mi">0</span><span class="p">))</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">start_y</span> <span class="o">=</span> <span class="n">i</span> <span class="o">*</span> <span class="n">spaceVal</span> <span class="o">+</span> <span class="n">text_y</span>
+                    <span class="n">painter</span><span class="o">.</span><span class="n">drawText</span><span class="p">(</span><span class="n">text_x</span><span class="p">,</span> <span class="n">start_y</span> <span class="o">+</span> <span class="mi">10</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="mi">800</span> <span class="o">-</span> <span class="n">i</span> <span class="o">*</span> <span class="n">increment</span><span class="p">))</span>
+            
+            <span class="c1"># geometrik çizimler için kalem ayarlanır</span>
+            <span class="n">painter</span><span class="o">.</span><span class="n">setPen</span><span class="p">(</span><span class="n">QPen</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">white</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">Qt</span><span class="o">.</span><span class="n">SolidLine</span><span class="p">))</span>
+                
+            <span class="c1"># bar çizimi yapılır</span>
+            <span class="n">painter</span><span class="o">.</span><span class="n">drawRect</span><span class="p">(</span><span class="n">rect_x</span><span class="p">,</span> <span class="n">rect_y</span><span class="p">,</span> <span class="n">rect_w</span><span class="p">,</span> <span class="n">rect_h</span><span class="p">)</span>
+
+            <span class="c1"># bardaki büyük ölçek çizgileri çizilir</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">scaleCount</span><span class="p">):</span>
+                <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                    <span class="n">painter</span><span class="o">.</span><span class="n">drawLine</span><span class="p">(</span><span class="n">rect_x</span><span class="o">-</span><span class="mi">15</span><span class="p">,</span><span class="n">scale_y</span><span class="p">,</span> <span class="n">rect_x</span><span class="p">,</span> <span class="n">scale_y</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">scale_y</span> <span class="o">+=</span> <span class="n">spaceVal</span>
+                    <span class="n">painter</span><span class="o">.</span><span class="n">drawLine</span><span class="p">(</span><span class="n">rect_x</span><span class="o">-</span><span class="mi">15</span><span class="p">,</span> <span class="n">scale_y</span><span class="p">,</span> <span class="n">rect_x</span><span class="p">,</span> <span class="n">scale_y</span><span class="p">)</span>
+
+            <span class="c1"># bardaki küçük ölçek çizgileri çizilir</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">scaleCount</span><span class="p">):</span>
+                <span class="k">if</span> <span class="n">page</span> <span class="o">==</span> <span class="s2">&quot;du2&quot;</span> <span class="ow">and</span> <span class="n">i</span> <span class="o">==</span> <span class="n">scaleCount</span><span class="o">-</span><span class="mi">1</span><span class="p">:</span>
+                    <span class="k">break</span>
+                <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                    <span class="n">scale_y</span> <span class="o">=</span> <span class="n">rect_y</span> <span class="o">+</span> <span class="p">(</span><span class="nb">int</span><span class="p">)(</span><span class="n">spaceVal</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span>
+                    <span class="n">painter</span><span class="o">.</span><span class="n">drawLine</span><span class="p">(</span><span class="n">rect_x</span><span class="o">-</span><span class="mi">8</span><span class="p">,</span> <span class="n">scale_y</span><span class="p">,</span> <span class="n">rect_x</span><span class="p">,</span> <span class="n">scale_y</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">i</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+                    <span class="n">scale_y</span> <span class="o">+=</span> <span class="n">spaceVal</span>
+                    <span class="n">painter</span><span class="o">.</span><span class="n">drawLine</span><span class="p">(</span><span class="n">rect_x</span><span class="o">-</span><span class="mi">8</span><span class="p">,</span> <span class="n">scale_y</span><span class="p">,</span> <span class="n">rect_x</span><span class="p">,</span> <span class="n">scale_y</span><span class="p">)</span>
+            
+            <span class="k">if</span> <span class="n">progressValue</span> <span class="o">&gt;=</span><span class="mi">0</span> <span class="ow">and</span> <span class="n">progressValue</span> <span class="o">&lt;=</span> <span class="mi">800</span><span class="p">:</span>
+                <span class="n">progressValue</span> <span class="o">=</span> <span class="p">(</span><span class="nb">float</span><span class="p">)(</span><span class="n">progressValue</span> <span class="o">/</span> <span class="n">increment</span><span class="p">)</span> <span class="o">*</span> <span class="n">spaceVal</span>
+                <span class="n">rect</span> <span class="o">=</span> <span class="n">QRectF</span><span class="p">(</span><span class="n">rect_x</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">rect_y</span><span class="o">+</span><span class="n">rect_h</span> <span class="o">-</span> <span class="n">progressValue</span><span class="p">,</span> <span class="n">rect_w</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="n">progressValue</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+                <span class="n">painter</span><span class="o">.</span><span class="n">fillRect</span><span class="p">(</span><span class="n">rect</span><span class="p">,</span> <span class="n">QBrush</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">red</span><span class="p">))</span>
+        <span class="c1"># paintEvent end for A bar</span>
+
+        <span class="c1"># paintEvent start for kN bar</span>
+        <span class="k">if</span> <span class="n">barName</span> <span class="o">==</span> <span class="s2">&quot;kN&quot;</span><span class="p">:</span>
+            <span class="n">scaleCountLeft</span> <span class="o">=</span> <span class="mi">7</span>
+            <span class="n">scaleCountRight</span> <span class="o">=</span> <span class="mi">11</span>
+            <span class="n">incrementLeft</span> <span class="o">=</span> <span class="mi">50</span>
+            <span class="n">incrementRight</span> <span class="o">=</span> <span class="mi">10</span>
+            <span class="n">rect_h</span> <span class="o">=</span> <span class="mi">210</span>
+            <span class="n">rect_w</span> <span class="o">=</span> <span class="mi">40</span>
+            <span class="n">rect_x</span> <span class="o">=</span> <span class="mi">350</span>
+            <span class="n">rect_y</span> <span class="o">=</span> <span class="mi">130</span>
+            <span class="n">text_x</span> <span class="o">=</span> <span class="mi">310</span> <span class="c1"># text değerleri sol taraf için yazılmıştır, </span>
+            <span class="n">text_y</span> <span class="o">=</span> <span class="mi">135</span> <span class="c1"># sağ taraf bu değerlerden elde edilecektir</span>
+            <span class="n">spaceValLeft</span> <span class="o">=</span> <span class="p">(</span><span class="nb">int</span><span class="p">)</span> <span class="p">(</span><span class="n">rect_h</span> <span class="o">/</span> <span class="p">(</span><span class="n">scaleCountLeft</span><span class="p">))</span>
+            <span class="n">spaceValRight</span> <span class="o">=</span> <span class="p">(</span><span class="nb">int</span><span class="p">)</span> <span class="p">(</span><span class="n">rect_h</span> <span class="o">/</span> <span class="p">(</span><span class="n">scaleCountRight</span> <span class="o">-</span> <span class="mi">1</span><span class="p">))</span>
+            <span class="c1"># yazı için kalem özellikleri ayarlanır</span>
+            <span class="n">pen</span><span class="o">.</span><span class="n">setWidth</span><span class="p">(</span><span class="mi">60</span><span class="p">)</span>
+            <span class="n">pen</span><span class="o">.</span><span class="n">setColor</span><span class="p">(</span><span class="n">QColor</span><span class="p">(</span><span class="s2">&quot;white&quot;</span><span class="p">))</span>
+            <span class="n">painter</span><span class="o">.</span><span class="n">setPen</span><span class="p">(</span><span class="n">pen</span><span class="p">)</span>
+
+            <span class="c1"># barın adı yazılır</span>
+            <span class="n">painter</span><span class="o">.</span><span class="n">drawText</span><span class="p">(</span><span class="n">rect_x</span> <span class="o">-</span> <span class="mi">20</span><span class="p">,</span> <span class="n">rect_y</span> <span class="o">-</span> <span class="mi">5</span><span class="p">,</span> <span class="n">barName</span><span class="p">)</span>
+
+            <span class="c1"># bardaki sayı değerleri yazılır</span>
+            
+            <span class="c1"># barın sol tarafı için</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">scaleCountLeft</span><span class="p">):</span>
+                <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="n">scaleCountLeft</span> <span class="o">-</span> <span class="mi">1</span><span class="p">:</span>
+                    <span class="n">painter</span><span class="o">.</span><span class="n">drawText</span><span class="p">(</span><span class="n">text_x</span><span class="p">,</span> <span class="n">rect_y</span> <span class="o">+</span> <span class="n">rect_h</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="mi">0</span><span class="p">))</span>
+                <span class="n">painter</span><span class="o">.</span><span class="n">drawText</span><span class="p">(</span><span class="n">text_x</span><span class="p">,</span> <span class="n">rect_y</span> <span class="o">+</span> <span class="n">i</span><span class="o">*</span><span class="n">spaceValLeft</span> <span class="o">+</span> <span class="n">spaceValLeft</span> <span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="mi">300</span> <span class="o">-</span> <span class="n">i</span><span class="o">*</span><span class="n">incrementLeft</span><span class="p">))</span>
+            
+            <span class="c1"># barın sağ tarafı için</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">scaleCountRight</span><span class="p">):</span>
+                <span class="n">painter</span><span class="o">.</span><span class="n">drawText</span><span class="p">(</span><span class="n">text_x</span> <span class="o">+</span> <span class="mi">105</span><span class="p">,</span> <span class="n">rect_y</span> <span class="o">+</span> <span class="n">i</span><span class="o">*</span><span class="n">spaceValRight</span> <span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="mi">100</span> <span class="o">-</span> <span class="n">i</span><span class="o">*</span><span class="n">incrementRight</span><span class="p">))</span>
+
+            <span class="c1"># geometrik çizimler için kalem ayarlanır</span>
+            <span class="n">painter</span><span class="o">.</span><span class="n">setPen</span><span class="p">(</span><span class="n">QPen</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">white</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">Qt</span><span class="o">.</span><span class="n">SolidLine</span><span class="p">))</span>
+                
+            <span class="c1"># bar çizimi yapılır</span>
+            <span class="n">painter</span><span class="o">.</span><span class="n">drawRect</span><span class="p">(</span><span class="n">rect_x</span><span class="p">,</span> <span class="n">rect_y</span><span class="p">,</span> <span class="n">rect_w</span><span class="p">,</span> <span class="n">rect_h</span><span class="p">)</span>
+
+            <span class="c1"># barın sol tarafındaki büyük ölçek çizgileri çizilir</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">scaleCountLeft</span><span class="p">):</span>
+                <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="n">scaleCountLeft</span> <span class="o">-</span> <span class="mi">1</span><span class="p">:</span>
+                    <span class="n">painter</span><span class="o">.</span><span class="n">drawLine</span><span class="p">(</span><span class="n">rect_x</span> <span class="o">-</span> <span class="mi">15</span><span class="p">,</span> <span class="n">rect_y</span> <span class="o">+</span> <span class="n">rect_h</span><span class="p">,</span> <span class="n">rect_x</span><span class="p">,</span> <span class="n">rect_y</span> <span class="o">+</span> <span class="n">rect_h</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">i</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+                    <span class="n">painter</span><span class="o">.</span><span class="n">drawLine</span><span class="p">(</span><span class="n">rect_x</span><span class="o">-</span><span class="mi">15</span><span class="p">,</span> <span class="n">rect_y</span> <span class="o">+</span> <span class="n">i</span><span class="o">*</span><span class="n">spaceValLeft</span><span class="p">,</span> <span class="n">rect_x</span><span class="p">,</span> <span class="n">rect_y</span> <span class="o">+</span> <span class="n">i</span><span class="o">*</span><span class="n">spaceValLeft</span><span class="p">)</span>
+
+            <span class="c1"># barın sağ tarafındaki büyük ölçek çizgileri çizilir</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">scaleCountRight</span><span class="p">):</span>
+                <span class="n">painter</span><span class="o">.</span><span class="n">drawLine</span><span class="p">(</span><span class="n">rect_x</span> <span class="o">+</span> <span class="n">rect_w</span><span class="p">,</span> <span class="n">rect_y</span> <span class="o">+</span> <span class="n">i</span><span class="o">*</span><span class="n">spaceValRight</span><span class="p">,</span> <span class="n">rect_x</span> <span class="o">+</span> <span class="n">rect_w</span> <span class="o">+</span> <span class="mi">15</span><span class="p">,</span> <span class="n">rect_y</span> <span class="o">+</span> <span class="n">i</span><span class="o">*</span><span class="n">spaceValRight</span><span class="p">)</span>
+
+            <span class="c1"># barın sol tarafındaki küçük ölçek çizgileri çizilir</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">scaleCountLeft</span><span class="p">):</span>
+                <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                    <span class="n">scale_y</span> <span class="o">=</span> <span class="n">rect_y</span> <span class="o">+</span> <span class="p">(</span><span class="nb">int</span><span class="p">)(</span><span class="n">spaceValRight</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">+</span> <span class="mi">4</span><span class="p">)</span>
+                    <span class="n">painter</span><span class="o">.</span><span class="n">drawLine</span><span class="p">(</span><span class="n">rect_x</span><span class="o">-</span><span class="mi">8</span><span class="p">,</span> <span class="n">scale_y</span><span class="p">,</span> <span class="n">rect_x</span><span class="p">,</span> <span class="n">scale_y</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">scale_y</span> <span class="o">+=</span> <span class="n">spaceValLeft</span>
+                    <span class="n">painter</span><span class="o">.</span><span class="n">drawLine</span><span class="p">(</span><span class="n">rect_x</span><span class="o">-</span><span class="mi">8</span><span class="p">,</span> <span class="n">scale_y</span><span class="p">,</span> <span class="n">rect_x</span><span class="p">,</span> <span class="n">scale_y</span><span class="p">)</span>
+            
+            <span class="k">if</span> <span class="n">progressValue</span> <span class="o">&gt;=</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">progressValue</span> <span class="o">&lt;=</span> <span class="mi">300</span><span class="p">:</span>
+                <span class="n">progressValue</span> <span class="o">=</span> <span class="p">(</span><span class="nb">float</span><span class="p">)(</span><span class="n">progressValue</span> <span class="o">/</span> <span class="n">incrementLeft</span><span class="p">)</span> <span class="o">*</span> <span class="n">spaceValLeft</span>
+                <span class="n">rect</span> <span class="o">=</span> <span class="n">QRectF</span><span class="p">(</span><span class="n">rect_x</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">rect_y</span> <span class="o">+</span> <span class="n">rect_h</span> <span class="o">-</span> <span class="n">progressValue</span><span class="p">,</span> <span class="n">rect_w</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="n">progressValue</span> <span class="p">)</span>
+                <span class="n">painter</span><span class="o">.</span><span class="n">fillRect</span><span class="p">(</span><span class="n">rect</span><span class="p">,</span> <span class="n">QBrush</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">green</span><span class="p">))</span>
+        <span class="c1"># paintEvent end for kN bar</span>
+
+        <span class="c1"># paintEvent start for kN/FM bar</span>
+        <span class="k">if</span> <span class="n">barName</span> <span class="o">==</span> <span class="s2">&quot;kN/FM&quot;</span><span class="p">:</span>
+            <span class="n">text_x</span> <span class="o">=</span> <span class="mi">620</span>
+            <span class="n">text_y</span> <span class="o">=</span> <span class="mi">125</span>
+            <span class="n">rect_x</span> <span class="o">=</span> <span class="mi">650</span>
+            <span class="n">rect_y</span> <span class="o">=</span> <span class="mi">130</span>
+            <span class="n">rect_w</span> <span class="o">=</span> <span class="mi">30</span>
+            <span class="n">rect_h</span> <span class="o">=</span> <span class="mi">220</span>
+            <span class="n">scaleCount</span> <span class="o">=</span> <span class="mi">11</span>
+            <span class="n">increment</span> <span class="o">=</span> <span class="mi">40</span>
+            <span class="n">spaceVal</span> <span class="o">=</span> <span class="p">(</span><span class="nb">int</span><span class="p">)</span> <span class="p">(</span><span class="n">rect_h</span> <span class="o">/</span> <span class="p">(</span><span class="n">scaleCount</span> <span class="o">-</span> <span class="mi">1</span><span class="p">))</span>
+            <span class="n">scale_y</span> <span class="o">=</span> <span class="n">rect_y</span>
+        
+            <span class="n">pen</span><span class="o">.</span><span class="n">setWidth</span><span class="p">(</span><span class="mi">60</span><span class="p">)</span>
+            <span class="n">pen</span><span class="o">.</span><span class="n">setColor</span><span class="p">(</span><span class="n">QColor</span><span class="p">(</span><span class="s2">&quot;white&quot;</span><span class="p">))</span>
+            <span class="n">painter</span><span class="o">.</span><span class="n">setPen</span><span class="p">(</span><span class="n">pen</span><span class="p">)</span>
+
+            <span class="c1"># barın adı yazılır</span>
+            <span class="n">painter</span><span class="o">.</span><span class="n">drawText</span><span class="p">(</span><span class="n">rect_x</span><span class="p">,</span> <span class="n">rect_y</span> <span class="o">-</span> <span class="mi">10</span><span class="p">,</span> <span class="n">barName</span><span class="p">)</span>
+
+            <span class="c1"># ölçekteki sayısal değerler yazılır</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">scaleCount</span><span class="p">):</span>
+                <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="n">scaleCount</span> <span class="o">-</span> <span class="mi">1</span><span class="p">:</span>
+                    <span class="n">start_y</span> <span class="o">=</span> <span class="n">rect_y</span> <span class="o">+</span> <span class="n">rect_h</span>
+                    <span class="n">painter</span><span class="o">.</span><span class="n">drawText</span><span class="p">(</span><span class="n">text_x</span><span class="p">,</span> <span class="n">start_y</span> <span class="o">+</span> <span class="mi">5</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="mi">0</span><span class="p">))</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">start_y</span> <span class="o">=</span> <span class="n">i</span> <span class="o">*</span> <span class="n">spaceVal</span> <span class="o">+</span> <span class="n">text_y</span>
+                    <span class="n">painter</span><span class="o">.</span><span class="n">drawText</span><span class="p">(</span><span class="n">text_x</span><span class="p">,</span> <span class="n">start_y</span> <span class="o">+</span> <span class="mi">10</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="mi">400</span> <span class="o">-</span> <span class="n">i</span> <span class="o">*</span> <span class="n">increment</span><span class="p">))</span>
+            
+            <span class="c1"># geometrik çizimler için kalem ayarlanır</span>
+            <span class="n">painter</span><span class="o">.</span><span class="n">setPen</span><span class="p">(</span><span class="n">QPen</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">white</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">Qt</span><span class="o">.</span><span class="n">SolidLine</span><span class="p">))</span>
+
+            <span class="c1"># bar çizimi yapılır</span>
+            <span class="n">painter</span><span class="o">.</span><span class="n">drawRect</span><span class="p">(</span><span class="n">rect_x</span><span class="p">,</span> <span class="n">rect_y</span><span class="p">,</span> <span class="n">rect_w</span><span class="p">,</span> <span class="n">rect_h</span><span class="p">)</span>
+
+            <span class="c1"># bardaki büyük ölçek değerleri çizilir</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">scaleCount</span><span class="p">):</span>
+                <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                    <span class="n">painter</span><span class="o">.</span><span class="n">drawLine</span><span class="p">(</span><span class="n">rect_x</span> <span class="o">-</span> <span class="mi">8</span><span class="p">,</span> <span class="n">scale_y</span><span class="p">,</span> <span class="n">rect_x</span><span class="p">,</span> <span class="n">scale_y</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">scale_y</span> <span class="o">+=</span> <span class="n">spaceVal</span>
+                    <span class="n">painter</span><span class="o">.</span><span class="n">drawLine</span><span class="p">(</span><span class="n">rect_x</span> <span class="o">-</span> <span class="mi">8</span><span class="p">,</span> <span class="n">scale_y</span><span class="p">,</span> <span class="n">rect_x</span><span class="p">,</span> <span class="n">scale_y</span><span class="p">)</span>
+
+            <span class="c1"># progress kısmı</span>
+
+            <span class="k">if</span> <span class="n">progressValue</span> <span class="o">&gt;=</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">progressValue</span> <span class="o">&lt;=</span> <span class="mi">400</span><span class="p">:</span>
+                <span class="n">progressValue</span> <span class="o">=</span> <span class="p">(</span><span class="nb">float</span><span class="p">)</span> <span class="p">(</span><span class="n">progressValue</span> <span class="o">/</span> <span class="n">increment</span><span class="p">)</span> <span class="o">*</span> <span class="n">spaceVal</span>
+                <span class="n">rect</span> <span class="o">=</span> <span class="n">QRectF</span><span class="p">(</span><span class="n">rect_x</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">rect_y</span> <span class="o">+</span> <span class="n">rect_h</span> <span class="o">-</span> <span class="n">progressValue</span><span class="p">,</span> <span class="n">rect_w</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="n">progressValue</span><span class="p">)</span>
+                <span class="n">painter</span><span class="o">.</span><span class="n">fillRect</span><span class="p">(</span><span class="n">rect</span><span class="p">,</span> <span class="n">QBrush</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">blue</span><span class="p">))</span>
+        <span class="c1"># paintEvent end for kN/FM bar        </span>
+
+        <span class="c1"># paintEvent start for BatV bar</span>
+        <span class="k">if</span> <span class="n">barName</span> <span class="o">==</span> <span class="s2">&quot;BatV&quot;</span><span class="p">:</span>
+            <span class="n">text_x</span> <span class="o">=</span> <span class="mi">700</span>
+            <span class="n">text_y</span> <span class="o">=</span> <span class="mi">125</span>
+            <span class="n">rect_x</span> <span class="o">=</span> <span class="mi">740</span>
+            <span class="n">rect_y</span> <span class="o">=</span> <span class="mi">130</span>
+            <span class="n">rect_w</span> <span class="o">=</span> <span class="mi">30</span>
+            <span class="n">rect_h</span> <span class="o">=</span> <span class="mi">204</span>
+            <span class="n">scaleCount</span> <span class="o">=</span> <span class="mi">7</span>
+            <span class="n">increment</span> <span class="o">=</span> <span class="mi">20</span>
+            <span class="n">spaceVal</span> <span class="o">=</span> <span class="p">(</span><span class="nb">int</span><span class="p">)</span> <span class="p">(</span><span class="n">rect_h</span> <span class="o">/</span> <span class="p">(</span><span class="n">scaleCount</span> <span class="o">-</span> <span class="mi">1</span><span class="p">))</span>
+            <span class="n">scale_y</span> <span class="o">=</span> <span class="n">rect_y</span>
+
+            <span class="n">pen</span><span class="o">.</span><span class="n">setWidth</span><span class="p">(</span><span class="mi">60</span><span class="p">)</span>
+            <span class="n">pen</span><span class="o">.</span><span class="n">setColor</span><span class="p">(</span><span class="n">QColor</span><span class="p">(</span><span class="s2">&quot;white&quot;</span><span class="p">))</span>
+            <span class="n">painter</span><span class="o">.</span><span class="n">setPen</span><span class="p">(</span><span class="n">pen</span><span class="p">)</span>
+
+            <span class="c1"># barın adı yazılır</span>
+            <span class="n">painter</span><span class="o">.</span><span class="n">drawText</span><span class="p">(</span><span class="n">rect_x</span><span class="p">,</span> <span class="n">rect_y</span> <span class="o">-</span> <span class="mi">10</span><span class="p">,</span> <span class="n">barName</span><span class="p">)</span>
+
+            <span class="c1"># değerin gösterildiği kutuya değer yazılır</span>
+            <span class="n">pen</span><span class="o">.</span><span class="n">setColor</span><span class="p">(</span><span class="n">QColor</span><span class="p">(</span><span class="s2">&quot;blue&quot;</span><span class="p">))</span>
+            <span class="n">painter</span><span class="o">.</span><span class="n">setPen</span><span class="p">(</span><span class="n">pen</span><span class="p">)</span>
+            <span class="n">painter</span><span class="o">.</span><span class="n">drawText</span><span class="p">(</span><span class="n">rect_x</span> <span class="o">+</span> <span class="mi">5</span><span class="p">,</span> <span class="n">rect_y</span> <span class="o">+</span> <span class="n">rect_h</span> <span class="o">+</span> <span class="mi">18</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">progressValue</span><span class="p">)))</span>
+
+
+            <span class="c1"># değiştirilen kalem rengi düzeltilir</span>
+            <span class="n">pen</span><span class="o">.</span><span class="n">setColor</span><span class="p">(</span><span class="n">QColor</span><span class="p">(</span><span class="s2">&quot;white&quot;</span><span class="p">))</span>
+            <span class="n">painter</span><span class="o">.</span><span class="n">setPen</span><span class="p">(</span><span class="n">pen</span><span class="p">)</span>
+
+            <span class="c1"># ölçekteki sayısal değerler yazılır</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">scaleCount</span><span class="p">):</span>
+                <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="n">scaleCount</span> <span class="o">-</span> <span class="mi">1</span><span class="p">:</span>
+                    <span class="n">start_y</span> <span class="o">=</span> <span class="n">rect_h</span> <span class="o">+</span> <span class="n">rect_y</span>
+                    <span class="n">painter</span><span class="o">.</span><span class="n">drawText</span><span class="p">(</span><span class="n">text_x</span><span class="p">,</span> <span class="n">start_y</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="mi">0</span><span class="p">))</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">start_y</span> <span class="o">=</span> <span class="n">i</span> <span class="o">*</span> <span class="n">spaceVal</span> <span class="o">+</span> <span class="n">text_y</span>
+                    <span class="n">painter</span><span class="o">.</span><span class="n">drawText</span><span class="p">(</span><span class="n">text_x</span><span class="p">,</span> <span class="n">start_y</span> <span class="o">+</span> <span class="mi">10</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="mi">120</span> <span class="o">-</span> <span class="n">i</span> <span class="o">*</span> <span class="n">increment</span><span class="p">))</span>
+            
+            <span class="c1"># geometrik çizimler için kalem ayarlanır</span>
+            <span class="n">painter</span><span class="o">.</span><span class="n">setPen</span><span class="p">(</span><span class="n">QPen</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">white</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">Qt</span><span class="o">.</span><span class="n">SolidLine</span><span class="p">))</span>
+                
+            <span class="c1"># bar çizimi yapılır</span>
+            <span class="n">painter</span><span class="o">.</span><span class="n">drawRect</span><span class="p">(</span><span class="n">rect_x</span><span class="p">,</span> <span class="n">rect_y</span><span class="p">,</span> <span class="n">rect_w</span><span class="p">,</span> <span class="n">rect_h</span><span class="p">)</span>
+
+            <span class="c1"># bardaki büyük ölçek çizgileri çizilir</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">scaleCount</span><span class="p">):</span>
+                <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                    <span class="n">painter</span><span class="o">.</span><span class="n">drawLine</span><span class="p">(</span><span class="n">rect_x</span> <span class="o">-</span> <span class="mi">15</span><span class="p">,</span> <span class="n">scale_y</span><span class="p">,</span> <span class="n">rect_x</span><span class="p">,</span> <span class="n">scale_y</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">scale_y</span> <span class="o">+=</span> <span class="n">spaceVal</span>
+                    <span class="n">painter</span><span class="o">.</span><span class="n">drawLine</span><span class="p">(</span><span class="n">rect_x</span> <span class="o">-</span> <span class="mi">15</span><span class="p">,</span> <span class="n">scale_y</span><span class="p">,</span> <span class="n">rect_x</span><span class="p">,</span> <span class="n">scale_y</span><span class="p">)</span>
+            
+            <span class="c1"># bardaki ara ölçek çizgileri çizilir</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">scaleCount</span><span class="p">):</span>
+                <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="n">scaleCount</span> <span class="o">-</span> <span class="mi">1</span><span class="p">:</span>
+                    <span class="k">break</span>
+                <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                    <span class="n">scale_y</span> <span class="o">=</span> <span class="n">rect_y</span> <span class="o">+</span> <span class="p">(</span><span class="nb">int</span><span class="p">)</span> <span class="p">(</span><span class="n">spaceVal</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span>
+                    <span class="n">painter</span><span class="o">.</span><span class="n">drawLine</span><span class="p">(</span><span class="n">rect_x</span> <span class="o">-</span> <span class="mi">15</span><span class="p">,</span> <span class="n">scale_y</span><span class="p">,</span> <span class="n">rect_x</span><span class="p">,</span> <span class="n">scale_y</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">i</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+                    <span class="n">scale_y</span> <span class="o">+=</span> <span class="n">spaceVal</span>
+                    <span class="n">painter</span><span class="o">.</span><span class="n">drawLine</span><span class="p">(</span><span class="n">rect_x</span> <span class="o">-</span> <span class="mi">15</span><span class="p">,</span> <span class="n">scale_y</span><span class="p">,</span> <span class="n">rect_x</span><span class="p">,</span> <span class="n">scale_y</span><span class="p">)</span>
+
+            <span class="c1"># değerin gösterildiği küçük kutu çizilir</span>
+            <span class="n">painter</span><span class="o">.</span><span class="n">drawRect</span><span class="p">(</span><span class="n">rect_x</span><span class="p">,</span> <span class="n">rect_y</span> <span class="o">+</span> <span class="n">rect_h</span> <span class="o">+</span> <span class="mi">5</span><span class="p">,</span> <span class="n">rect_w</span><span class="p">,</span> <span class="mi">20</span><span class="p">)</span>
+
+            <span class="c1"># progress kısmı</span>
+            <span class="k">if</span> <span class="n">progressValue</span> <span class="o">&gt;=</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">progressValue</span> <span class="o">&lt;=</span> <span class="mi">120</span><span class="p">:</span>
+                <span class="n">progressValue</span> <span class="o">=</span> <span class="p">(</span><span class="nb">float</span><span class="p">)(</span><span class="n">progressValue</span> <span class="o">/</span> <span class="n">increment</span><span class="p">)</span> <span class="o">*</span> <span class="n">spaceVal</span>
+                <span class="n">rect</span> <span class="o">=</span> <span class="n">QRectF</span><span class="p">(</span><span class="n">rect_x</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">rect_y</span> <span class="o">+</span> <span class="n">rect_h</span> <span class="o">-</span> <span class="n">progressValue</span><span class="p">,</span> <span class="n">rect_w</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="n">progressValue</span><span class="p">)</span>
+                <span class="n">painter</span><span class="o">.</span><span class="n">fillRect</span><span class="p">(</span><span class="n">rect</span><span class="p">,</span> <span class="n">QBrush</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">blue</span><span class="p">))</span>
+
+        <span class="k">if</span> <span class="n">barName</span> <span class="o">==</span> <span class="s2">&quot;brakeBar1&quot;</span><span class="p">:</span>
+            <span class="n">rect_x</span> <span class="o">=</span> <span class="mi">502</span>
+            <span class="n">rect_y</span> <span class="o">=</span> <span class="mi">110</span>
+            <span class="n">rect_h</span> <span class="o">=</span> <span class="mi">210</span>
+            <span class="n">rect_w</span> <span class="o">=</span> <span class="mi">60</span>
+            <span class="n">text_x</span> <span class="o">=</span> <span class="mi">460</span>
+            <span class="n">text_y</span> <span class="o">=</span> <span class="mi">105</span>
+            <span class="n">incrementLeft</span> <span class="o">=</span> <span class="mf">0.5</span>
+            <span class="n">incrementRight</span> <span class="o">=</span> <span class="mi">1</span>
+
+            <span class="n">scaleCountLeft</span> <span class="o">=</span> <span class="mi">8</span>
+            <span class="n">scaleCountRight</span> <span class="o">=</span> <span class="mi">12</span>
+            <span class="n">spaceValRight</span> <span class="o">=</span> <span class="p">(</span><span class="nb">int</span><span class="p">)</span> <span class="p">(</span><span class="n">rect_h</span> <span class="o">/</span> <span class="p">(</span><span class="n">scaleCountRight</span> <span class="o">-</span> <span class="mi">1</span><span class="p">))</span>
+            <span class="n">spaceValLeft</span> <span class="o">=</span> <span class="p">(</span><span class="nb">int</span><span class="p">)</span> <span class="p">(</span><span class="n">rect_h</span> <span class="o">/</span> <span class="p">(</span><span class="n">scaleCountLeft</span> <span class="o">-</span> <span class="mi">1</span><span class="p">))</span>
+            <span class="n">spaceVal</span> <span class="o">=</span> <span class="p">(</span><span class="nb">int</span><span class="p">)</span> <span class="p">(</span><span class="n">rect_h</span> <span class="o">/</span> <span class="p">(</span><span class="n">scaleCountLeft</span> <span class="o">-</span> <span class="mi">1</span><span class="p">))</span>
+
+            <span class="n">pen</span><span class="o">.</span><span class="n">setWidth</span><span class="p">(</span><span class="mi">60</span><span class="p">)</span>
+            <span class="n">pen</span><span class="o">.</span><span class="n">setColor</span><span class="p">(</span><span class="n">QColor</span><span class="p">(</span><span class="s2">&quot;white&quot;</span><span class="p">))</span>
+            <span class="n">painter</span><span class="o">.</span><span class="n">setPen</span><span class="p">(</span><span class="n">pen</span><span class="p">)</span>
+
+            <span class="c1"># ölçekteki sayısal değerler yazılır</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">scaleCountLeft</span><span class="p">):</span>
+                <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="n">scaleCountLeft</span> <span class="o">-</span> <span class="mi">1</span><span class="p">:</span>
+                    <span class="n">start_y</span> <span class="o">=</span> <span class="n">rect_h</span> <span class="o">+</span> <span class="n">rect_y</span>
+                    <span class="n">painter</span><span class="o">.</span><span class="n">drawText</span><span class="p">(</span><span class="n">text_x</span><span class="p">,</span> <span class="n">start_y</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="mi">0</span><span class="p">))</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">start_y</span> <span class="o">=</span> <span class="n">i</span> <span class="o">*</span> <span class="n">spaceVal</span> <span class="o">+</span> <span class="n">text_y</span>
+                    <span class="n">painter</span><span class="o">.</span><span class="n">drawText</span><span class="p">(</span><span class="n">text_x</span><span class="p">,</span> <span class="n">start_y</span> <span class="o">+</span> <span class="mi">10</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="mf">6.0</span> <span class="o">-</span> <span class="n">i</span> <span class="o">*</span> <span class="n">incrementLeft</span><span class="p">))</span>
+
+            <span class="c1"># barın sağ tarafı için</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">scaleCountRight</span><span class="p">):</span>
+                <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                    <span class="n">painter</span><span class="o">.</span><span class="n">drawText</span><span class="p">(</span><span class="n">text_x</span> <span class="o">+</span> <span class="mi">125</span><span class="p">,</span> <span class="n">rect_y</span> <span class="o">+</span> <span class="n">i</span><span class="o">*</span><span class="n">spaceValRight</span> <span class="o">+</span> <span class="mi">3</span><span class="p">,</span> <span class="s2">&quot;FS&quot;</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+                    <span class="n">painter</span><span class="o">.</span><span class="n">drawText</span><span class="p">(</span><span class="n">text_x</span> <span class="o">+</span> <span class="mi">125</span><span class="p">,</span> <span class="n">rect_y</span> <span class="o">+</span> <span class="n">i</span><span class="o">*</span><span class="n">spaceValRight</span> <span class="o">+</span> <span class="mi">3</span><span class="p">,</span> <span class="s2">&quot;RP&quot;</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+                    <span class="n">painter</span><span class="o">.</span><span class="n">drawText</span><span class="p">(</span><span class="n">text_x</span> <span class="o">+</span> <span class="mi">125</span><span class="p">,</span> <span class="n">rect_y</span> <span class="o">+</span> <span class="n">i</span><span class="o">*</span><span class="n">spaceValRight</span> <span class="o">+</span> <span class="mi">3</span><span class="p">,</span> <span class="s2">&quot;1A&quot;</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span>
+                    <span class="n">painter</span><span class="o">.</span><span class="n">drawText</span><span class="p">(</span><span class="n">text_x</span> <span class="o">+</span> <span class="mi">125</span><span class="p">,</span> <span class="n">rect_y</span> <span class="o">+</span> <span class="n">i</span><span class="o">*</span><span class="n">spaceValRight</span> <span class="o">+</span> <span class="mi">3</span><span class="p">,</span> <span class="s2">&quot;1B&quot;</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">i</span> <span class="o">&gt;=</span> <span class="mi">4</span> <span class="ow">and</span> <span class="n">i</span> <span class="o">&lt;</span><span class="n">scaleCountRight</span> <span class="o">-</span> <span class="mi">2</span><span class="p">:</span>
+                    <span class="n">painter</span><span class="o">.</span><span class="n">drawText</span><span class="p">(</span><span class="n">text_x</span> <span class="o">+</span> <span class="mi">125</span><span class="p">,</span> <span class="n">rect_y</span> <span class="o">+</span> <span class="n">i</span><span class="o">*</span><span class="n">spaceValRight</span> <span class="o">+</span> <span class="mi">3</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span> <span class="o">+</span> <span class="n">i</span><span class="o">*</span><span class="n">incrementRight</span><span class="p">))</span>
+                <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="n">scaleCountRight</span> <span class="o">-</span> <span class="mi">2</span><span class="p">:</span>
+                    <span class="n">painter</span><span class="o">.</span><span class="n">drawText</span><span class="p">(</span><span class="n">text_x</span> <span class="o">+</span> <span class="mi">125</span><span class="p">,</span> <span class="n">rect_y</span> <span class="o">+</span> <span class="n">i</span><span class="o">*</span><span class="n">spaceValRight</span> <span class="o">+</span> <span class="mi">3</span><span class="p">,</span> <span class="s2">&quot;MB&quot;</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="n">scaleCountRight</span> <span class="o">-</span> <span class="mi">1</span><span class="p">:</span>
+                    <span class="n">painter</span><span class="o">.</span><span class="n">drawText</span><span class="p">(</span><span class="n">text_x</span> <span class="o">+</span> <span class="mi">125</span><span class="p">,</span> <span class="n">rect_y</span> <span class="o">+</span> <span class="n">i</span><span class="o">*</span><span class="n">spaceValRight</span> <span class="o">+</span> <span class="mi">3</span><span class="p">,</span> <span class="s2">&quot;EB&quot;</span><span class="p">)</span>
+
+            <span class="c1"># geometrik çizimler için kalem ayarlanır</span>
+            <span class="n">painter</span><span class="o">.</span><span class="n">setPen</span><span class="p">(</span><span class="n">QPen</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">white</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">Qt</span><span class="o">.</span><span class="n">SolidLine</span><span class="p">))</span>
+                
+            <span class="c1"># bar çizimi yapılır</span>
+            <span class="n">painter</span><span class="o">.</span><span class="n">drawRect</span><span class="p">(</span><span class="n">rect_x</span><span class="p">,</span> <span class="n">rect_y</span><span class="p">,</span> <span class="n">rect_w</span><span class="p">,</span> <span class="n">rect_h</span><span class="p">)</span>
+
+            <span class="c1"># barın sağ tarafındaki büyük ölçek çizgileri çizilir</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">scaleCountRight</span><span class="p">):</span>
+                <span class="n">painter</span><span class="o">.</span><span class="n">drawLine</span><span class="p">(</span><span class="n">rect_x</span> <span class="o">+</span> <span class="n">rect_w</span><span class="p">,</span> <span class="n">rect_y</span> <span class="o">+</span> <span class="n">i</span><span class="o">*</span><span class="n">spaceValRight</span><span class="p">,</span> <span class="n">rect_x</span> <span class="o">+</span> <span class="n">rect_w</span> <span class="o">+</span> <span class="mi">15</span><span class="p">,</span> <span class="n">rect_y</span> <span class="o">+</span> <span class="n">i</span><span class="o">*</span><span class="n">spaceValRight</span><span class="p">)</span>
+
+            <span class="c1"># barın sol tarafındaki büyük ölçek çizgileri çizilir</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">scaleCountLeft</span><span class="p">):</span>
+                <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="n">scaleCountLeft</span> <span class="o">-</span> <span class="mi">1</span><span class="p">:</span>
+                    <span class="n">painter</span><span class="o">.</span><span class="n">drawLine</span><span class="p">(</span><span class="n">rect_x</span> <span class="o">-</span> <span class="mi">15</span><span class="p">,</span> <span class="n">rect_y</span> <span class="o">+</span> <span class="n">rect_h</span><span class="p">,</span> <span class="n">rect_x</span><span class="p">,</span> <span class="n">rect_y</span> <span class="o">+</span> <span class="n">rect_h</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">painter</span><span class="o">.</span><span class="n">drawLine</span><span class="p">(</span><span class="n">rect_x</span><span class="o">-</span><span class="mi">15</span><span class="p">,</span> <span class="n">rect_y</span> <span class="o">+</span> <span class="n">i</span><span class="o">*</span><span class="n">spaceValLeft</span><span class="p">,</span> <span class="n">rect_x</span><span class="p">,</span> <span class="n">rect_y</span> <span class="o">+</span> <span class="n">i</span><span class="o">*</span><span class="n">spaceValLeft</span><span class="p">)</span>
+
+            <span class="c1"># progress kısmı</span>
+            <span class="k">if</span> <span class="n">progressValue</span> <span class="o">&gt;=</span><span class="mi">0</span> <span class="ow">and</span> <span class="n">progressValue</span> <span class="o">&lt;=</span> <span class="mf">3.0</span><span class="p">:</span>
+                <span class="n">progressValue</span> <span class="o">=</span> <span class="n">progressValue</span> <span class="o">*</span> <span class="mf">10.0</span>
+                
+            <span class="k">elif</span> <span class="n">progressValue</span> <span class="o">&gt;</span> <span class="mf">3.0</span> <span class="ow">and</span> <span class="n">progressValue</span> <span class="o">&lt;=</span> <span class="mf">6.0</span><span class="p">:</span>
+                <span class="n">progressValue</span> <span class="o">=</span> <span class="mf">30.0</span> <span class="o">+</span> <span class="p">(</span><span class="n">progressValue</span> <span class="o">-</span> <span class="mi">3</span><span class="p">)</span><span class="o">*</span><span class="mf">60.0</span>
+            <span class="n">rect</span> <span class="o">=</span> <span class="n">QRectF</span><span class="p">(</span><span class="n">rect_x</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">rect_y</span> <span class="o">+</span> <span class="n">rect_h</span> <span class="o">-</span> <span class="n">progressValue</span><span class="p">,</span> <span class="n">rect_w</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="n">progressValue</span><span class="p">)</span>
+            <span class="n">painter</span><span class="o">.</span><span class="n">fillRect</span><span class="p">(</span><span class="n">rect</span><span class="p">,</span> <span class="n">QBrush</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">yellow</span><span class="p">))</span>
+                
+        <span class="k">if</span> <span class="n">barName</span> <span class="o">==</span> <span class="s2">&quot;brakeBar2&quot;</span><span class="p">:</span>
+            <span class="n">rect_x</span> <span class="o">=</span> <span class="mi">630</span>
+            <span class="n">rect_y</span> <span class="o">=</span> <span class="mi">140</span>
+            <span class="n">rect_h</span> <span class="o">=</span> <span class="mi">180</span>
+            <span class="n">rect_w</span> <span class="o">=</span> <span class="mi">60</span> 
+            <span class="n">text_x</span> <span class="o">=</span> <span class="mi">610</span>
+            <span class="n">text_y</span> <span class="o">=</span> <span class="mi">135</span>
+            <span class="n">scaleCount</span> <span class="o">=</span> <span class="mi">7</span>
+            <span class="n">spaceVal</span> <span class="o">=</span> <span class="p">(</span><span class="nb">int</span><span class="p">)</span> <span class="p">(</span><span class="n">rect_h</span> <span class="o">/</span> <span class="p">(</span><span class="n">scaleCount</span> <span class="o">-</span> <span class="mi">1</span><span class="p">))</span>
+
+            <span class="n">pen</span><span class="o">.</span><span class="n">setWidth</span><span class="p">(</span><span class="mi">60</span><span class="p">)</span>
+            <span class="n">pen</span><span class="o">.</span><span class="n">setColor</span><span class="p">(</span><span class="n">QColor</span><span class="p">(</span><span class="s2">&quot;white&quot;</span><span class="p">))</span>
+            <span class="n">painter</span><span class="o">.</span><span class="n">setPen</span><span class="p">(</span><span class="n">pen</span><span class="p">)</span>
+
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">scaleCount</span><span class="p">):</span>
+                <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="n">scaleCount</span> <span class="o">-</span> <span class="mi">1</span><span class="p">:</span>
+                    <span class="n">start_y</span> <span class="o">=</span> <span class="n">rect_h</span> <span class="o">+</span> <span class="n">rect_y</span>
+                    <span class="n">painter</span><span class="o">.</span><span class="n">drawText</span><span class="p">(</span><span class="n">text_x</span><span class="p">,</span> <span class="n">start_y</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="mi">0</span><span class="p">))</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">start_y</span> <span class="o">=</span> <span class="n">i</span> <span class="o">*</span> <span class="n">spaceVal</span> <span class="o">+</span> <span class="n">text_y</span>
+                    <span class="n">painter</span><span class="o">.</span><span class="n">drawText</span><span class="p">(</span><span class="n">text_x</span><span class="p">,</span> <span class="n">start_y</span> <span class="o">+</span> <span class="mi">10</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="mi">6</span> <span class="o">-</span> <span class="n">i</span><span class="p">))</span>
+            <span class="c1"># geometrik çizimler için kalem ayarlanır</span>
+            <span class="n">painter</span><span class="o">.</span><span class="n">setPen</span><span class="p">(</span><span class="n">QPen</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">white</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">Qt</span><span class="o">.</span><span class="n">SolidLine</span><span class="p">))</span>
+                
+            <span class="c1"># bar çizimi yapılır</span>
+            <span class="n">painter</span><span class="o">.</span><span class="n">drawRect</span><span class="p">(</span><span class="n">rect_x</span><span class="p">,</span> <span class="n">rect_y</span><span class="p">,</span> <span class="n">rect_w</span><span class="p">,</span> <span class="n">rect_h</span><span class="p">)</span>
+            <span class="n">painter</span><span class="o">.</span><span class="n">drawLine</span><span class="p">(</span><span class="n">rect_x</span> <span class="o">+</span> <span class="nb">int</span><span class="p">(</span><span class="n">rect_w</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span> <span class="o">-</span> <span class="mi">4</span><span class="p">,</span> <span class="n">rect_y</span><span class="p">,</span> <span class="n">rect_x</span> <span class="o">+</span> <span class="nb">int</span><span class="p">(</span><span class="n">rect_w</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span> <span class="o">-</span> <span class="mi">4</span><span class="p">,</span> <span class="n">rect_y</span> <span class="o">+</span> <span class="n">rect_h</span><span class="p">)</span>
+            <span class="n">painter</span><span class="o">.</span><span class="n">drawLine</span><span class="p">(</span><span class="n">rect_x</span> <span class="o">+</span> <span class="nb">int</span><span class="p">(</span><span class="n">rect_w</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span> <span class="o">+</span> <span class="mi">4</span><span class="p">,</span> <span class="n">rect_y</span><span class="p">,</span> <span class="n">rect_x</span> <span class="o">+</span> <span class="nb">int</span><span class="p">(</span><span class="n">rect_w</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span> <span class="o">+</span> <span class="mi">4</span><span class="p">,</span> <span class="n">rect_y</span> <span class="o">+</span> <span class="n">rect_h</span><span class="p">)</span>
+
+            <span class="c1"># aradaki küçük çizgiler çizilir</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">12</span><span class="p">):</span>
+                <span class="n">painter</span><span class="o">.</span><span class="n">drawLine</span><span class="p">(</span><span class="n">rect_x</span> <span class="o">+</span> <span class="nb">int</span><span class="p">(</span><span class="n">rect_w</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span> <span class="o">-</span> <span class="mi">4</span><span class="p">,</span> <span class="n">rect_y</span> <span class="o">+</span> <span class="n">i</span><span class="o">*</span> <span class="nb">int</span><span class="p">(</span><span class="n">rect_h</span> <span class="o">/</span> <span class="mi">12</span><span class="p">),</span> <span class="n">rect_x</span> <span class="o">+</span> <span class="nb">int</span><span class="p">(</span><span class="n">rect_w</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span> <span class="o">+</span> <span class="mi">4</span><span class="p">,</span> <span class="n">rect_y</span> <span class="o">+</span> <span class="n">i</span><span class="o">*</span> <span class="nb">int</span><span class="p">(</span><span class="n">rect_h</span> <span class="o">/</span> <span class="mi">12</span><span class="p">))</span>
+
+            <span class="c1"># ölçek çizgileri çizilir</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">scaleCount</span><span class="p">):</span>
+                <span class="c1"># büyük ölçek çizgilerini çizmek için</span>
+                <span class="n">painter</span><span class="o">.</span><span class="n">drawLine</span><span class="p">(</span><span class="n">rect_x</span> <span class="o">-</span> <span class="mi">9</span><span class="p">,</span> <span class="n">rect_y</span> <span class="o">+</span> <span class="n">i</span> <span class="o">*</span> <span class="nb">int</span><span class="p">(</span><span class="n">rect_h</span> <span class="o">/</span> <span class="p">(</span><span class="n">scaleCount</span><span class="o">-</span><span class="mi">1</span><span class="p">)),</span> <span class="n">rect_x</span><span class="p">,</span> <span class="n">rect_y</span> <span class="o">+</span> <span class="n">i</span> <span class="o">*</span> <span class="nb">int</span><span class="p">(</span><span class="n">rect_h</span> <span class="o">/</span> <span class="p">(</span><span class="n">scaleCount</span><span class="o">-</span><span class="mi">1</span><span class="p">)))</span>
+                <span class="c1"># küçük ölçek çizgilerini çizmek için</span>
+                <span class="n">painter</span><span class="o">.</span><span class="n">drawLine</span><span class="p">(</span><span class="n">rect_x</span> <span class="o">-</span> <span class="mi">5</span><span class="p">,</span> <span class="n">rect_y</span> <span class="o">+</span> <span class="nb">int</span><span class="p">(</span><span class="n">rect_h</span> <span class="o">/</span> <span class="mi">12</span><span class="p">)</span> <span class="o">+</span> <span class="n">i</span><span class="o">*</span><span class="nb">int</span><span class="p">(</span><span class="n">rect_h</span> <span class="o">/</span> <span class="p">(</span><span class="n">scaleCount</span><span class="o">-</span><span class="mi">1</span><span class="p">)),</span> <span class="n">rect_x</span><span class="p">,</span> <span class="n">rect_y</span> <span class="o">+</span> <span class="nb">int</span><span class="p">(</span><span class="n">rect_h</span> <span class="o">/</span> <span class="mi">12</span><span class="p">)</span> <span class="o">+</span> <span class="n">i</span><span class="o">*</span><span class="nb">int</span><span class="p">(</span><span class="n">rect_h</span> <span class="o">/</span> <span class="p">(</span><span class="n">scaleCount</span><span class="o">-</span><span class="mi">1</span><span class="p">)))</span>
+            
+
+            <span class="k">if</span> <span class="mi">0</span> <span class="o">&lt;=</span> <span class="n">progressValue</span> <span class="o">&lt;=</span><span class="mi">6</span><span class="p">:</span>
+                <span class="n">progressValue</span> <span class="o">=</span> <span class="n">progressValue</span><span class="o">*</span><span class="mi">30</span>
+            
+            <span class="n">rect</span> <span class="o">=</span> <span class="n">QRectF</span><span class="p">(</span><span class="n">rect_x</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">rect_y</span> <span class="o">+</span> <span class="n">rect_h</span> <span class="o">-</span> <span class="n">progressValue</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="n">rect_w</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span> <span class="o">-</span> <span class="mi">5</span><span class="p">,</span> <span class="n">progressValue</span><span class="p">)</span>
+            <span class="n">painter</span><span class="o">.</span><span class="n">fillRect</span><span class="p">(</span><span class="n">rect</span><span class="p">,</span> <span class="n">QBrush</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">yellow</span><span class="p">))</span>
+
+            <span class="n">rect2</span> <span class="o">=</span> <span class="n">QRectF</span><span class="p">(</span><span class="n">rect_x</span> <span class="o">+</span> <span class="nb">int</span><span class="p">(</span><span class="n">rect_w</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span> <span class="o">+</span> <span class="mi">5</span><span class="p">,</span> <span class="n">rect_y</span> <span class="o">+</span> <span class="n">rect_h</span> <span class="o">-</span> <span class="n">progressValue</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="n">rect_w</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span> <span class="o">-</span> <span class="mi">4</span><span class="p">,</span> <span class="n">progressValue</span><span class="p">)</span>
+            <span class="n">painter</span><span class="o">.</span><span class="n">fillRect</span><span class="p">(</span><span class="n">rect2</span><span class="p">,</span> <span class="n">QBrush</span><span class="p">(</span><span class="n">Qt</span><span class="o">.</span><span class="n">yellow</span><span class="p">))</span></div></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Hilal Nisanci.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

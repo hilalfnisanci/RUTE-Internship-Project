@@ -1,0 +1,7 @@
+mqttEvents module
+=================
+
+.. automodule:: mqttEvents
+   :members:
+   :undoc-members:
+   :show-inheritance:

@@ -1,0 +1,7 @@
+analoggaugewidget module
+========================
+
+.. automodule:: analoggaugewidget
+   :members:
+   :undoc-members:
+   :show-inheritance:
