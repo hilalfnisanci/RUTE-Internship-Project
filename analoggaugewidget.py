@@ -5,6 +5,11 @@ from PyQt5.QtWidgets import *
 from PyQt5.QtGui import *
 from PyQt5.QtCore import *
 
+from mqttEvents import Mqtt
+
+from time import sleep
+import random
+
 class AnalogGaugeWidget(QWidget):
     """Fetches rows from a Bigtable.
     Args: 
@@ -1397,6 +1402,11 @@ class AnalogGaugeWidget(QWidget):
         if self.enable_CenterPoint:
             self.draw_big_needle_center_point(diameter=(self.widget_diameter / 6))
 
+
+        self.updateAngleValue()
+
+        self.update()        
+
     ###############################################################################################
     # MOUSE EVENTS
     ###############################################################################################
@@ -1427,7 +1437,7 @@ class AnalogGaugeWidget(QWidget):
         self.NeedleColor = self.NeedleColorReleased
         self.update() 
 
-    def mousePressEvent(self, event):
+    """def mousePressEvent(self, event):
 
         if event.buttons () == Qt.LeftButton: # left button pressed
 
@@ -1455,6 +1465,37 @@ class AnalogGaugeWidget(QWidget):
                     self.valueChanged.emit(int(value))
                 
                 self.updateValue(value)
+
+"""
+    
+    
+    def updateAngleValue(self):
+        
+        self.angle += Mqtt.angle
+        
+        value = (float(math.fmod(self.angle - self.scale_angle_start_value + 720, 360)) / \
+            (float(self.scale_angle_size) / float(self.maxValue - self.minValue))) + self.minValue
+
+        if(self.value - (self.maxValue - self.minValue) * self.valueNeedleSnapzone) <= \
+            value <= (self.value + (self.maxValue - self.minValue) * self.valueNeedleSnapzone):
+            self.NeedleColor = self.NeedleColorDrag
+
+            if value >= self.maxValue and self.last_value < (self.maxValue - self.minValue) / 2:
+                value = self.maxValue
+                self.last_value = self.minValue
+                self.valueChanged.emit(int(value))
+            
+            elif value >= self.maxValue >= self.last_value:
+                value = self.maxValue
+                self.valueChanged.emit(int(value))
+            
+            else:
+                self.last_value = value
+                self.valueChanged.emit(int(value))
+            
+
+            print(" **** angle : ", self.angle)
+            self.updateValue(value)
 
 ################################################################################################
 # END ==>

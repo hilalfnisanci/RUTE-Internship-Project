@@ -24,6 +24,7 @@ class CreateDu1(QWidget):
         self.createUpButtons()
         self.createRightButtons()
         self.createInsideButtons()
+        self.createBarsfromImages()
 
     def createDownButtons(self):
         
@@ -313,7 +314,7 @@ class CreateDu1(QWidget):
         self.du1Grid.addWidget(self.MCBLabel)
 
 
-    def UiComponents(self):
+    """def UiComponents(self):
         self.bar1 = QProgressBar(self)
         self.bar1.setGeometry(140, 120, 35, 200)
         self.bar1.setValue(70)
@@ -330,7 +331,7 @@ class CreateDu1(QWidget):
                           "border-radius :5px;"
                           "}")
         self.bar1.setTextVisible(False)
-        self.du1Grid.addWidget(self.bar1)
+        self.du1Grid.addWidget(self.bar1)"""
 
     # çizim işlemleri gerçekleştirilir
     def paintEvent(self, e):
@@ -369,7 +370,6 @@ class CreateDu1(QWidget):
         painter.drawLine(652, 420, 652, 520)
         painter.drawLine(721, 420, 721, 520)
         
-        
         # print(pv, "  -  ", type(pv))   Mqtt.takeData(barName='kV')    Mqtt.takeData(barName='A')
         createBar.CreateBar().paintEvent(painter=painter, barName="kV", page="du1", progressValue = Mqtt.takeData(barName='kV'))
         createBar.CreateBar().paintEvent(painter=painter, barName="A", page="du1", progressValue= Mqtt.takeData(barName='A'))
@@ -377,16 +377,13 @@ class CreateDu1(QWidget):
         createBar.CreateBar().paintEvent(painter=painter, barName='brakeBar1', page='du1', progressValue=Mqtt.takeData(barName='brakeBar1'))
         createBar.CreateBar().paintEvent(painter=painter, barName='brakeBar2', page='du1', progressValue=Mqtt.takeData(barName='brakeBar2'))
 
-
-        t1 = Thread(target=self.update())
-        t1.start()
-
-        
         self.createBtnImg()
         self.createScrollImg()
-
+        
         self.dateTime = QDateTime.currentDateTime()
         painter.drawText(550, 400, self.dateTime.toString())
+
+        self.update()
 
         painter.end()
 

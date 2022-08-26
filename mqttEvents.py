@@ -13,14 +13,13 @@ class Mqtt():
     btnValue = []
     scrollDict = {}
 
-    angle = None
+    angle = 0
 
     def on_connect(client, userdata,  flags, rc):
         client.subscribe(Mqtt().topic)
         
         for i in Mqtt.data['data']:
             client.publish(Mqtt.topic, json.dumps(i))
-        # client.publish(Mqtt().topic, Mqtt().mqtt_msg)
 
     def on_publish(client, userdata, mid):
         print("Message published")

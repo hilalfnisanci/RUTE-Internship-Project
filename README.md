@@ -1,1 +1,0 @@
-# rute-staj-proje

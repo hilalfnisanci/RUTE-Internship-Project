@@ -4,7 +4,6 @@ from PyQt5.QtGui import *
 from analoggaugewidget import AnalogGaugeWidget
 import createBar
 from mqttEvents import Mqtt
-from threading import Thread
 
 class CreateDu2(QWidget):
     def __init__(self, parent=None):
@@ -15,6 +14,7 @@ class CreateDu2(QWidget):
         self.createRightButtons()
         self.createDownButtons()
         self.createUpButtons()
+        
         self.createGaugeMeter()
         self.createInsideButtons()
         self.createImages()
@@ -244,7 +244,6 @@ class CreateDu2(QWidget):
         self.btnDIR.setIconSize(QSize(69, 48))"""
         self.du2Grid.addWidget(self.btnDIR)
 
-
     def createGaugeMeter(self):
         self.centralwidget = QWidget(self)
         self.centralwidget.setStyleSheet("")
@@ -270,6 +269,7 @@ class CreateDu2(QWidget):
         self.verticalLayout_2.addWidget(self.frame)
 
     def paintEvent(self, e):
+        
         painter = QPainter(self)
         painter.begin(self)
         painter.setPen(QPen(Qt.white, 2, Qt.SolidLine))
@@ -296,24 +296,19 @@ class CreateDu2(QWidget):
         painter.drawLine(721, 420, 721, 520)
 
 
-        # pv = Mqtt.takeData(barName='kV')
-        # print(pv, "  -  ", type(pv))    Mqtt.takeData(barName='kV')    Mqtt.takeData(barName='A')
-
         createBar.CreateBar().paintEvent(painter=painter, barName="kV", page="du2", progressValue = Mqtt.takeData(barName='kV'))
         createBar.CreateBar().paintEvent(painter=painter, barName="A", page="du2", progressValue = Mqtt.takeData(barName='A'))
         createBar.CreateBar().paintEvent(painter=painter, barName="kN/FM", page="du2", progressValue= Mqtt.takeData(barName='kN/FM'))
         createBar.CreateBar().paintEvent(painter=painter, barName="BatV", page="du2", progressValue=Mqtt.takeData(barName='BatV'))
-
-        t1 = Thread(target=self.update())
-        t1.start()
 
         self.createScrollImg()
 
         self.dateTime = QDateTime.currentDateTime()
         painter.drawText(550, 400, self.dateTime.toString())
 
-        painter.end()
+        self.update()
 
+        painter.end()
 
     def createImages(self):
 

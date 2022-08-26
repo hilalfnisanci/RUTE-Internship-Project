@@ -7,15 +7,15 @@ class CreateBar():
         
         pen = QPen()
 
-        # paintEvent start for kW bar 
+        # paintEvent start for kV bar 
         if barName == "kV":
             
             if page == "du1":
                 # kullanılacak sayısal değerler verilir
-                text_x = 105    # kW barında değerlerin yazılmaya başlanacağı x değeri  
-                text_y = 135    # kW barında değerlerin yazılmaya başlanacağı y değeri
-                scaleCount = 4  # kW barında 4 değer bulunuyor
-                increment = 5   # kW barındaki artış değeri
+                text_x = 105    # kV barında değerlerin yazılmaya başlanacağı x değeri  
+                text_y = 135    # kV barında değerlerin yazılmaya başlanacağı y değeri
+                scaleCount = 4  # kV barında 4 değer bulunuyor
+                increment = 5   # kV barındaki artış değeri
                 rect_x = 140    # dörtgenin başlangıç x değeri
                 rect_y = 130    # dörtgenin başlangıç y değeri
                 rect_w = 40     # dörtgenin width değeri
@@ -23,10 +23,10 @@ class CreateBar():
 
             if page == "du2":
                 # kullanılacak sayısal değerler verilir
-                text_x = 450    # kW barında değerlerin yazılmaya başlanacağı x değeri  
-                text_y = 135    # kW barında değerlerin yazılmaya başlanacağı y değeri  
-                scaleCount = 4  # kW barında 4 değer bulunuyor
-                increment = 5   # kW barındaki artış değeri
+                text_x = 450    # kV barında değerlerin yazılmaya başlanacağı x değeri  
+                text_y = 135    # kV barında değerlerin yazılmaya başlanacağı y değeri  
+                scaleCount = 4  # kV barında 4 değer bulunuyor
+                increment = 5   # kV barındaki artış değeri
                 rect_x = 488    # dörtgenin başlangıç x değeri   
                 rect_y = 130    # dörtgenin başlangıç y değeri   
                 rect_w = 40     # dörtgenin width değeri 
@@ -81,7 +81,7 @@ class CreateBar():
                 
                 rect = QRectF(rect_x + 1, rect_y+rect_h - progressValue, rect_w-2, progressValue)
                 painter.fillRect(rect, QBrush(Qt.blue))
-        # paintevent end for kW bar
+        # paintevent end for kV bar
 
         # paintEvent start for A bar
         if barName == "A":

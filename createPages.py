@@ -1,3 +1,10 @@
+"""
+createPages.py
+====================================
+This module to create du1 and du2 tabs
+"""
+
+
 from PyQt5.QtWidgets import *
 from PyQt5.QtCore import *
 from PyQt5.QtGui import *

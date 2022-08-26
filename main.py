@@ -3,7 +3,7 @@ from PyQt5.QtCore import *
 from PyQt5.QtWidgets import *
 from PyQt5.QtGui import *
 import sys
-import test
+import createPages
 from mqttEvents import Mqtt as mqtt
 import random
 from paho.mqtt import client as mqtt_client
@@ -29,9 +29,6 @@ class App(QWidget):
         self.createButtons()
         self.leftPanel()
         self.createImages()
-
-        self.dataThread = Thread(target=self.sendData)
-        self.dataThread.start()
 
 
     def middlePanel(self):
@@ -220,7 +217,7 @@ class App(QWidget):
             self.count += 1
             sleep(0.3)
             mqtt.run(1)
-            self.pages = test.CreatePages()
+            self.pages = createPages.CreatePages()
             self.pages.create()
         else:
             self.connectButton.setStyleSheet("QPushButton{border-radius : 15; border : 1px solid white;background-color : red;color : white}")
@@ -239,6 +236,18 @@ class App(QWidget):
         painter.drawRect(740, 80, 200, 480)    # Right panel
         painter.drawRect(280, 40, 420, 150)    # Middle panel
         painter.drawRect(340, 380, 300, 180)   # Main control panel
+        
+        self.sendAngleValueData()
+
+        painter.end()
+
+    def sendAngleValueData(self):
+        
+        randAngleValue = random.randint(-20, 100)
+        angleValueMsg = '{"gaugeMeterAngle" : "' + str(randAngleValue) + '"}'
+
+        self.client.connect(self.broker, 1883)
+        self.client.publish(topic=self.topic, payload=angleValueMsg)
 
     def createImages(self):
 
@@ -362,15 +371,6 @@ class App(QWidget):
             self.client.connect(self.broker, 1883)
             self.client.publish(topic=self.topic, payload=msg)
             print("mcb scroll new value : ", value)
-
-    def sendData(self):
-        randAngleValue = random.randint(0, 25)
-        threadMsg = '{"gaugeMeterAngle" : "'+ str(randAngleValue) +'}'
-
-        self.client.connect(self.broker, 1883)
-        self.client.publish(topic=self.topic, payload=threadMsg)
-
-        print(str(threadMsg))
 
 def main():
     app = QApplication(sys.argv)
