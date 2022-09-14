@@ -1,9 +1,9 @@
-<h2 align="center">SUMMER INTERNSHIP PROJECT</h2>
+<h1 align="center">SUMMER INTERNSHIP PROJECT</h1>
 <h5>This project is related to rail transport technologies. I developed this project during my summer internship at Tübitak RUTE. In this project, I created both the frontend and the backend part with Python.</h5>
 
 <h5>In this project, the interface of the machinist screen in a train system has been developed. At the same time, I have developed the interface of the machinist control table, where there are physical switches for control.  I tried to make the designs of the screens by studying the documentation given to me.</h5>
 
-<h3>Requirements for the project</h3>
+<h2>Requirements for the project</h2>
 
 <h6>
   <img alt="Python" src="https://img.shields.io/badge/Python-14354C?style=for-the-badge&logo=python&logoColor=white"/>
