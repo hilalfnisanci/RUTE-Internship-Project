@@ -5,6 +5,12 @@
 
 <h3>Requirements for the project</h3>
 
+<h6>
+  <img alt="Python" src="https://img.shields.io/badge/Python-14354C?style=for-the-badge&logo=python&logoColor=white"/>
+  <img alt="QT" src="https://img.shields.io/badge/Qt-%23217346.svg?style=for-the-badge&logo=Qt&logoColor=white"/>
+  <img alt="Mosquitto" src="https://img.shields.io/badge/mosquitto-%233C5280.svg?style=for-the-badge&logo=eclipsemosquitto&logoColor=white"/>
+</h6>
+
 <h5>
   <ul>1. First of all, you need to download the Visual Studio Code text-editor and add Python plugins to it.</ul>
   <ul> - You can download VsCode <a href="https://code.visualstudio.com/download" target=”_blank” rel=”noreferrer”>here</a></ul>
@@ -38,5 +44,4 @@
 </h5>
 
 <h6>NOTE : You can use <a href="https://stackoverflow.com/" target=”_blank” rel=”noreferrer”>this page</a> for all errors.</h6>
-
 
