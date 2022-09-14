@@ -18,7 +18,7 @@
 </h5>
 
 <h5>
-  <ul>2. The PyQt5 library was used for the interface while the project was being developed. You can click here for the download link for PyQt5 and some tutorial resources that I have used.</ul>
+  <ul>2. The PyQt5 library was used for the interface while the project was being developed. </ul>
   <ul> - You can download PyQt5 <a href="https://pypi.org/project/PyQt5/" target=”_blank” rel=”noreferrer”>here</a></ul>
     <ul> - If you need tutorial 
       <ul><a href="https://www.tutorialspoint.com/pyqt5/pyqt5_tutorial.pdf" target=”_blank” rel=”noreferrer”>PDF Tutorial</a></ul>
