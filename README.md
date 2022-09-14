@@ -6,7 +6,8 @@
 <h3>Requirements for the project</h3>
 
 <h5>
-  <ul>1. First of all, you need to download the Visual Studio Code text-editor and add Python plugins to it.</ul>
+  <ul>1. First of all, you need to download the Visual Studio Code text-editor and add Python plugins to it.
+  </ul>
 </h5>
 
 <h5>
